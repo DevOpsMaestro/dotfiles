@@ -6,12 +6,14 @@ My chezmoi dotfiles
 
 [following this](https://www.chezmoi.io/quick-start/#set-up-a-new-machine-with-a-single-command)
 
+[install client](https://www.chezmoi.io/install/)
+
 Macbook client
 ```shell
 brew install chezmoi
 ```
 
-From your Second system
+From your Second system, example:
 ```shell
 chezmoi init https://github.com/DevOpsMaestro/dotfiles.git
 
