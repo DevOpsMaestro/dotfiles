@@ -15,6 +15,11 @@ Macbook client
 brew install chezmoi
 ```
 
+Arch Linux client
+```shell
+pacman -S chezmoi
+```
+
 ## Rough Notes
 
 From your Second system, example:
