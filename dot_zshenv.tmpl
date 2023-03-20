@@ -1,0 +1,24 @@
+typeset -U path
+path=("$HOME/.local/bin" "/usr/local/bin" "/usr/local/sbin" $path)
+
+# common exports
+export EDITOR=nvim
+export PAGER=less
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
+# gnupg
+unset SSH_AGENT_PID
+if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+  export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+fi
+
+# software versions
+[[ -x $(whence cargo) ]] && path=("${CARGO_HOME:-$HOME/.cargo}/bin" $path)
+[[ -x $(whence jenv) ]] && path=("${JENV_HOME:-$HOME/.jenv}/bin" $path)
+[[ -x $(whence pyenv) ]] && path=("${PYENV_ROOT:-$HOME/.pyenv}/bin" $path)
+[[ -x $(whence luarocks) ]] && path=("$HOME/.luarocks/bin" $path)
+
+{{- if contains "maxar" .chezmoi.fqdnHostname }}
+
+export WORKSPACE="$HOME/SourceCode/MAXAR"
+{{- end }}

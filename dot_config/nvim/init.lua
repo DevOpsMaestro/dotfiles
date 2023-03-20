@@ -1,0 +1,2 @@
+-- bootstrap
+require("config.lazy")

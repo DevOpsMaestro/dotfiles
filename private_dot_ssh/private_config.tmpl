@@ -1,0 +1,34 @@
+ControlMaster auto
+ControlPersist yes
+ControlPath ~/.ssh/sockets/%C
+
+CanonicalizeHostname yes
+{{- if contains "maxar" .chezmoi.fqdnHostname }}
+Include {{ .chezmoi.homeDir }}/.colima/ssh_config
+
+Match host="*.kestrel"
+    User s0m3r@nd0mU53rH3r3
+    StrictHostKeyChecking no
+    ForwardAgent yes
+    UserKnownHostsFile /dev/null
+    ServerAliveInterval 30
+
+{{- else }}
+
+# PERSONAL STUFF:
+Host github.com
+    HostName github.com
+    IdentityFile /home/${USER}/.ssh/GIT_KEYS/id_ed25519
+    User git
+
+Match host "*fortres*,172.20.156.*"
+    User goldenleg
+    ForwardAgent yes
+    IdentityFile ~/.ssh/RKE-LABS/id_ed25519
+    LogLevel QUIET
+    PreferredAuthentications publickey
+    ServerAliveInterval 30
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+
+{{- end }}

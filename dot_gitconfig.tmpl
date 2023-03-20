@@ -1,0 +1,112 @@
+[user]
+    name = DevOpsMaestro
+    email = {{ .email }}
+{{- if index . "signingkey" }}
+    signingkey = {{ .signingkey }}
+{{- end }}
+
+[init]
+	defaultBranch = main
+
+[core]
+    pager = delta
+
+[pager]
+	diff = delta
+	log = delta
+	reflog = delta
+	show = delta
+
+[interactive]
+	diffFilter = delta --color-only --features=interactive
+
+[delta]
+    features = decorations
+    light = false
+    line-numbers = true
+    navigate = true
+    syntax-theme = base16-256
+
+[merge]
+    conflictstyle = diff3
+    tool = nvimdiff
+
+[status]
+    submoduleSummary = true
+
+[push]
+    autoSetupRemote = true
+    default = simple
+
+[pull]
+	ff = only
+	rebase = true
+
+[commit]
+	gpgsign = true
+
+[diff]
+	colorMoved = default
+
+[difftool "vimdiff"]
+	path = vim
+
+[mergetool "vimdiff"]
+	path = vim
+
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/
+
+[credential "https://github.com"]
+    helper = 
+    helper = !gh auth git-credential
+
+[credential "https://gist.github.com"]
+    helper = 
+    helper = !gh auth git-credential
+
+[log]
+    graphColors = bold 160, blink 231 bold 239, bold 166, bold black 214, bold green, bold 24, cyan
+
+[color "decorate"]
+    HEAD = bold blink italic 196
+    branch = 214
+    diff = true
+    interactive = true
+    status = true
+    tag = bold 222
+
+[alias]
+    logx = log --all --graph --decorate=short --color --format=format:'%C(bold blue)%h%C(reset)+%C(dim black)(%cr)%C(reset)+%C(auto)%d%C(reset)++\n+++       %C(bold black)%an%C(reset)%C(black): %s%C(reset)'
+    vtree = !bash -c '"                                                                                     \
+        while IFS=+ read -r hash time branch message; do                                                \
+            timelength=$(echo \"$time\" | sed -E \"s:[^ ][[]([0-9]{1,2}(;[0-9]{1,2})?)?m::g\");     \
+            timelength=$(echo \"16+${#time}-${#timelength}\" | bc);                                 \
+            printf \"%${timelength}s    %s %s %s\n\" \"$time\" \"$hash\" \"$branch\" \"$message\";  \
+        done < <(git logx && echo);"'
+
+    #quick look at all repo
+    loggsa = log --color --date-order --graph --oneline --decorate --simplify-by-decoration --all
+    #quick look at active branch (or refs pointed)
+    loggs  = log --color --date-order --graph --oneline --decorate --simplify-by-decoration
+    #extend look at all repo
+    logga  = log --color --date-order --graph --oneline --decorate --all
+    #extend look at active branch
+    logg   = log --color --date-order --graph --oneline --decorate
+    #Look with date
+    logda  = log --color --date-order --date=local --graph --format=\"%C(auto)%h%Creset %C(blue bold)%ad%Creset %C(auto)%d%Creset %s\" --all
+    logd   = log --color --date-order --date=local --graph --format=\"%C(auto)%h%Creset %C(blue bold)%ad%Creset %C(auto)%d%Creset %s\"
+    #Look with relative date
+    logdra = log --color --date-order --graph --format=\"%C(auto)%h%Creset %C(blue bold)%ar%Creset %C(auto)%d%Creset %s\" --all
+    logdr = log --color --date-order --graph --format=\"%C(auto)%h%Creset %C(blue bold)%ar%Creset %C(auto)%d%Creset %s\"
+    loga   = log --graph --color --decorate --all
+
+    # For repos without subject body commits (vim repo, git-svn clones)
+    logt  = log --graph --color --format=\"%C(auto)%h %d %<|(100,trunc) %s\"
+    logta  = log --graph --color --format=\"%C(auto)%h %d %<|(100,trunc) %s\" --all
+    logtsa = log --graph --color --format=\"%C(auto)%h %d %<|(100,trunc) %s\" --all --simplify-by-decoration
+
+    tably = log --all --graph --decorate=short --color --pretty=format:'+%C(bold 214)%<(7,trunc)%h%C(reset)+%C(dim white)%>(12,trunc)%cr%C(reset)+%C(auto)%>(15,trunc)%D%C(reset)+%C(white)%s%C(reset)'
+
+[http]
+   postBuffer = 157286400

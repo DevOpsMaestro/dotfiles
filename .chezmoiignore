@@ -1,0 +1,6 @@
+README.md
+{{- if ne .chezmoi.os "linux" }}
+.config/autostart
+.config/gtk-3.0
+.config/gtk-4.0
+{{- end }}

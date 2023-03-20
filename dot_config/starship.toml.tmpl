@@ -1,0 +1,23 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+add_newline = false
+
+command_timeout = 750
+
+[kubernetes]
+disabled = false
+
+[memory_usage]
+disabled = false
+
+[sudo]
+disabled = false
+{{- if contains "maxar" .chezmoi.fqdnHostname }}
+
+[terraform]
+disabled = true
+
+[env_var.DEPLOY_ENV]
+symbol = '💠 '
+style = 'bold 105'
+{{- end }}

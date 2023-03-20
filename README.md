@@ -1,4 +1,6 @@
-# dotfiles
+# DevOpsMaestro/dotfiles
+
+Dapper Dan's dotfiles, managed with [`chezmoi`](https://github.com/twpayne/chezmoi).
 
 My chezmoi dotfiles
 
@@ -12,6 +14,8 @@ Macbook client
 ```shell
 brew install chezmoi
 ```
+
+## Rough Notes
 
 From your Second system, example:
 ```shell

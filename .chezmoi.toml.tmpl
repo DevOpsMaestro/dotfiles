@@ -1,0 +1,16 @@
+{{- $email := promptString "email" -}}
+{{- $gpgKey := promptString "gpg key" -}}
+{{- $githubUser := promptString "github username" -}}
+[data]
+  email = "{{ $email }}"
+  signingkey = "{{ $gpgKey }}"
+  [data.github]
+    user = "{{ $githubUser }}"
+[diff]
+  format = "git"
+  pager = "delta"
+[merge]
+  command = "nvim"
+  args = "-d"
+[gpg]
+  recipient = "{{ $gpgKey }}"

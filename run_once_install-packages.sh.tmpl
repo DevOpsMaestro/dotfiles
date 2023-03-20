@@ -1,0 +1,94 @@
+#!/bin/bash
+set -euo pipefail
+IFS=$'\n\t'
+
+{{ if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "arch") -}}
+if ! command -v paru &> /dev/null
+then
+  sudo pacman -S --needed base-devel rustup
+  rustup toolchain install stable
+  BUILDDIR=$(mktemp -d)
+  git clone https://aur.archlinux.org/paru.git $BUILDDIR
+  pushd $BUILDDIR
+  makepkg -si
+  popd $BUILDDIR
+  rm -rf $BUILDDIR
+fi
+
+paru -S --needed \
+  arc-gtk-theme \
+  arc-icon-theme \
+  archlinux-wallpaper \
+  aws-cli-v2 \
+  base-devel \
+  bat \
+  bitwarden-cli \
+  bottom \
+  dust \
+  elementary-icon-theme \
+  fd \
+  flux-bin \
+  fzf \
+  git \
+  git-delta \
+  github-cli \
+  gnupg \
+  helm \
+  jq \
+  kitty \
+  kubectl \
+  lsd \
+  luarocks \
+  neovim \
+  ttf-firacode-nerd \
+  pyenv \
+  ranger \
+  restic \
+  ripgrep \
+  rustup \
+  starship \
+  yq \
+  zsh \
+  zsh-autosuggestions \
+  zsh-completions \
+  zsh-syntax-highlighting
+
+paru -S --asdeps --needed \
+  python-neovim \
+  wl-clipboard \
+  xsel
+{{ else if eq .chezmoi.os "darwin" -}}
+brew install \
+  awscli \
+  bat \
+  bitwarden-cli \
+  bottom \
+  dust \
+  fd \
+  fluxcd/tap/flux \
+  fzf \
+  gh \
+  git \
+  git-delta \
+  gnupg \
+  helm \
+  jq \
+  kitty \
+  kubectl \
+  lsd \
+  luarocks \
+  neovim \
+  pyenv \
+  ranger \
+  restic \
+  ripgrep \
+  rustup \
+  starship \
+  yq \
+  zsh \
+  zsh-autosuggestions \
+  zsh-completions \
+  zsh-syntax-highlighting
+
+pip3 install --user pynvim
+{{ end -}}
