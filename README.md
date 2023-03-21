@@ -48,3 +48,14 @@ After the initial install, you can simply run:
 chezmoi status
 chezmoi update -v
 ```
+
+## Dealing with variances in config files
+
+One solution is to remove the file from the local configuration. 
+
+```shell
+chezmoi forget ~/.ssh/config
+```
+
+
+
