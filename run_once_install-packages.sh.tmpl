@@ -22,7 +22,6 @@ paru -S --needed \
   aws-cli-v2 \
   base-devel \
   bat \
-  bitwarden-cli \
   bottom \
   dust \
   elementary-icon-theme \
@@ -57,11 +56,25 @@ paru -S --asdeps --needed \
   python-neovim \
   wl-clipboard \
   xsel
+
+# Install lazyvim
+# docs: https://www.lazyvim.org/installation
+# required cleanup before install
+mv ${HOME}/config/nvim ${HOME}/config/nvim.bak
+
+# optional but recommended for lazyvim
+mv ${HOME}/local/share/nvim ${HOME}/local/share/nvim.bak
+mv ${HOME}/local/state/nvim ${HOME}/local/state/nvim.bak
+mv ${HOME}/cache/nvim ${HOME}/cache/nvim.bak
+
+# finally install lazyvim
+git clone https://github.com/LazyVim/starter ${HOME}/.config/nvim
+
+
 {{ else if eq .chezmoi.os "darwin" -}}
 brew install \
   awscli \
   bat \
-  bitwarden-cli \
   bottom \
   dust \
   fd \
@@ -91,4 +104,19 @@ brew install \
   zsh-syntax-highlighting
 
 pip3 install --user pynvim
+
+# Install lazyvim
+# docs: https://www.lazyvim.org/installation
+# required cleanup before install
+mv ${HOME}/config/nvim ${HOME}/config/nvim.bak
+
+# optional but recommended for lazyvim
+mv ${HOME}/local/share/nvim ${HOME}/local/share/nvim.bak
+mv ${HOME}/local/state/nvim ${HOME}/local/state/nvim.bak
+mv ${HOME}/cache/nvim ${HOME}/cache/nvim.bak
+
+# finally install lazyvim
+git clone https://github.com/LazyVim/starter ${HOME}/.config/nvim
+
+
 {{ end -}}
