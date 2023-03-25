@@ -2,7 +2,7 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-{{ if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "arch") -}}
+{{ if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "archarm") -}}
 if ! command -v paru &> /dev/null
 then
   sudo pacman -S --needed base-devel rustup
