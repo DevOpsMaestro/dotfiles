@@ -58,12 +58,12 @@ paru -S --asdeps --needed \
 # Install lazyvim
 # docs: https://www.lazyvim.org/installation
 # required cleanup before install
-mv ${HOME}/.config/nvim ${HOME}/.config/nvim.bak
+[[ -d ${HOME}/.config/nvim ]] && mv ${HOME}/.config/nvim ${HOME}/.config/nvim.bak.$$
 
 # optional but recommended for lazyvim
-mv ${HOME}/.local/share/nvim ${HOME}/.local/share/nvim.bak
-mv ${HOME}/.local/state/nvim ${HOME}/.local/state/nvim.bak
-mv ${HOME}/.cache/nvim ${HOME}/.cache/nvim.bak
+[[ -d ${HOME}/.local/share/nvim ]] && mv ${HOME}/.local/share/nvim ${HOME}/.local/share/nvim.bak.$$
+[[ -d ${HOME}/.local/state/nvim ]] && mv ${HOME}/.local/state/nvim ${HOME}/.local/state/nvim.bak.$$
+[[ -d ${HOME}/.cache/nvim ]] && mv ${HOME}/.cache/nvim ${HOME}/.cache/nvim.bak.$$
 
 # finally install lazyvim
 git clone https://github.com/LazyVim/starter ${HOME}/.config/nvim
