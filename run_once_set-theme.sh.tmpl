@@ -3,6 +3,7 @@ set -euo pipefail
 IFS=$'\n\t'
 
 {{ if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "archarm") -}}
+printf "skipping the gsettings and desktop theme for the moment\n\n"
 # desktop.interface hash {{ output "gsettings" "list-recursively" "org.gnome.desktop.interface" | sha256sum }}
 # shell.theme hash {{ output "gsettings" "list-recursively" "org.gnome.shell.extensions.user-theme" | sha256sum }}
 # gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
