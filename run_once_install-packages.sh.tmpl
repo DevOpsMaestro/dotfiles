@@ -16,17 +16,12 @@ then
 fi
 
 paru -S --needed \
-  arc-gtk-theme \
-  arc-icon-theme \
-  archlinux-wallpaper \
-  aws-cli-v2 \
   base-devel \
   bat \
   bottom \
+  cni-plugins-bin \
   dust \
-  elementary-icon-theme \
   fd \
-  flux-bin \
   fzf \
   git \
   git-delta \
@@ -35,18 +30,20 @@ paru -S --needed \
   helm \
   jq \
   kitty \
-  kubectl \
+  kubeadm-bin \
+  kubectl-bin \
+  kubelet-bin \
   lazygit \
   lsd \
   luarocks \
   neovim \
-  ttf-firacode-nerd \
   pyenv \
   ranger \
   restic \
   ripgrep \
   rustup \
   starship \
+  ttf-firacode-nerd \
   yq \
   zsh \
   zsh-autosuggestions \
@@ -88,7 +85,6 @@ brew install \
   helm \
   jq \
   kitty \
-  kubectl \
   lsd \
   luarocks \
   neovim \
@@ -103,6 +99,8 @@ brew install \
   zsh-autosuggestions \
   zsh-completions \
   zsh-syntax-highlighting
+
+  #   kubectl \
 
 brew tap jesseduffield/lazygit
 brew install lazygitbrew tap
