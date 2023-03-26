@@ -71,29 +71,51 @@ git clone https://github.com/LazyVim/starter ${HOME}/.config/nvim
 
 {{ else if eq .chezmoi.os "darwin" -}}
 brew install \
+  argocd \
   awscli \
   bat \
   bottom \
+  bpytop \
+  clair \
   dust \
+  easy-rsa \
   fd \
   fluxcd/tap/flux \
+  fping \
   fzf \
   gh \
   git \
   git-delta \
   gnupg \
+  gping \
   helm \
+  hping \
+  htop \
   jq \
+  jsonlint \
+  k9s \
   kitty \
+  lazygit \
+  lolcat \
   lsd \
+  lsof \
   luarocks \
+  mtr \
   neovim \
+  p7zip \
+  prettyping \
+  pstree \
   pyenv \
   ranger \
   restic \
   ripgrep \
   rust \
+  sops \
   starship \
+  trivy \
+  watch \
+  wget \
+  yamllint \
   yq \
   zsh \
   zsh-autosuggestions \
@@ -111,12 +133,12 @@ pip3 install --user pynvim
 # Install lazyvim
 # docs: https://www.lazyvim.org/installation
 # required cleanup before install
-mv ${HOME}/.config/nvim ${HOME}/.config/nvim.bak
+mv ${HOME}/.config/nvim ${HOME}/.config/nvim.bak.$$
 
 # optional but recommended for lazyvim
-mv ${HOME}/.local/share/nvim ${HOME}/.local/share/nvim.bak
-mv ${HOME}/.local/state/nvim ${HOME}/.local/state/nvim.bak
-mv ${HOME}/.cache/nvim ${HOME}/.cache/nvim.bak
+mv ${HOME}/.local/share/nvim ${HOME}/.local/share/nvim.bak.$$
+mv ${HOME}/.local/state/nvim ${HOME}/.local/state/nvim.bak.$$
+mv ${HOME}/.cache/nvim ${HOME}/.cache/nvim.bak.$$
 
 # finally install lazyvim
 git clone https://github.com/LazyVim/starter ${HOME}/.config/nvim
