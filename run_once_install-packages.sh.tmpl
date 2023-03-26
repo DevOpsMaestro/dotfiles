@@ -5,7 +5,7 @@ IFS=$'\n\t'
 {{ if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "archarm") -}}
 if ! command -v paru &> /dev/null
 then
-  sudo pacman -S --needed base-devel rustup
+  sudo pacman -S --needed base-devel rust
   rustup toolchain install stable
   BUILDDIR=$(mktemp -d)
   git clone https://aur.archlinux.org/paru.git $BUILDDIR
@@ -41,7 +41,7 @@ paru -S --needed \
   ranger \
   restic \
   ripgrep \
-  rustup \
+  rust \
   starship \
   ttf-firacode-nerd \
   yq \
@@ -92,7 +92,7 @@ brew install \
   ranger \
   restic \
   ripgrep \
-  rustup \
+  rust \
   starship \
   yq \
   zsh \
