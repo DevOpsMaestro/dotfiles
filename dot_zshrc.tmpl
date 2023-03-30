@@ -138,6 +138,7 @@ fi
 
 # gnupg
 export GPG_TTY=$(tty)
+[[ -x $(whence gpg-agent) ]] && eval "$( gpg-agent --quiet --daemon 2>/dev/null )"
 
 # For SOPS
 export SOPS_GPG_EXEC="gpg"
@@ -145,15 +146,15 @@ export SOPS_PGP_FP="55DC1CA95F792EACE2491532EC363AC46ABDC9E7"
 export SOPS_GPG_KEYSERVER="hkps://keyserver.ubuntu.com"
 
 # software versions
-[[ -x $(whence jenv) ]] && eval "$(jenv init -)"
-[[ -x $(whence pyenv) ]] && eval "$(pyenv init -)"
-[[ -x $(whence luarocks) ]] && eval "$(luarocks path --no-bin)"
+[[ -x $(whence jenv) ]] && eval "$( jenv init - )"
+[[ -x $(whence pyenv) ]] && eval "$( pyenv init - )"
+[[ -x $(whence luarocks) ]] && eval "$( luarocks path --no-bin )"
 
 # k8s
-[[ -x $(whence kubectl) ]] && source <(kubectl completion zsh)
-[[ -x $(whence helm) ]] && source <(helm completion zsh)
-[[ -x $(whence flux) ]] && source <(flux completion zsh) && compdef _flux flux
-[[ -x $(whence saml2aws) ]] && eval "$(saml2aws --completion-script-zsh)"
+[[ -x $(whence kubectl) ]] && source <( kubectl completion zsh )
+[[ -x $(whence helm) ]] && source <( helm completion zsh )
+[[ -x $(whence flux) ]] && source <( flux completion zsh ) && compdef _flux flux
+[[ -x $(whence saml2aws) ]] && eval "$( saml2aws --completion-script-zsh )"
 
 {{- if contains "fortress" .chezmoi.fqdnHostname }}
 
