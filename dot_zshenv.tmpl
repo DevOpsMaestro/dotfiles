@@ -1,12 +1,6 @@
 typeset -U path
-
-{{- if contains "fortress" .chezmoi.fqdnHostname }}
-
-path=("$HOME/.local/bin" "${HOME}/anaconda3/bin" "/usr/local/bin" "/usr/local/sbin" $path)
-{{- else }}
-
 path=("$HOME/.local/bin" "/usr/local/bin" "/usr/local/sbin" $path)
-{{- end }}
+
 
 # common exports
 export EDITOR=nvim
