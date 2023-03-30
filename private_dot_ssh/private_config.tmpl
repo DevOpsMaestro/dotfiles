@@ -31,4 +31,14 @@ Match host "*fortres*,172.20.156.*"
     StrictHostKeyChecking no
     UserKnownHostsFile /dev/null
 
+Match host "172.31.254.*"
+    User oBF6k2HnwNy
+    ForwardAgent yes
+    IdentityFile ~/.ssh/id_rsa
+    LogLevel QUIET
+    PreferredAuthentications publickey
+    ServerAliveInterval 30
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null 
+
 {{- end }}
