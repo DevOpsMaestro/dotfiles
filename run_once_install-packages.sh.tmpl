@@ -29,14 +29,13 @@ paru -S --needed \
   gnupg \
   helm \
   jq \
-  kitty \
   kubeadm-bin \
   kubectl-bin \
   kubelet-bin \
   lazygit \
   lsd \
   luarocks \
-  neovim \
+  vim \
   pyenv \
   ranger \
   restic \
@@ -54,20 +53,6 @@ paru -S --asdeps --needed \
   python-neovim \
   wl-clipboard \
   xsel
-
-# Install lazyvim
-# docs: https://www.lazyvim.org/installation
-# required cleanup before install
-[[ -d ${HOME}/.config/nvim ]] && mv ${HOME}/.config/nvim ${HOME}/.config/nvim.bak.$$
-
-# optional but recommended for lazyvim
-[[ -d ${HOME}/.local/share/nvim ]] && mv ${HOME}/.local/share/nvim ${HOME}/.local/share/nvim.bak.$$
-[[ -d ${HOME}/.local/state/nvim ]] && mv ${HOME}/.local/state/nvim ${HOME}/.local/state/nvim.bak.$$
-[[ -d ${HOME}/.cache/nvim ]] && mv ${HOME}/.cache/nvim ${HOME}/.cache/nvim.bak.$$
-
-# finally install lazyvim
-git clone https://github.com/LazyVim/starter ${HOME}/.config/nvim
-
 
 {{ else if eq .chezmoi.os "darwin" -}}
 brew install \
@@ -94,20 +79,16 @@ brew install \
   jq \
   jsonlint \
   k9s \
-  kitty \
   lazygit \
-  lolcat \
   lsd \
   lsof \
-  luarocks \
   mtr \
-  neovim \
+  vim \
   p7zip \
   pinentry-mac \
   prettyping \
   pstree \
   pyenv \
-  ranger \
   restic \
   ripgrep \
   rust \
@@ -122,27 +103,5 @@ brew install \
   zsh-autosuggestions \
   zsh-completions \
   zsh-syntax-highlighting
-
-  #   kubectl \
-
-brew tap jesseduffield/lazygit
-brew install lazygitbrew tap
-brew install lazygit
-
-pip3 install --user pynvim
-
-# Install lazyvim
-# docs: https://www.lazyvim.org/installation
-# required cleanup before install
-mv ${HOME}/.config/nvim ${HOME}/.config/nvim.bak.$$
-
-# optional but recommended for lazyvim
-mv ${HOME}/.local/share/nvim ${HOME}/.local/share/nvim.bak.$$
-mv ${HOME}/.local/state/nvim ${HOME}/.local/state/nvim.bak.$$
-mv ${HOME}/.cache/nvim ${HOME}/.cache/nvim.bak.$$
-
-# finally install lazyvim
-git clone https://github.com/LazyVim/starter ${HOME}/.config/nvim
-
 
 {{ end -}}
