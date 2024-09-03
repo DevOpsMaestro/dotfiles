@@ -1,15 +1,21 @@
 # troubleshooting begining
-#zmodload zsh/zprof
+# zmodload zsh/zprof
 
 # history
 HISTFILE=~/.zsh_history
-HISTSIZE=25000
-SAVEHIST=25000
+HISTSIZE=10000
+SAVEHIST=10000
 
 # options
-setopt EXTENDED_HISTORY HIST_FIND_NO_DUPS HIST_IGNORE_SPACE INC_APPEND_HISTORY_TIME
-setopt AUTO_CD AUTO_PUSHD PUSHD_MINUS
-setopt AUTO_MENU ALWAYS_TO_END
+setopt EXTENDED_HISTORY 
+setopt HIST_FIND_NO_DUPS 
+setopt HIST_IGNORE_SPACE 
+setopt INC_APPEND_HISTORY_TIME
+setopt AUTO_CD 
+setopt AUTO_PUSHD 
+setopt PUSHD_MINUS
+setopt AUTO_MENU 
+setopt ALWAYS_TO_END
 cdpath=("$HOME/SourceCode")
 
 # vi mode
@@ -20,21 +26,18 @@ zstyle :compinstall filename "$HOME/.zshrc"
 autoload -Uz compinit
 compinit
 
-# starship
+# git & ssh-agent --> using GPG further down.
+
+# load starship 
 eval "$(starship init zsh)"
 
 # aliases
-[[ -x $(whence batcat) ]] && alias bat='batcat'
-alias cat='bat --paging=never'
-alias icat="kitty +kitten icat"
-alias s='kitty +kitten ssh'
-alias hg="kitty +kitten hyperlinked_grep"
 # alias Chrome='google-chrome --proxy-server="socks5://localhost:3333" --host-resolver-rules="MAP * 0.0.0.0 , EXCLUDE localhost" %U'
 alias Backup='mkdir -p .backups/$(date +%Y%m%dT%H%M) 2>/dev/null; cp -R * .backups/$(date +%Y%m%dT%H%M)/'
 alias dsize='du -sk * | sort -n --'
 alias DT='date "+%F %T"'
 alias du="dust"
-#alias edit='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl $@'
+alias edit='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl $@'
 #alias EMD='eval $(minikube docker-env)'
 alias filetree="ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'"
 alias fluxlogs='flux logs --all-namespaces --follow --tail=10'
@@ -42,13 +45,16 @@ alias GBT='printf "\n\n"; kubectl -n kubernetes-dashboard create token admin-use
 alias grep='grep --color=auto'
 alias h='history'
 alias j='jobs -l'
+alias k='kubectl $@'
+#alias k9s='k9s --readonly --refresh 6 --crumbsless --all-namespaces $@'
+alias k9s='k9s --refresh 6 --crumbsless --all-namespaces $@'
 alias less='less --quiet --tabs=4 $@'
 alias libpath='echo -e ${LD_LIBRARY_PATH//:/\\n}'
 alias ll="ls -lv"
 alias lt='ls -latr'
 alias myflux='flux reconcile ks flux-system --with-source'
-#alias Netstat='watch -n 15 -d "lsof -n -i | grep -e LISTEN -e ESTABLISHED"'
-#alias Nmap='sudo nmap -p0-65535 -T5 $@'
+alias Netstat='watch -n 15 -d "lsof -n -i | grep -e LISTEN -e ESTABLISHED"'
+alias Nmap='sudo nmap -p0-65535 -T5 $@'
 alias numfmt=gnumfmt
 alias path='echo -e ${PATH//:/\\n}'
 alias ping='prettyping --nolegend'
@@ -57,8 +63,6 @@ alias ping='prettyping --nolegend'
 alias PODS='watch -n 6 "kubectl get pods --all-namespaces --field-selector metadata.namespace!=kube-system -o wide"'
 alias TOP1='watch -n 6 "kubectl top pods --use-protocol-buffers --sort-by=cpu --all-namespaces=true --field-selector metadata.namespace!=kube-system" '
 alias TOP2='watch -n 6 "kubectl top pods --use-protocol-buffers --sort-by=memory --all-namespaces=true --field-selector metadata.namespace!=kube-system" '
-alias vi='nvim'
-alias vim='nvim'
 alias which='type -a'
 #
 alias gc='git commit $@'
@@ -99,16 +103,6 @@ genpasswd() {
       tr -dc A-Za-z0-9_ < /dev/urandom | head -c ${l} | xargs
 }
 
-
-{{- if contains "maxar" .chezmoi.fqdnHostname }}
-
-function s2a() {
-  export AWS_PROFILE=$1
-  export DEPLOY_ENV=${1##*-}
-  saml2aws -a $1 login ${@:2}
-}
-{{- end }}
-
 # fuzzy search
 if [ -f /usr/share/fzf/completion.zsh ]; then
   source /usr/share/fzf/completion.zsh
@@ -137,7 +131,8 @@ elif [ -f /usr/local/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
 fi
 
 # gnupg
-export GPG_TTY=$(tty)
+GPG_TTY=$(tty)
+export GPG_TTY
 [[ -x $(whence gpg-agent) ]] && eval "$( gpg-agent --quiet --daemon 2>/dev/null )"
 
 # For SOPS
@@ -145,18 +140,14 @@ export SOPS_GPG_EXEC="gpg"
 export SOPS_PGP_FP="55DC1CA95F792EACE2491532EC363AC46ABDC9E7"
 export SOPS_GPG_KEYSERVER="hkps://keyserver.ubuntu.com"
 
-# software versions
-[[ -x $(whence jenv) ]] && eval "$( jenv init - )"
-[[ -x $(whence pyenv) ]] && eval "$( pyenv init - )"
-[[ -x $(whence luarocks) ]] && eval "$( luarocks path --no-bin )"
+# for Talos
+export TALOSCONFIG="${HOME}/SourceCode/Personal/talos-intel-homelab/00_talos_baremetal/talosconfig"
 
 # k8s
 [[ -x $(whence kubectl) ]] && source <( kubectl completion zsh )
 [[ -x $(whence helm) ]] && source <( helm completion zsh )
 [[ -x $(whence flux) ]] && source <( flux completion zsh ) && compdef _flux flux
-[[ -x $(whence saml2aws) ]] && eval "$( saml2aws --completion-script-zsh )"
-
-{{- if contains "fortress" .chezmoi.fqdnHostname }}
+#[[ -x $(whence saml2aws) ]] && eval "$( saml2aws --completion-script-zsh )"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -172,7 +163,6 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-{{- end }}
 
 # troubleshooting ending
-#zprof
+# zprof
