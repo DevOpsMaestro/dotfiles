@@ -18,13 +18,13 @@ Match host="*.kestrel"
 # PERSONAL STUFF:
 Host github.com
     HostName github.com
-    IdentityFile /home/${USER}/.ssh/GIT_KEYS/id_ed25519
+    IdentityFile ${HOME}/.ssh/GIT_KEYS/id_ed25519
     User git
 
 Match host "*fortres*,172.20.156.*"
     User goldenleg
     ForwardAgent yes
-    IdentityFile ~/.ssh/RKE-LABS/id_ed25519
+    IdentityFile ${HOME}/.ssh/RKE-LABS/id_ed25519
     LogLevel QUIET
     PreferredAuthentications publickey
     ServerAliveInterval 30
@@ -34,7 +34,7 @@ Match host "*fortres*,172.20.156.*"
 Match host "172.31.254.*"
     User oBF6k2HnwNy
     ForwardAgent yes
-    IdentityFile ~/.ssh/id_rsa
+    IdentityFile ${HOME}/.ssh/id_rsa
     LogLevel QUIET
     PreferredAuthentications publickey
     ServerAliveInterval 30
