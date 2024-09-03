@@ -1,19 +1,8 @@
 ControlMaster auto
 ControlPersist yes
-ControlPath ~/.ssh/sockets/%C
+ControlPath ${HOME}/.ssh/sockets/%C
 
 CanonicalizeHostname yes
-{{- if contains "maxar" .chezmoi.fqdnHostname }}
-Include {{ .chezmoi.homeDir }}/.colima/ssh_config
-
-Match host="*.kestrel"
-    User s0m3r@nd0mU53rH3r3
-    StrictHostKeyChecking no
-    ForwardAgent yes
-    UserKnownHostsFile /dev/null
-    ServerAliveInterval 30
-
-{{- else }}
 
 # PERSONAL STUFF:
 Host github.com
@@ -21,24 +10,44 @@ Host github.com
     IdentityFile ${HOME}/.ssh/GIT_KEYS/id_ed25519
     User git
 
+Match host "172.20.156.195"
+    User root
+    ForwardAgent yes
+    IdentityFile ${HOME}/.ssh/RKE-LABS/id_ed25519
+    PreferredAuthentications password
+    ServerAliveInterval 30
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+
+Host rhel-iso-builder.fortress.lan
+    HostName 172.20.156.208
+    User goldenleg
+    ForwardAgent yes
+    IdentityFile ${HOME}/.ssh/RKE-LABS/id_ed25519
+    PreferredAuthentications password
+    ServerAliveInterval 30
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+
 Match host "*fortres*,172.20.156.*"
     User goldenleg
     ForwardAgent yes
     IdentityFile ${HOME}/.ssh/RKE-LABS/id_ed25519
     LogLevel QUIET
-    PreferredAuthentications publickey
+    # PreferredAuthentications publickey
+    ServerAliveInterval 30
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+
+Match host "172.31.254.1"
+    User root
     ServerAliveInterval 30
     StrictHostKeyChecking no
     UserKnownHostsFile /dev/null
 
 Match host "172.31.254.*"
     User oBF6k2HnwNy
-    ForwardAgent yes
     IdentityFile ${HOME}/.ssh/id_rsa
-    LogLevel QUIET
-    PreferredAuthentications publickey
     ServerAliveInterval 30
     StrictHostKeyChecking no
-    UserKnownHostsFile /dev/null 
-
-{{- end }}
+    UserKnownHostsFile /dev/null
