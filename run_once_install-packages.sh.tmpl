@@ -17,9 +17,6 @@ fi
 
 paru -S --needed \
   base-devel \
-  bat \
-  bottom \
-  cni-plugins-bin \
   dust \
   fd \
   fzf \
@@ -32,13 +29,9 @@ paru -S --needed \
   kubeadm-bin \
   kubectl-bin \
   kubelet-bin \
-  lazygit \
   lsd \
-  luarocks \
   vim \
   pyenv \
-  ranger \
-  restic \
   ripgrep \
   rust \
   starship \
@@ -56,25 +49,19 @@ paru -S --asdeps --needed \
 
 {{ else if eq .chezmoi.os "darwin" -}}
 brew install \
-  argocd \
   awscli \
-  bat \
-  bottom \
-  bpytop \
-  clair \
+  btop \
   dust \
   easy-rsa \
   fd \
   fluxcd/tap/flux \
   fping \
   fzf \
-  gh \
   git \
   git-delta \
   gnupg \
   gping \
   helm \
-  hping \
   htop \
   jq \
   jsonlint \
@@ -89,12 +76,9 @@ brew install \
   prettyping \
   pstree \
   pyenv \
-  restic \
   ripgrep \
-  rust \
   sops \
   starship \
-  trivy \
   watch \
   wget \
   yamllint \
