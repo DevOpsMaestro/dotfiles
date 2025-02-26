@@ -6,19 +6,55 @@
 {{- end }}
 
 [init]
-	defaultBranch = main
+    defaultBranch = main
 
 [core]
     pager = delta
+    fsmonitor = true
+    untrackedCache = true
 
-[pager]
-	diff = delta
-	log = delta
-	reflog = delta
-	show = delta
+[branch]
+    sort = -committerdate
+
+[tag]
+    sort = version:refname
+
+[merge]
+    conflictstyle = zdiff3
+    tool = vimdiff
+
+[status]
+    submoduleSummary = true
+
+[column]
+    ui = auto
 
 [interactive]
-	diffFilter = delta --color-only --features=interactive
+    diffFilter = delta --color-only --features=interactive
+
+[push]
+    default = simple
+    autoSetupRemote = true
+    followTags = true
+
+[pull]
+    ff = only
+    rebase = true
+
+[fetch]
+    prune = true
+    pruneTags = true
+    all = true
+
+[commit]
+    verbose = true
+    # gpgsign = true
+
+[pager]
+    diff = delta
+    log = delta
+    reflog = delta
+    show = delta
 
 [delta]
     features = decorations
@@ -27,43 +63,32 @@
     navigate = true
     syntax-theme = base16-256
 
-[merge]
-    conflictstyle = diff3
-    tool = nvimdiff
+[help]
+    autocorrect = prompt
 
-[status]
-    submoduleSummary = true
+[rerere]
+    enabled = true
+    autoupdate = true
 
-[push]
-    autoSetupRemote = true
-    default = simple
-
-[pull]
-	ff = only
-	rebase = true
-
-[commit]
-    # gpgsign = true
+[rebase]
+    autoSquash = true
+    autoStash = true
+    updateRefs = true
 
 [diff]
-	colorMoved = default
+    algorithm = histogram
+    colorMoved = plain
+    mnemonicPrefix = true
+    renames = true
 
 [difftool "vimdiff"]
-	path = vim
+    path = vim
 
 [mergetool "vimdiff"]
-	path = vim
+    path = vim
 
-#[url "ssh://git@github.com/"]
-	#insteadOf = https://github.com/
-
-[credential "https://github.com"]
-    helper = 
-    helper = !gh auth git-credential
-
-[credential "https://gist.github.com"]
-    helper = 
-    helper = !gh auth git-credential
+[url "ssh://git@github.com/"]
+    insteadOf = https://github.com/
 
 [log]
     graphColors = bold 160, blink 231 bold 239, bold 166, bold black 214, bold green, bold 24, cyan
