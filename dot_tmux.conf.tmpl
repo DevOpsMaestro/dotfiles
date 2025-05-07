@@ -1,0 +1,149 @@
+
+# NOTE: must exit tmux server instance before changes here can take effect.
+# https://gist.github.com/MohamedAlaa/2961058
+
+# remap prefix to Control + space
+set -g prefix C-space
+unbind C-b
+bind C-space send-prefix
+
+bind k resize-pane -U 10
+bind j resize-pane -D 10
+
+# allow j,k movement in, for example, tmux windows list/select
+setw -g mode-keys vi
+
+# center the window list
+set -g status-justify centre
+
+# enable activity alerts
+setw -g monitor-activity on
+set -g visual-activity on
+
+# http://stackoverflow.com/questions/25477279/create-new-window-and-set-name
+bind-key c command-prompt -p "window name:" "new-window; rename-window '%%'"
+
+# https://superuser.com/questions/231002/how-can-i-search-within-the-output-buffer-of-a-tmux-shell
+# allows (prefix) + /
+# and start typing the search term, which will search up (latest lines first).
+bind-key / copy-mode \; send-key ?
+
+# https://unix.stackexchange.com/questions/151329/reorder-tmux-windows
+# https://superuser.com/questions/352117/binding-a-tmux-key-to-multiple-commands
+# must backslash escape the cmd separator (;)
+bind-key -n S-Left swap-window -t -1 \; select-window -t -1
+bind-key -n S-Right swap-window -t +1 \; select-window -t +1
+
+# https://stackoverflow.com/questions/13058578/how-to-prevent-tmux-from-filling-up-the-global-path-variable-with-duplicated-pat
+# By default tmux starts new shells as login shells. to prevent tmux from doing that:
+# Thu 03 Oct 2024 02:30:02 AM UTC
+# disabled this b/c it caused ~/.zshenv to exec 2x.
+# https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard/issues/23#issuecomment-31034789
+# set -g default-command /usr/bin/zsh
+
+# https://stackoverflow.com/questions/18760281/how-to-increase-scrollback-buffer-size-in-tmux#18777877
+# the default value is 2000
+set-option -g history-limit 4000
+
+# Wed 14 Jun 2017 08:10:36 AM EDT
+# https://www.codementor.io/linux/tutorial/configure-linux-toolset-zsh-tmux-vim
+
+# UTF is great, let us use that
+# deprecated in v2+
+# set -g utf8
+# set-window-option -g utf8 on
+
+# command delay? We don't want that, make it short
+# https://unix.stackexchange.com/questions/23138/esc-key-causes-a-small-delay-in-terminal-due-to-its-alt-behavior/25638#25638
+set -sg escape-time 0
+
+
+# Set the numbering of windows to go from 1 instead of 0
+set-option -g base-index 1
+setw -g pane-base-index 1
+
+# Thu 15 Sep 2022 01:51:08 PM EDT
+# select previous pane
+bind -T prefix m select-pane -t :.-
+
+## Allow us to reload our Tmux configuration while
+## using Tmux
+# bind r source-file ~/.tmux.conf \; display "Reloaded!"
+#
+## Getting interesting now, we use the vertical and horizontal
+## symbols to split the screen
+bind | split-window -h
+bind - split-window -v
+
+# todo: http://www.drbunsen.org/the-text-triumvirate/
+
+#
+# http://www.hamvocke.com/blog/a-guide-to-customizing-your-tmux-conf/
+# follows...
+
+# don't rename windows automatically
+# By default tmux will update the window title automatically depending on the
+# last executed command within that window.
+# set-option -g allow-rename off
+
+# reload config file
+# not working
+# bind -T prefix r source-file ~/.tmux.conf \; \
+# display-message "source-file ~/.tmux.conf done"
+
+# reload config file
+# not working
+# bind -T prefix r source-file ~/.tmux.conf \; \
+# display-message "source-file ~/.tmux.conf done"
+
+######################
+### DESIGN CHANGES ###
+######################
+
+# Enable RGB colour if running in xterm(1)
+set-option -sa terminal-overrides ",xterm*:Tc"
+
+# Change the default $TERM to tmux-256color
+set -g default-terminal "screen-256color"
+
+## Status bar design
+set -g status-justify left
+set -g status-interval 2
+set -g status-position bottom
+
+set -g status-right '#[fg=colour233,bg=colour241,bold] %d %b #[fg=colour233,bg=colour245,bold] %H:%M:%S '
+set -g status-right-length 50
+
+set -g status-left ''
+set -g status-style "bg=colour235,fg=colour136"
+setw -g window-status-format '#[bg=colour243,fg=colour16] #I #[bg=colour241,fg=colour111] #W #F'
+setw -g window-status-current-format '#[bg=colour15,fg=colour235,bold] #I #[bg=colour238,fg=colour123,bold] #W #F'
+
+# By default Tmux environment is saved to a file in ~/.tmux/resurrect dir.
+# set -g @resurrect-dir '/some/path'
+#
+# Fri 07 Jul 2017 10:38:06 AM EDT
+# https://github.com/tmux-plugins/tpm
+# https://github.com/tmux-plugins # for list of plugins
+# you need to run the following:
+# git clone https://github.com/tmux-plugins/tpm ${HOME}/.tmux/plugins/tpm
+# List of plugins
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+# set -g @plugin 'tmux-plugins/tmux-yank'
+# set -g @plugin 'tmux-plugins/tmux-copycat'
+
+# https://github.com/tmux-plugins/tmux-resurrect?tab=readme-ov-file#installation-with-tmux-plugin-manager-recommended
+# 1) Add plugin to the list of TPM plugins in .tmux.conf:
+# 2) Hit prefix + I to fetch the plugin and source it. You should now be able to use the plugin.
+set -g @plugin 'tmux-plugins/tmux-resurrect'
+
+# https://github.com/sainnhe/tmux-fzf
+set -g @plugin 'sainnhe/tmux-fzf'
+TMUX_FZF_LAUNCH_KEY='C-f'
+TMUX_FZF_OPTIONS='-p -w 62% -h 38% -m'
+TMUX_FZF_ORDER='session|window|pane|command|keybinding'
+TMUX_FZF_PANE_FORMAT='[#{window_name}] #{pane_current_command} [#{pane_width}x#{pane_height}] [history #{history_size}/#{history_limit}, #{history_bytes} bytes] #{?pane_active,[active],[inactive]}'
+
+# Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+run '~/.tmux/plugins/tpm/tpm'
