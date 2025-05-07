@@ -31,8 +31,10 @@ bind-key / copy-mode \; send-key ?
 # https://unix.stackexchange.com/questions/151329/reorder-tmux-windows
 # https://superuser.com/questions/352117/binding-a-tmux-key-to-multiple-commands
 # must backslash escape the cmd separator (;)
-bind-key -n S-Left swap-window -t -1 \; select-window -t -1
-bind-key -n S-Right swap-window -t +1 \; select-window -t +1
+# bind-key -n S-Left swap-window -t -1 \; select-window -t -1
+# bind-key -n S-Right swap-window -t +1 \; select-window -t +1
+bind < swap-window -t -1 \; select-window -t -1
+bind > swap-window -t +1 \; select-window -t +1
 
 # https://stackoverflow.com/questions/13058578/how-to-prevent-tmux-from-filling-up-the-global-path-variable-with-duplicated-pat
 # By default tmux starts new shells as login shells. to prevent tmux from doing that:
@@ -45,7 +47,6 @@ bind-key -n S-Right swap-window -t +1 \; select-window -t +1
 # the default value is 2000
 set-option -g history-limit 4000
 
-# Wed 14 Jun 2017 08:10:36 AM EDT
 # https://www.codementor.io/linux/tutorial/configure-linux-toolset-zsh-tmux-vim
 
 # UTF is great, let us use that
@@ -53,10 +54,13 @@ set-option -g history-limit 4000
 # set -g utf8
 # set-window-option -g utf8 on
 
+# Set mouse support to on.
+# For resizing, scrolling, and pane selection with the mouse:
+set -g mouse on
+
 # command delay? We don't want that, make it short
 # https://unix.stackexchange.com/questions/23138/esc-key-causes-a-small-delay-in-terminal-due-to-its-alt-behavior/25638#25638
 set -sg escape-time 0
-
 
 # Set the numbering of windows to go from 1 instead of 0
 set-option -g base-index 1
@@ -66,8 +70,7 @@ setw -g pane-base-index 1
 # select previous pane
 bind -T prefix m select-pane -t :.-
 
-## Allow us to reload our Tmux configuration while
-## using Tmux
+## Allow us to reload our Tmux configuration while using tmux
 # bind r source-file ~/.tmux.conf \; display "Reloaded!"
 #
 ## Getting interesting now, we use the vertical and horizontal
@@ -111,18 +114,21 @@ set -g status-justify left
 set -g status-interval 2
 set -g status-position bottom
 
-set -g status-right '#[fg=colour233,bg=colour241,bold] %d %b #[fg=colour233,bg=colour245,bold] %H:%M:%S '
+# set -g status-right '#[fg=colour233,bg=colour241,bold] %d %b #[fg=colour233,bg=colour245,bold] %H:%M:%S '
+set -g status-right '#[fg=colour233,bg=colour241,bold] %a %d %b #[fg=colour233,bg=colour245,bold] %H:%M:%S #[fg=colour233,bg=colour241] #H '
+
 set -g status-right-length 50
 
 set -g status-left ''
 set -g status-style "bg=colour235,fg=colour136"
-setw -g window-status-format '#[bg=colour243,fg=colour16] #I #[bg=colour241,fg=colour111] #W #F'
-setw -g window-status-current-format '#[bg=colour15,fg=colour235,bold] #I #[bg=colour238,fg=colour123,bold] #W #F'
+# setw -g window-status-format '#[bg=colour243,fg=colour16] #I #[bg=colour241,fg=colour111] #W #F'
+# setw -g window-status-current-format '#[bg=colour15,fg=colour235,bold] #I #[bg=colour238,fg=colour123,bold] #W #F'
+setw -g window-status-format '#[bg=colour235,fg=colour244] #I:#W '
+setw -g window-status-current-format '#[bg=colour28,fg=colour231,bold] #I:#W '
 
 # By default Tmux environment is saved to a file in ~/.tmux/resurrect dir.
-# set -g @resurrect-dir '/some/path'
+# set -g @resurrect-dir '${HOME}/.some/path'
 #
-# Fri 07 Jul 2017 10:38:06 AM EDT
 # https://github.com/tmux-plugins/tpm
 # https://github.com/tmux-plugins # for list of plugins
 # you need to run the following:
@@ -130,15 +136,25 @@ setw -g window-status-current-format '#[bg=colour15,fg=colour235,bold] #I #[bg=c
 # List of plugins
 set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-sensible'
-# set -g @plugin 'tmux-plugins/tmux-yank'
+set -g @plugin 'tmux-plugins/tmux-yank'
 # set -g @plugin 'tmux-plugins/tmux-copycat'
+
+# For autosaving sessions:
+set -g @plugin 'tmux-plugins/tmux-continuum'
+set -g @continuum-restore 'on'
+set -g @continuum-save-interval '15'
+
+# To visualize when you are in prefix mode:
+set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
 
 # https://github.com/tmux-plugins/tmux-resurrect?tab=readme-ov-file#installation-with-tmux-plugin-manager-recommended
 # 1) Add plugin to the list of TPM plugins in .tmux.conf:
 # 2) Hit prefix + I to fetch the plugin and source it. You should now be able to use the plugin.
 set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @resurrect-strategy-vim 'session'
 
 # https://github.com/sainnhe/tmux-fzf
+# The following allows me to perform fuzzy searches:
 set -g @plugin 'sainnhe/tmux-fzf'
 TMUX_FZF_LAUNCH_KEY='C-f'
 TMUX_FZF_OPTIONS='-p -w 62% -h 38% -m'
