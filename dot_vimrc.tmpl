@@ -25,6 +25,7 @@ Plug 'honza/vim-snippets'
 Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
 Plug 'vimwiki/vimwiki'
 Plug 'altercation/vim-colors-solarized'
+" Plug 'vim-scripts/Gundo'
 call plug#end()
 
 " -------------------------------------------
@@ -153,7 +154,9 @@ map 9 gT
 map 0 gt
 
 " Gundo toggle
-map <F5> <Esc>:GundoToggle<CR>
+" FYSA: Gundo vim requires said to be compiled with Python 2.4+
+" map <F5> <Esc>:GundoToggle<CR>
+" nnoremap <F5> :GundoToggle<CR>
 
 " Toggle line-wrap
 map <F6> <Esc>:set wrap!<CR>
