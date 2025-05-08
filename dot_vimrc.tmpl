@@ -33,6 +33,14 @@ call plug#end()
 " NERDTree configuration
 map <C-n> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
+let NERDTreeMouseMode=2
+
+augroup MouseInNERDTreeOnly
+    autocmd!
+    autocmd BufEnter NERD_tree_* set mouse=a
+    autocmd BufLeave NERD_tree_* set mouse=
+augroup END
+set mouse=
 
 " Quick pane navigation
 nnoremap <C-j> <C-w>j
