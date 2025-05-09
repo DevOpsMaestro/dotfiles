@@ -24,8 +24,9 @@ Plug 'alvan/vim-closetag'
 Plug 'honza/vim-snippets'
 Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
 Plug 'vimwiki/vimwiki'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'altercation/vim-colors-solarized'
-" Plug 'vim-scripts/Gundo'
 call plug#end()
 
 " -------------------------------------------
@@ -35,11 +36,10 @@ call plug#end()
 map <C-n> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
 let NERDTreeMouseMode=2
-
 augroup MouseInNERDTreeOnly
-    autocmd!
-    autocmd BufEnter NERD_tree_* set mouse=a
-    autocmd BufLeave NERD_tree_* set mouse=
+      autocmd!
+          autocmd BufEnter NERD_tree_* set mouse=a
+          autocmd BufLeave NERD_tree_* set mouse=
 augroup END
 set mouse=
 
@@ -65,8 +65,24 @@ map <leader>gl :Git pull<CR>
 " Code Formatting and Linting
 " -------------------------------------------
 " Integrate ALE for linting and fixing
+highlight ALEWarning ctermbg=DarkMagenta
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_fix_on_save = 1
-let g:ale_linters = {'python': ['flake8'], 'yaml': ['yamllint']}
+let g:ale_linters = { 
+\  'ansible': ['ansible-lint'],
+\  'Dockerfile': ['dockerfile_lint'],
+\  'JSON': ['jsonlint', 'jq', 'prettier'],
+\  'Python': ['autopep8', 'flake8', 'pylint'],
+\  'Terraform': ['terraform-fmt-fixer', 'tflint'],
+\  'YAML': ['yamllint', 'yq']
+\}
+let g:ale_sign_error = '>>'
+let g:ale_sign_warning = '--'
+
+" Set this. Airline will handle the rest.
+let g:airline#extensions#ale#enabled = 1
 
 
 " -------------------------------------------
@@ -152,11 +168,6 @@ nnoremap <Leader>sr :source ~/vim-session.vim<CR>
 map 8 <Esc>:tabe 
 map 9 gT
 map 0 gt
-
-" Gundo toggle
-" FYSA: Gundo vim requires said to be compiled with Python 2.4+
-" map <F5> <Esc>:GundoToggle<CR>
-" nnoremap <F5> :GundoToggle<CR>
 
 " Toggle line-wrap
 map <F6> <Esc>:set wrap!<CR>
