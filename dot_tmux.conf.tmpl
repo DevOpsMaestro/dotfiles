@@ -57,6 +57,8 @@ set-option -g history-limit 4000
 # Set mouse support to on.
 # For resizing, scrolling, and pane selection with the mouse:
 set -g mouse on
+# Linux only
+set -g mouse on
 bind -n WheelUpPane if-shell -F -t = "#{mouse_any_flag}" "send-keys -M" "if -Ft='#{pane_in_mode}' 'send-keys -M' 'select-pane -t=; copy-mode -e; send-keys -M'"
 bind -n WheelDownPane select-pane -t= \; send-keys -M
 bind -n C-WheelUpPane select-pane -t= \; copy-mode -e \; send-keys -M
@@ -76,12 +78,31 @@ setw -g pane-base-index 1
 bind -T prefix m select-pane -t :.-
 
 ## Allow us to reload our Tmux configuration while using tmux
-# bind r source-file ~/.tmux.conf \; display "Reloaded!"
+bind r source-file ${HOME}/.tmux.conf \; display-message "Config reloaded!"
 #
 ## Getting interesting now, we use the vertical and horizontal
 ## symbols to split the screen
 bind | split-window -h
 bind - split-window -v
+
+#
+# Call sign: "Uncle Fester" suggested this option for syncing the panes
+# He likes to open 8 panes with each one ssh'ed to a different node
+# then he will sync them, and from one pane
+# controlling all 8 target servers. e.g. for patching.
+# yes, you could use pssh to mimic this, but a cool way inside of tmux to accomplish a similar method as PSSH.
+# Cool enough that I am taking my time to learn this approach.
+#
+# My helper command to toggle synchronize-panes with a happy message
+# F3: force ON
+bind-key -n F3 set-window-option synchronize-panes on \; display-message "#[fg=lightgreen,bold,bg=black]Synchronize-panes is now ON"
+# F4: force OFF
+bind-key -n F4 set-window-option synchronize-panes off \; display-message "#[fg=yellow,bold,bg=black]Synchronize-panes is now OFF"
+#
+# Prefix + F3: ON
+bind F3 if -F '#{window_synchronize_panes}' 'set-window-option synchronize-panes off; display-message "#[fg=lightgreen,bold,bg=black]Synchronize-panes is now OFF"' 'set-window-option synchronize-panes on; display-message "#[fg=lightgreen,bold,bg=black]Synchronize-panes is now ON"'
+# Prefix + F4: OFF
+bind F4 set-window-option synchronize-panes off \; display-message "#[fg=yellow,bold,bg=black]Synchronize-panes is now OFF"
 
 # todo: http://www.drbunsen.org/the-text-triumvirate/
 
@@ -136,7 +157,9 @@ setw -g window-status-current-format '#[bg=colour28,fg=colour231,bold] #I:#W '
 #
 # https://github.com/tmux-plugins/tpm
 # https://github.com/tmux-plugins # for list of plugins
-# you need to run the following:
+# I know it Stinks!
+# but if you don't have tmux's TPM already installed, you will need to run the
+# following `git clone` command to install the other plugins:
 # git clone https://github.com/tmux-plugins/tpm ${HOME}/.tmux/plugins/tpm
 # List of plugins
 set -g @plugin 'tmux-plugins/tpm'
