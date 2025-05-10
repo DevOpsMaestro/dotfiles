@@ -22,6 +22,7 @@ Plug 'jiangmiao/auto-pairs' " Auto-pairs for brackets, quotes, etc.
 Plug 'tpope/vim-fugitive'   " Git integration
 Plug 'altercation/vim-colors-solarized'
 Plug 'alvan/vim-closetag'
+Plug 'catppuccin/vim', { 'as': 'catppuccin'  }
 Plug 'honza/vim-snippets'
 Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
 Plug 'vim-airline/vim-airline-themes'
@@ -42,6 +43,12 @@ augroup MouseInNERDTreeOnly
     autocmd BufLeave NERD_tree_* set mouse=
 augroup END
 set mouse=
+
+" color scheme
+let g:catppuccin_flavour = "macchiato"            " Optional, usually defaults to macchiato
+let g:catppuccin_transparent_background = v:true  " For transparent terminal backgrounds
+let g:catppuccin_terminal_colors = v:true         " Use theme colors for :terminal
+colorscheme catppuccin_macchiato
 
 " Quick pane navigation
 nnoremap <C-h> <C-w>h
