@@ -38,7 +38,6 @@ bind > swap-window -t +1 \; select-window -t +1
 
 # https://stackoverflow.com/questions/13058578/how-to-prevent-tmux-from-filling-up-the-global-path-variable-with-duplicated-pat
 # By default tmux starts new shells as login shells. to prevent tmux from doing that:
-# Thu 03 Oct 2024 02:30:02 AM UTC
 # disabled this b/c it caused ~/.zshenv to exec 2x.
 # https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard/issues/23#issuecomment-31034789
 # set -g default-command /usr/bin/zsh
@@ -48,11 +47,6 @@ bind > swap-window -t +1 \; select-window -t +1
 set-option -g history-limit 4000
 
 # https://www.codementor.io/linux/tutorial/configure-linux-toolset-zsh-tmux-vim
-
-# UTF is great, let us use that
-# deprecated in v2+
-# set -g utf8
-# set-window-option -g utf8 on
 
 # Set mouse support to on.
 # For resizing, scrolling, and pane selection with the mouse:
@@ -73,7 +67,6 @@ set -sg escape-time 0
 set-option -g base-index 1
 setw -g pane-base-index 1
 
-# Thu 15 Sep 2022 01:51:08 PM EDT
 # select previous pane
 bind -T prefix m select-pane -t :.-
 
