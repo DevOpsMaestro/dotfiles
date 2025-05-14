@@ -17,31 +17,18 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 " Use a plugin manager like Vim-Plug for easier plugin management
 call plug#begin('~/.vim/bundle')
 Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' } " File navigation
+Plug 'tpope/vim-fugitive'   " Git integration
 Plug 'dense-analysis/ale'   " Formatting and linting
 Plug 'jiangmiao/auto-pairs' " Auto-pairs for brackets, quotes, etc.
-Plug 'tpope/vim-fugitive'   " Git integration
-Plug 'alvan/vim-closetag'
-Plug 'catppuccin/vim', { 'as': 'catppuccin'  }
-Plug 'honza/vim-snippets'
-Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
-Plug 'vim-airline/vim-airline-themes'
+Plug 'junegunn/goyo.vim', { 'for': 'markdown' } " for resizing windows
+Plug 'catppuccin/vim', { 'as': 'catppuccin'   } " my favorite color scheme
 Plug 'vim-airline/vim-airline'
-Plug 'vimwiki/vimwiki'
+Plug 'vim-airline/vim-airline-themes'
 call plug#end()
 
-" -------------------------------------------
-" File Navigation and Exploration
-" -------------------------------------------
-" NERDTree configuration
-map <C-n> :NERDTreeToggle<CR>
-let NERDTreeShowHidden=1
-let NERDTreeMouseMode=2
-augroup MouseInNERDTreeOnly
-  autocmd!
-    autocmd BufEnter NERD_tree_* set mouse=a
-    autocmd BufLeave NERD_tree_* set mouse=
-augroup END
-set mouse=
+" display options
+"set t_Co=256 " tell the term has 256 colors
+"set hidden "hide buffers when not displayed
 
 " color scheme
 let g:catppuccin_flavour = "macchiato"            " Optional, usually defaults to macchiato
@@ -50,9 +37,9 @@ let g:catppuccin_terminal_colors = v:true         " Use theme colors for :termin
 colorscheme catppuccin_macchiato
 
 " Quick pane navigation
-nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
 " Open file under cursor in a new tab
@@ -62,10 +49,10 @@ map <F9> <Esc><C-W>gF<CR>:tabm<CR>
 " Git Integration
 " -------------------------------------------
 " Use Fugitive for Git commands within Vim
-map <leader>gc :Git commit<CR>
-map <leader>gl :Git pull<CR>
-map <leader>gp :Git push<CR>
 map <leader>gs :Git status<CR>
+map <leader>gc :Git commit<CR>
+map <leader>gp :Git push<CR>
+map <leader>gl :Git pull<CR>
 
 " -------------------------------------------
 " Code Formatting and Linting
@@ -73,10 +60,10 @@ map <leader>gs :Git status<CR>
 " Integrate ALE for linting and fixing
 highlight ALEWarning ctermbg=DarkMagenta
 let g:ale_echo_msg_error_str = 'E'
-let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_fix_on_save = 1
-let g:ale_linters = {
+let g:ale_linters = { 
 \  'ansible': ['ansible-lint'],
 \  'Dockerfile': ['dockerfile_lint'],
 \  'JSON': ['jsonlint', 'jq', 'prettier'],
@@ -94,85 +81,86 @@ let g:airline#extensions#ale#enabled = 1
 " -------------------------------------------
 " Search and Navigation
 " -------------------------------------------
-set gdefault           " Apply global flag by default for substitutions
-set hidden             " Enable background buffers
-set hlsearch           " Highlight search results
-set ignorecase         " Ignore case in search patterns
 set incsearch          " Show search matches as you type
-set showmatch          " Highlight matching brackets
+set ignorecase         " Ignore case in search patterns
 set smartcase          " Override ignorecase if search pattern contains uppercase
+set gdefault           " Apply global flag by default for substitutions
+set hlsearch           " Highlight search results
+set showmatch          " Highlight matching brackets
+set hidden             " Enable background buffers
 
 " -------------------------------------------
 " Appearance and Visual Settings
 " -------------------------------------------
-set background=dark    " Use dark background for better contrast
-set cursorcolumn       " Highlight current column
-set cursorline         " Highlight current line
-set encoding=utf-8     " Set file encoding
-set termguicolors      " Enable true colors support
 syntax enable          " Enable syntax highlighting
+set encoding=utf-8     " Set file encoding
+set cursorline         " Highlight current line
+set cursorcolumn       " Highlight current column
+set background=dark    " Use dark background for better contrast
+set termguicolors      " Enable true colors support
 
 " Display settings
-set colorcolumn=80     " Highlight the 80th column
-set formatoptions=qrn1 " Text formatting options
+set ls=2               " Always show status line
+set showmode           " Display current mode
+set showcmd            " Display incomplete commands
+set modeline           " Enable modelines
+set title              " Show the file title in window title bar
+set number             " Show line numbers
+set norelativenumber   " Disable relative line numbers
+set scrolloff=3        " Keep 3 lines above/below the cursor when scrolling
+set visualbell         " Use visual bell instead of beeping
+set ttyfast            " Optimize for fast terminal
+set ruler              " Show cursor position
 set laststatus=2       " Always show the last status line
 set linebreak          " Wrap lines at convenient points
-set ls=2               " Always show status line
-set modeline           " Enable modelines
-set norelativenumber   " Disable relative line numbers
-set nowrap             " Disable line wrapping
-set number             " Show line numbers
-set ruler              " Show cursor position
-set scrolloff=3        " Keep 3 lines above/below the cursor when scrolling
 set showbreak=▹        " Character to show at wrapped lines
-set showcmd            " Display incomplete commands
-set showmode           " Display current mode
+set nowrap             " Disable line wrapping, use F6 to activate
 set textwidth=80       " Set text width to 80 characters
-set title              " Show the file title in window title bar
-set ttyfast            " Optimize for fast terminal
-set visualbell         " Use visual bell instead of beeping
+set formatoptions=qrn1 " Text formatting options
+set colorcolumn=80     " Highlight the 80th column
+
+" Toggle line-wrap
+map <F6> <Esc>:set wrap!<CR>
 
 " -------------------------------------------
 " Indentation Settings
 " -------------------------------------------
 set autoindent         " Auto-indent new lines
-set expandtab          " Use spaces instead of tabs
-set shiftround         " Round indent to multiple of shiftwidth
 set shiftwidth=2       " Set indentation width
-set softtabstop=2      " Set soft tab width
 set tabstop=2          " Set tab width
+set softtabstop=2      " Set soft tab width
+set shiftround         " Round indent to multiple of shiftwidth
+set expandtab          " Use spaces instead of tabs
 
 " -------------------------------------------
 " Miscellaneous Settings
 " -------------------------------------------
-set backspace=indent,eol,start " Make backspace more powerful
-set backupskip=/tmp/*,/private/tmp/*  " Skip backups for these paths
-set clipboard=unnamedplus  " Use system clipboard
-set dictionary=/usr/share/dict/words " Set path for spell checking
 set history=50         " Keep 50 lines of command line history
-set lazyredraw         " Faster scrolling and redrawing
-set matchtime=3        " Delay before showing matching parens
-set nocompatible       " Use Vim defaults instead of Vi compatibility
-set noesckeys          " Disable Escape key mappings in terminal mode
-set nofoldenable       " Disable folding by default
-set shell=/bin/bash    " Set default shell
+set backspace=indent,eol,start " Make backspace more powerful
 set wildmenu           " Enable enhanced command line completion
 set wildmode=list:longest " Show completion options
+set clipboard=unnamedplus  " Use system clipboard
+set nocompatible       " Use Vim defaults instead of Vi compatibility
+set shell=/bin/bash    " Set default shell
+set lazyredraw         " Faster scrolling and redrawing
+set matchtime=3        " Delay before showing matching parens
+set nofoldenable       " Disable folding by default
+set dictionary=/usr/share/dict/words " Set path for spell checking
+set backupskip=/tmp/*,/private/tmp/*  " Skip backups for these paths
+set noesckeys          " Disable Escape key mappings in terminal mode
+
 
 " -------------------------------------------
-" Session Management
+" File Navigation and Exploration
 " -------------------------------------------
-" Save and restore sessions
-nnoremap <Leader>ss :mksession! ~/vim-session.vim<CR>
-nnoremap <Leader>sr :source ~/vim-session.vim<CR>
+" NERDTree configuration
+nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <C-n> :NERDTree<CR>
+nnoremap <C-t> :NERDTreeToggle<CR>
 
-" -------------------------------------------
-" Custom Key Mappings
-" -------------------------------------------
-" Switch tabs
-map 8 <Esc>:tabe
-map 9 gT
-map 0 gt
-
-" Toggle line-wrap
-map <F6> <Esc>:set wrap!<CR>
+let NERDTreeShowHidden=1
+let NERDTreeSortHiddenFirst=1
+let NERDTreeShowLineNumbers=1
+let NERDTreeFileLines=1
+let NERDTreeNaturalSort=1
+let NERDTreeIgnore=['\.git$', '\~$']
