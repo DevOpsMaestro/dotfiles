@@ -129,10 +129,10 @@ This guide will walk you through how to use the provided Vim configuration, expl
 
 **a. Window and Tab Navigation**
 - Move between panes:  
-  - ``: Left  
-  - ``: Down  
-  - ``: Up  
-  - ``: Right
+  - `Ctrl+h`: Left  
+  - `Ctrl+j`: Down  
+  - `Ctrl+k`: Up  
+  - `Ctrl+l`: Right
 - Tabs:  
   - `F5`: Open new tab  
   - `F6`: Next tab  
