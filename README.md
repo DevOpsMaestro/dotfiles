@@ -211,25 +211,44 @@ This guide will walk you through how to use the provided Vim configuration, expl
 This configuration turns Vim into a powerful, modern code editor with real-time linting, file navigation, session management, and a beautiful UI. Use the provided shortcuts and plugins to streamline your workflow, and don’t be afraid to experiment or customize further as you become more comfortable with Vim.
 
 Citations:
-[1] https://www.freecodecamp.org/news/vimrc-configuration-guide-customize-your-vim-editor/
-[2] https://github.com/junegunn/vim-plug
-[3] https://github.com/dmerejkowsky/vim-ale
-[4] https://nickjanetakis.com/blog/i-use-nerdtree-in-vim-but-it-is-usually-not-for-opening-files
-[5] https://dev.to/ethand91/my-basic-vim-setup-5hdf
-[6] https://dev.to/aviavinav/vim-a-beginners-guide-from-a-beginner-b11
-[7] https://www.jakewiesler.com/blog/getting-started-with-vim
-[8] https://github.com/xolox/vim-session
-[9] https://learnvimscriptthehardway.stevelosh.com/chapters/03.html
-[10] https://hamvocke.com/blog/ansi-vim-color-scheme/
-[11] https://www.tutorialspoint.com/vim/vim_navigating.htm
-[12] https://askubuntu.com/questions/264258/changing-vim-editor-settings
-[13] https://www.linode.com/docs/guides/writing-a-vim-plugin/
-[14] https://dmerej.info/blog/post/lets-have-a-pint-of-vim-ale/
-[15] https://github.com/preservim/nerdtree
-[16] https://www.vim.org/scripts/script.php?script_id=2010
-[17] https://vim.fandom.com/wiki/Mapping_keys_in_Vim_-_Tutorial_(Part_1)
-[18] https://www.linode.com/docs/guides/vim-color-schemes/
-[19] https://www.linuxfoundation.org/blog/blog/classic-sysadmin-vim-101-a-beginners-guide-to-vim
-[20] https://www.reddit.com/r/vim/comments/viunvt/setting_up_good_vim_workflow_as_a_beginner/
 
+[1] https://www.freecodecamp.org/news/vimrc-configuration-guide-customize-your-vim-editor/
+
+[2] https://github.com/junegunn/vim-plug
+
+[3] https://github.com/dmerejkowsky/vim-ale
+
+[4] https://nickjanetakis.com/blog/i-use-nerdtree-in-vim-but-it-is-usually-not-for-opening-files
+
+[5] https://dev.to/ethand91/my-basic-vim-setup-5hdf
+
+[6] https://dev.to/aviavinav/vim-a-beginners-guide-from-a-beginner-b11
+
+[7] https://www.jakewiesler.com/blog/getting-started-with-vim
+
+[8] https://github.com/xolox/vim-session
+
+[9] https://learnvimscriptthehardway.stevelosh.com/chapters/03.html
+
+[10] https://hamvocke.com/blog/ansi-vim-color-scheme/
+
+[11] https://www.tutorialspoint.com/vim/vim_navigating.htm
+
+[12] https://askubuntu.com/questions/264258/changing-vim-editor-settings
+
+[13] https://www.linode.com/docs/guides/writing-a-vim-plugin/
+
+[14] https://dmerej.info/blog/post/lets-have-a-pint-of-vim-ale/
+
+[15] https://github.com/preservim/nerdtree
+
+[16] https://www.vim.org/scripts/script.php?script_id=2010
+
+[17] https://vim.fandom.com/wiki/Mapping_keys_in_Vim_-_Tutorial_(Part_1)
+
+[18] https://www.linode.com/docs/guides/vim-color-schemes/
+
+[19] https://www.linuxfoundation.org/blog/blog/classic-sysadmin-vim-101-a-beginners-guide-to-vim
+
+[20] https://www.reddit.com/r/vim/comments/viunvt/setting_up_good_vim_workflow_as_a_beginner/
 
