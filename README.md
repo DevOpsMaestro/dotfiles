@@ -257,8 +257,6 @@ Citations:
 
 </details>
 
-&nbsp;
-
 [Vim NerdTree Cheatsheet](https://github.com/DevOpsMaestro/dotfiles/blob/main/cheatsheet_nerdtree.md)
 
 ---
@@ -363,8 +361,6 @@ Citations:
 ---
 
 </details>
-
-&nbsp;
 
 [TMUX Cheatsheet](https://github.com/DevOpsMaestro/dotfiles/blob/main/cheatsheet_tmux.md)
 
