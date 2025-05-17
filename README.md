@@ -256,11 +256,10 @@ Citations:
 
 [20] https://www.reddit.com/r/vim/comments/viunvt/setting_up_good_vim_workflow_as_a_beginner/
 
+</details>
 
-
-
-
-
+  &nbsp;
+  &nbsp;
 
 <details>
   <summary>tmux Configuration Guide</summary>
@@ -356,4 +355,10 @@ Citations:
 [5] https://gerrit.avm99963.com/plugins/gitiles/dotfiles-external/+/b5fe60fafb87dbe165bf7f1d8655a25ccc7329db/dot_tmux.conf.tmpl
 
 ---
+
+</details>
+
+  &nbsp;
+  &nbsp;
+
 
