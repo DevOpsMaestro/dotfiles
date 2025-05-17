@@ -260,10 +260,13 @@ Citations:
 
   &nbsp;
 
+---
+
+  &nbsp;
+
 <details>
   <summary>tmux Configuration Guide</summary>
 
-  &nbsp;
   &nbsp;
 
 This guide explains key features and commands for the [DevOpsMaestro tmux configuration](https://github.com/DevOpsMaestro/dotfiles/blob/main/dot_tmux.conf.tmpl), which uses **`Ctrl+Space`** as the prefix key. The configuration emphasizes efficiency, Vi-style navigation, and plugin integration[1][2].
@@ -361,5 +364,9 @@ Citations:
 ---
 
 </details>
+
+  &nbsp;
+
+---
 
   &nbsp;
