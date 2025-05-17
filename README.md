@@ -62,8 +62,7 @@ chezmoi forget ~/.ssh/config
 <details>
   <summary>Comprehensive Guide to Using This Vim Configuration</summary>
 
-  &nbsp;
-  &nbsp;
+&nbsp;
 
 This guide will walk you through how to use the provided Vim configuration, explaining what it does, how to get started, and how to take advantage of its features-even if you’ve never used it before.
 
@@ -258,16 +257,14 @@ Citations:
 
 </details>
 
-  &nbsp;
+&nbsp;
 
 ---
-
-  &nbsp;
 
 <details>
   <summary>tmux Configuration Guide</summary>
 
-  &nbsp;
+&nbsp;
 
 This guide explains key features and commands for the [DevOpsMaestro tmux configuration](https://github.com/DevOpsMaestro/dotfiles/blob/main/dot_tmux.conf.tmpl), which uses **`Ctrl+Space`** as the prefix key. The configuration emphasizes efficiency, Vi-style navigation, and plugin integration[1][2].
 
@@ -365,8 +362,8 @@ Citations:
 
 </details>
 
-  &nbsp;
+&nbsp;
 
 ---
 
-  &nbsp;
+&nbsp;
