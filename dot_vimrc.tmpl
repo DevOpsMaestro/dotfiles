@@ -3,32 +3,40 @@
 " -------------------------------------------
 " The following is to automatically setup 'vim-plug' if it is not installed
 " on this system.
-" Install vim-plug if said plugin is not installed locally, 
+" Install vim-plug if said plugin is not installed locally,
 " has to be before plug(ins) section.
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 endif
 
+
 " Run PlugInstall if there are missing plugins
 autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
   \| PlugInstall --sync | source $MYVIMRC
 \| endif
+
 
 " Use a plugin manager like Vim-Plug for easier plugin management
 call plug#begin('~/.vim/bundle')
 Plug 'catppuccin/vim', { 'as': 'catppuccin' }  " my favorite color scheme
 Plug 'dense-analysis/ale'                      " Formatting and linting
 Plug 'jiangmiao/auto-pairs'                    " Auto-pairs for brackets, quotes, etc.
-Plug 'junegunn/goyo.vim'                       " for resizing windows 
+Plug 'junegunn/goyo.vim'                       " for resizing windows
 Plug 'preservim/nerdtree'                      " File navigation
-Plug 'vim-airline/vim-airline-themes'
-Plug 'vim-airline/vim-airline'
+Plug 'sheerun/vim-polyglot'                    " Language pack for syntax highlighting for many languages
+Plug 'tpope/vim-commentary'                    " Easy code commenting
+Plug 'tpope/vim-sensible'                      " Loads a set of reasonable default Vim settings
+Plug 'tpope/vim-surround'                      " Easily modify surrounding characters (quotes, brackets, etc.)
+Plug 'vim-airline/vim-airline-themes'          " Additional themes for vim-airline
+Plug 'vim-airline/vim-airline'                 " Status/tabline for Vim
 call plug#end()
+
 
 " display options
 "set t_Co=256 " tell the term has 256 colors
 set hidden "hide buffers when not displayed
+
 
 " color scheme
 let g:catppuccin_flavour = "macchiato"            " Optional, usually defaults to macchiato
@@ -36,7 +44,8 @@ let g:catppuccin_terminal_colors = v:true         " Use theme colors for :termin
 let g:catppuccin_transparent_background = v:true  " For transparent terminal backgrounds
 colorscheme catppuccin_macchiato
 
-" Quick pane navigation
+
+" Quick pane navigation to move around the panes in each Window
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
@@ -47,9 +56,19 @@ nnoremap <C-l> <C-w>l
 " Session Management
 " -------------------------------------------
 " The <Leader> key is by default: '\'
+" Keeping this in the config in case I wish to change the Leader key mapping
+"let mapleader="\<Space>" " Set leader key to space
 " Save and restore sessions
 nnoremap <Leader>ss :mksession! ${HOME}/.vim-session.vim<CR>
 nnoremap <Leader>sr :source ${HOME}/.vim-session.vim<CR>
+
+
+" -------------------------------------------
+" FZF config
+" -------------------------------------------
+nnoremap <Leader>b :Buffers<CR> " Map <Leader>b to fzf buffer search
+nnoremap <Leader>f :Files<CR>   " Map <Leader>f to fzf file search
+nnoremap <Leader>g :GFiles<CR>  " Map <Leader>g to fzf git file search
 
 
 " -------------------------------------------
@@ -102,6 +121,7 @@ set ignorecase         " Ignore case in search patterns
 set incsearch          " Show search matches as you type
 set showmatch          " Highlight matching brackets
 set smartcase          " Override ignorecase if search pattern contains uppercase
+set smartindent        " Smart autoindenting when starting a new line
 
 " -------------------------------------------
 " Appearance and Visual Settings
@@ -111,7 +131,7 @@ set cursorcolumn       " Highlight current column
 set cursorline         " Highlight current line
 set encoding=utf-8     " Set file encoding
 set termguicolors      " Enable true colors support
-syntax enable          " Enable syntax highlighting
+syntax on              " Enable syntax highlighting
 
 
 " Display settings
@@ -151,17 +171,17 @@ set tabstop=2          " Set tab width
 " -------------------------------------------
 set backspace=indent,eol,start " Make backspace more powerful
 set backupskip=/tmp/*,/var/tmp/*,/private/tmp/*  " Skip backups for these paths
-set clipboard=unnamedplus  " Use system clipboard
-set dictionary=/usr/share/dict/words " Set path for spell checking
-set history=50         " Keep 50 lines of command line history
-set lazyredraw         " Faster scrolling and redrawing
-set matchtime=3        " Delay before showing matching parens
-set nocompatible       " Use Vim defaults instead of Vi compatibility
-set noesckeys          " Disable Escape key mappings in terminal mode
-set nofoldenable       " Disable folding by default
-set shell=/bin/bash    " Set default shell
-set wildmenu           " Enable enhanced command line completion
-set wildmode=list:longest " Show completion options
+set clipboard=unnamedplus      " Use system clipboard
+set dictionary=/usr/share/dict/words             " Set path for spell checking
+set history=50                 " Keep 50 lines of command line history
+set lazyredraw                 " Faster scrolling and redrawing
+set matchtime=3                " Delay before showing matching parens
+set nocompatible               " Use Vim defaults instead of Vi compatibility
+set noesckeys                  " Disable Escape key mappings in terminal mode
+set nofoldenable               " Disable folding by default
+set shell=/bin/bash            " Set default shell
+set wildmenu                   " Enable enhanced command line completion
+set wildmode=list:longest      " Show completion options
 
 
 " -------------------------------------------
