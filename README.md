@@ -60,7 +60,10 @@ chezmoi forget ~/.ssh/config
 ---
 
 <details>
-  <summary>Comprehensive Guide to Using This Vim Configuration</summary>summary
+  <summary>Comprehensive Guide to Using This Vim Configuration</summary>
+
+  &nbsp;
+  &nbsp;
 
 This guide will walk you through how to use the provided Vim configuration, explaining what it does, how to get started, and how to take advantage of its features-even if you’ve never used it before.
 
