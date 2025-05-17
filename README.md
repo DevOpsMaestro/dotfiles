@@ -259,7 +259,6 @@ Citations:
 </details>
 
   &nbsp;
-  &nbsp;
 
 <details>
   <summary>tmux Configuration Guide</summary>
@@ -348,10 +347,15 @@ This guide explains key features and commands for the [DevOpsMaestro tmux config
 For the latest updates, refer to the [official cheatsheet](https://github.com/DevOpsMaestro/dotfiles/blob/main/cheatsheet_tmux.md)[1].
 
 Citations:
+
 [1] https://github.com/DevOpsMaestro/dotfiles/blob/main/cheatsheet_tmux.md
+
 [2] https://github.com/akitaonrails/dotfiles/blob/main/dot_tmux.conf.tmpl
+
 [3] https://github.com/NotHarshhaa/devops-cheatsheet/blob/master/Version-Control/GitLab.md
+
 [4] https://github.com/signalpillar/dotfiles/blob/master/dot_tmux.conf.tmpl
+
 [5] https://gerrit.avm99963.com/plugins/gitiles/dotfiles-external/+/b5fe60fafb87dbe165bf7f1d8655a25ccc7329db/dot_tmux.conf.tmpl
 
 ---
@@ -359,6 +363,3 @@ Citations:
 </details>
 
   &nbsp;
-  &nbsp;
-
-
