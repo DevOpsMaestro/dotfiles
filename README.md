@@ -59,7 +59,8 @@ chezmoi forget ~/.ssh/config
 
 ---
 
-## Comprehensive Guide to Using This Vim Configuration
+<details>
+  <summary>Comprehensive Guide to Using This Vim Configuration</summary>summary
 
 This guide will walk you through how to use the provided Vim configuration, explaining what it does, how to get started, and how to take advantage of its features-even if you’ve never used it before.
 
@@ -251,4 +252,3 @@ Citations:
 [19] https://www.linuxfoundation.org/blog/blog/classic-sysadmin-vim-101-a-beginners-guide-to-vim
 
 [20] https://www.reddit.com/r/vim/comments/viunvt/setting_up_good_vim_workflow_as_a_beginner/
-
