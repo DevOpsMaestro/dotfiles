@@ -255,3 +255,105 @@ Citations:
 [19] https://www.linuxfoundation.org/blog/blog/classic-sysadmin-vim-101-a-beginners-guide-to-vim
 
 [20] https://www.reddit.com/r/vim/comments/viunvt/setting_up_good_vim_workflow_as_a_beginner/
+
+
+
+
+
+
+
+<details>
+  <summary>tmux Configuration Guide</summary>
+
+  &nbsp;
+  &nbsp;
+
+This guide explains key features and commands for the [DevOpsMaestro tmux configuration](https://github.com/DevOpsMaestro/dotfiles/blob/main/dot_tmux.conf.tmpl), which uses **`Ctrl+Space`** as the prefix key. The configuration emphasizes efficiency, Vi-style navigation, and plugin integration[1][2].
+
+---
+
+### **Essential Key Bindings**  
+
+**Prefix Key**  
+- Default prefix: **`Ctrl+Space`**  
+
+---
+
+### **Session Management**  
+- **Create new session**: `tmux new -s `  
+- **Detach from session**: `Prefix + d`  
+- **List sessions**: `tmux ls`  
+- **Attach to session**: `tmux attach -t `  
+- **Kill session**: `Prefix + x` (confirm with `y`)[1]  
+
+---
+
+### **Window Management**  
+- **New window**: `Prefix + w`  
+- **Next window**: `Prefix + n`  
+- **Previous window**: `Prefix + p`  
+- **Rename window**: `Prefix + ,`  
+- **Close window**: `Prefix + &`  
+
+---
+
+### **Pane Management**  
+- **Split vertically**: `Prefix + v`  
+- **Split horizontally**: `Prefix + h`  
+- **Switch panes**:  
+  - `Prefix + Arrow Keys` (direction-based)  
+  - `Prefix + o` (cycle order)  
+- **Resize panes**: `Prefix + Ctrl + Arrow Keys`  
+- **Kill pane**: `Prefix + x`  
+
+---
+
+### **Vi-Style Copy Mode**  
+- **Enter copy mode**: `Prefix + [`  
+- **Start selection**: `v` (Vi mode)  
+- **Copy selection**: `y`  
+- **Paste buffer**: `Prefix + ]`  
+- **Quick copy to system clipboard**: `Ctrl+Shift+c`[2]  
+
+---
+
+### **Plugin Shortcuts**  
+- **tmux-resurrect** (session backup):  
+  - Save session: `Prefix + Ctrl+s`  
+  - Restore session: `Prefix + Ctrl+r`  
+- **vim-tmux-navigator** (seamless Vim/tmux navigation):  
+  - Use `Ctrl+h/j/k/l` to move between Vim splits and tmux panes[2].  
+
+---
+
+### **Configuration & Debugging**  
+- **Reload config**: `Prefix + r` (displays "Reloaded!" confirmation)  
+- **List all bindings**: `Prefix + ?`  
+- **Open notes file**: `Ctrl+Alt+n` (opens in split pane with `lvim`)[2]  
+
+---
+
+### **Advanced Features**  
+- **Synchronize panes**:  
+  - Enable: `Prefix + :setw synchronize-panes on`  
+  - Disable: `Prefix + :setw synchronize-panes off`  
+- **256-color support**: Preconfigured for terminal and Neovim compatibility[2].  
+
+---
+
+**Pro Tips**  
+- All new splits/windows inherit the current working directory.  
+- Use `Prefix + Ctrl+c`/`Ctrl+v` for cross-terminal clipboard integration[2].  
+- Customize further by editing `~/.tmux.conf`.  
+
+For the latest updates, refer to the [official cheatsheet](https://github.com/DevOpsMaestro/dotfiles/blob/main/cheatsheet_tmux.md)[1].
+
+Citations:
+[1] https://github.com/DevOpsMaestro/dotfiles/blob/main/cheatsheet_tmux.md
+[2] https://github.com/akitaonrails/dotfiles/blob/main/dot_tmux.conf.tmpl
+[3] https://github.com/NotHarshhaa/devops-cheatsheet/blob/master/Version-Control/GitLab.md
+[4] https://github.com/signalpillar/dotfiles/blob/master/dot_tmux.conf.tmpl
+[5] https://gerrit.avm99963.com/plugins/gitiles/dotfiles-external/+/b5fe60fafb87dbe165bf7f1d8655a25ccc7329db/dot_tmux.conf.tmpl
+
+---
+
