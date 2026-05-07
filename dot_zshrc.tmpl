@@ -24,6 +24,10 @@ export HOMEBREW_NO_AUTO_UPDATE=1
 # vi mode
 bindkey -v
 
+# Keep Vi mode, but disable mouse tracking
+zmodload zsh/terminfo
+printf '%s' "${terminfo[rmkx]}"
+
 # completion
 zstyle :compinstall filename "$HOME/.zshrc"
 autoload -Uz compinit
