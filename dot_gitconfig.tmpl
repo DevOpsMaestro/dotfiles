@@ -1,3 +1,6 @@
+# ─────────────────────────────────────────
+# Identity
+# ─────────────────────────────────────────
 [user]
     name = DevOpsMaestro
     email = {{ .email }}
@@ -8,37 +11,86 @@
 [init]
     defaultBranch = main
 
+# ─────────────────────────────────────────
+# Core
+# ─────────────────────────────────────────
 [core]
+    editor = nvim
     pager = delta
+    autocrlf = false
     fsmonitor = true
     untrackedCache = true
 
+# ─────────────────────────────────────────
+# Credentials
+# ─────────────────────────────────────────
+{{- if eq .chezmoi.os "darwin" }}
+[credential]
+    helper = osxkeychain
+{{- end }}
+
+# ─────────────────────────────────────────
+# Branching & Sorting
+# ─────────────────────────────────────────
 [branch]
     sort = -committerdate
 
 [tag]
     sort = version:refname
 
+# ─────────────────────────────────────────
+# Diff & Merge
+# ─────────────────────────────────────────
+[diff]
+    algorithm = histogram
+    colorMoved = plain
+    mnemonicPrefix = true
+    renames = true
+
+[difftool "vimdiff"]
+    path = vim
+
 [merge]
     conflictstyle = zdiff3
     tool = vimdiff
 
+[mergetool "vimdiff"]
+    path = vim
+
 [status]
     submoduleSummary = true
 
-[column]
-    ui = auto
+# ─────────────────────────────────────────
+# Commit & Signing
+# ─────────────────────────────────────────
+[commit]
+    verbose = true
+    gpgsign = true
 
-[interactive]
-    diffFilter = delta --color-only --features=interactive
+[gpg]
+    format = openpgp
 
+# ─────────────────────────────────────────
+# Rebase & Rerere
+# ─────────────────────────────────────────
+[rebase]
+    autoSquash = true
+    autoStash = true
+    updateRefs = true
+
+[rerere]
+    enabled = true
+    autoupdate = true
+
+# ─────────────────────────────────────────
+# Remote Operations
+# ─────────────────────────────────────────
 [push]
     default = simple
     autoSetupRemote = true
     followTags = true
 
 [pull]
-    ff = only
     rebase = true
 
 [fetch]
@@ -46,9 +98,24 @@
     pruneTags = true
     all = true
 
-[commit]
-    verbose = true
-    # gpgsign = true
+# ─────────────────────────────────────────
+# Display & Paging
+# ─────────────────────────────────────────
+[color]
+    diff = true
+    interactive = true
+    status = true
+
+[color "decorate"]
+    HEAD = bold blink italic 196
+    branch = 214
+    tag = bold 222
+
+[column]
+    ui = auto
+
+[log]
+    graphColors = bold 160, blink 231 bold 239, bold 166, bold black 214, bold green, bold 24, cyan
 
 [pager]
     diff = delta
@@ -63,75 +130,55 @@
     navigate = true
     syntax-theme = base16-256
 
+[interactive]
+    diffFilter = delta --color-only --features=interactive
+
+# ─────────────────────────────────────────
+# Help
+# ─────────────────────────────────────────
 [help]
     autocorrect = prompt
 
-[rerere]
-    enabled = true
-    autoupdate = true
-
-[rebase]
-    autoSquash = true
-    autoStash = true
-    updateRefs = true
-
-[diff]
-    algorithm = histogram
-    colorMoved = plain
-    mnemonicPrefix = true
-    renames = true
-
-[difftool "vimdiff"]
-    path = vim
-
-[mergetool "vimdiff"]
-    path = vim
-
+# ─────────────────────────────────────────
+# URL Rewrites
+# ─────────────────────────────────────────
 [url "ssh://git@github.com/"]
     insteadOf = https://github.com/
 
-[log]
-    graphColors = bold 160, blink 231 bold 239, bold 166, bold black 214, bold green, bold 24, cyan
-
-[color "decorate"]
-    HEAD = bold blink italic 196
-    branch = 214
-    diff = true
-    interactive = true
-    status = true
-    tag = bold 222
-
+# ─────────────────────────────────────────
+# Aliases
+# ─────────────────────────────────────────
 [alias]
-    logx = log --all --graph --decorate=short --color --format=format:'%C(bold blue)%h%C(reset)+%C(dim black)(%cr)%C(reset)+%C(auto)%d%C(reset)++\n+++       %C(bold black)%an%C(reset)%C(black): %s%C(reset)'
-    vtree = !bash -c '"                                                                                     \
+    # --- full decorated graph (used as foundation for vtree) ---
+    logx   = log --all --graph --decorate=short --color --format=format:'%C(bold blue)%h%C(reset)+%C(dim black)(%cr)%C(reset)+%C(auto)%d%C(reset)++\n+++       %C(bold black)%an%C(reset)%C(black): %s%C(reset)'
+    vtree  = !bash -c '"                                                                                     \
         while IFS=+ read -r hash time branch message; do                                                \
             timelength=$(echo \"$time\" | sed -E \"s:[^ ][[]([0-9]{1,2}(;[0-9]{1,2})?)?m::g\");     \
             timelength=$(echo \"16+${#time}-${#timelength}\" | bc);                                 \
             printf \"%${timelength}s    %s %s %s\n\" \"$time\" \"$hash\" \"$branch\" \"$message\";  \
         done < <(git logx && echo);"'
 
-    #quick look at all repo
-    loggsa = log --color --date-order --graph --oneline --decorate --simplify-by-decoration --all
-    #quick look at active branch (or refs pointed)
-    loggs  = log --color --date-order --graph --oneline --decorate --simplify-by-decoration
-    #extend look at all repo
-    logga  = log --color --date-order --graph --oneline --decorate --all
-    #extend look at active branch
+    # --- oneline graph (suffix a = all refs, s = simplified by decoration) ---
     logg   = log --color --date-order --graph --oneline --decorate
-    #Look with date
-    logda  = log --color --date-order --date=local --graph --format=\"%C(auto)%h%Creset %C(blue bold)%ad%Creset %C(auto)%d%Creset %s\" --all
-    logd   = log --color --date-order --date=local --graph --format=\"%C(auto)%h%Creset %C(blue bold)%ad%Creset %C(auto)%d%Creset %s\"
-    #Look with relative date
-    logdra = log --color --date-order --graph --format=\"%C(auto)%h%Creset %C(blue bold)%ar%Creset %C(auto)%d%Creset %s\" --all
-    logdr = log --color --date-order --graph --format=\"%C(auto)%h%Creset %C(blue bold)%ar%Creset %C(auto)%d%Creset %s\"
+    logga  = log --color --date-order --graph --oneline --decorate --all
+    loggs  = log --color --date-order --graph --oneline --decorate --simplify-by-decoration
+    loggsa = log --color --date-order --graph --oneline --decorate --simplify-by-decoration --all
+
+    # --- graph with absolute date (suffix a = all refs) ---
+    logd   = log --color --date-order --date=local --graph --format="%C(auto)%h%Creset %C(blue bold)%ad%Creset %C(auto)%d%Creset %s"
+    logda  = log --color --date-order --date=local --graph --format="%C(auto)%h%Creset %C(blue bold)%ad%Creset %C(auto)%d%Creset %s" --all
+
+    # --- graph with relative date (suffix a = all refs) ---
+    logdr  = log --color --date-order --graph --format="%C(auto)%h%Creset %C(blue bold)%ar%Creset %C(auto)%d%Creset %s"
+    logdra = log --color --date-order --graph --format="%C(auto)%h%Creset %C(blue bold)%ar%Creset %C(auto)%d%Creset %s" --all
+
+    # --- basic graph (all refs) ---
     loga   = log --graph --color --decorate --all
 
-    # For repos without subject body commits (vim repo, git-svn clones)
-    logt  = log --graph --color --format=\"%C(auto)%h %d %<|(100,trunc) %s\"
-    logta  = log --graph --color --format=\"%C(auto)%h %d %<|(100,trunc) %s\" --all
-    logtsa = log --graph --color --format=\"%C(auto)%h %d %<|(100,trunc) %s\" --all --simplify-by-decoration
+    # --- truncated subject, useful for repos without body commits ---
+    logt   = log --graph --color --format="%C(auto)%h %d %<|(100,trunc) %s"
+    logta  = log --graph --color --format="%C(auto)%h %d %<|(100,trunc) %s" --all
+    logtsa = log --graph --color --format="%C(auto)%h %d %<|(100,trunc) %s" --all --simplify-by-decoration
 
-    tably = log --all --graph --decorate=short --color --pretty=format:'+%C(bold 214)%<(7,trunc)%h%C(reset)+%C(dim white)%>(12,trunc)%cr%C(reset)+%C(auto)%>(15,trunc)%D%C(reset)+%C(white)%s%C(reset)'
-
-[http]
-   postBuffer = 157286400
+    # --- tabular: columnar layout with hash, relative time, ref, subject ---
+    tably  = log --all --graph --decorate=short --color --pretty=format:'+%C(bold 214)%<(7,trunc)%h%C(reset)+%C(dim white)%>(12,trunc)%cr%C(reset)+%C(auto)%>(15,trunc)%D%C(reset)+%C(white)%s%C(reset)'
