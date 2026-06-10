@@ -1,6 +1,10 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
-scan_timeout = 10
+# Catppuccin Macchiato palette reference:
+# Text:     #cad3f5  Blue:    #8aadf4  Green:   #a6da95
+# Red:      #ed8796  Peach:   #f5a97f  Surface: #494d64
+
+scan_timeout = 30
 add_newline = true
 
 format = """\
@@ -19,18 +23,18 @@ $shell\
 $character\
 """
 
+# ─────────────────────────────────────────
+# Prompt character
+# ─────────────────────────────────────────
+
 [character]
 success_symbol = '[➜](bold green)'
 error_symbol = '[✗](bold red)'
 vimcmd_symbol = '[V](bold green)'
 
-[fill]
-symbol = " "
-
-[time]
-disabled = false
-style = "bold #cad3f5"
-format = "[$time]($style)"
+# ─────────────────────────────────────────
+# Shell / Identity
+# ─────────────────────────────────────────
 
 [username]
 style_user = "bold #8aadf4"
@@ -45,55 +49,50 @@ format = 'on [$hostname](bold #f5a97f) '
 trim_at = "."
 disabled = false
 
-[cmd_duration]
-min_time = 5
-show_milliseconds = false
-style = "bold italic #a6da95"
-disabled = false
-
 [directory]
 style = "fg:#cad3f5 bg:#8aadf4"
 format = "[ $path ]($style)"
 truncation_length = 3
 truncation_symbol = "…/"
-read_only = " "
+read_only = " "
 truncate_to_repo = true
 
 [directory.substitutions]
 "Documents" = "󰈙"
-"Downloads" = ""
-"Music" = ""
-"Pictures" = ""
+"Downloads" = ""
+"Music" = ""
+"Pictures" = ""
 
-[jobs]
-symbol = '✦ '
-number_threshold = 1
-symbol_threshold = 0
+[shell]
+fish_indicator = '󰈺'
+powershell_indicator = ''
+unknown_indicator = '❓'
+style = 'bold #8aadf4'
+disabled = false
 
-[aws]
-symbol = " "
-
-[docker_context]
-symbol = ""
-format = "via [$symbol$context]($style) "
-style = "bold #8aadf4"
-only_with_files = true
-detect_files = ["docker-compose.yml", "docker-compose.yaml", "Dockerfile"]
+# ─────────────────────────────────────────
+# Git
+# ─────────────────────────────────────────
 
 [git_branch]
 symbol = '🌿 '
-truncation_length = 4
-truncation_symbol = ''
-ignore_branches = ['master', 'main']
+truncation_length = 20
+truncation_symbol = '…'
 style = "bold #8aadf4"
 
 [git_commit]
-commit_hash_length = 4
+commit_hash_length = 7
 tag_symbol = '🏷️ '
 
 [git_state]
 format = '[\($state( $progress_current of $progress_total)\)]($style) '
 cherry_pick = '[🍒 PICKING](bold #ed8796)'
+
+[git_metrics]
+added_style = 'bold #a6da95'
+deleted_style = 'bold #ed8796'
+format = '[+$added]($added_style)/[-$deleted]($deleted_style) '
+disabled = false
 
 [git_status]
 ahead = '⇡${count}'
@@ -108,20 +107,12 @@ stashed = '📦'
 up_to_date = '✓'
 untracked = '🤷'
 
-[git_metrics]
-added_style = 'bold #a6da95'
-deleted_style = 'bold #ed8796'
-format = '[+$added]($added_style)/[-$deleted]($deleted_style) '
-disabled = false
-
-[golang]
-symbol = ""
-style = "bg:#494d64"
-format = '[[ $symbol ($version) ](fg:#8aadf4 bg:#494d64)]($style)'
+# ─────────────────────────────────────────
+# Kubernetes
+# ─────────────────────────────────────────
 
 [kubernetes]
 disabled = false
-detect_files = ['k8s']
 
 [[kubernetes.contexts]]
 context_pattern = "production"
@@ -136,71 +127,43 @@ style = "bold #a6da95"
 symbol = "💔"
 context_alias = "talos"
 
-[memory_usage]
-symbol = " "
-style = "bold #f5a97f"
+# ─────────────────────────────────────────
+# Cloud / Infrastructure
+# ─────────────────────────────────────────
 
-[nodejs]
-symbol = ""
+[aws]
+symbol = " "
+
+[docker_context]
+symbol = ""
+format = "via [$symbol$context]($style) "
+style = "bold #8aadf4"
+only_with_files = true
+detect_files = ["docker-compose.yml", "docker-compose.yaml", "Dockerfile"]
+
+[terraform]
+format = '[🏎️💨 $version$workspace]($style) '
+style = 'bold #f5a97f'
+
+[vagrant]
+format = 'via [⍱ $version](bold #cad3f5) '
+
+# ─────────────────────────────────────────
+# Languages
+# ─────────────────────────────────────────
+
+[golang]
+symbol = ""
 style = "bg:#494d64"
 format = '[[ $symbol ($version) ](fg:#8aadf4 bg:#494d64)]($style)'
 
-# This is the default symbols table.
-[os.symbols]
-AIX = "➿ "
-Alpaquita = "🔔 "
-AlmaLinux = "💠 "
-Alpine = "🏔️ "
-Amazon = "🙂 "
-Android = "🤖 "
-Arch = "🎗️ "
-Artix = "🎗️ "
-Bluefin = "🐟 "
-CachyOS = "🎗️ "
-CentOS = "💠 "
-Debian = "🌀 "
-DragonFly = "🐉 "
-Emscripten = "🔗 "
-EndeavourOS = "🚀 "
-Fedora = "🎩 "
-FreeBSD = "😈 "
-Garuda = "🦅 "
-Gentoo = "🗜️ "
-HardenedBSD = "🛡️ "
-Illumos = "🐦 "
-Kali = "🐉 "
-Linux = "🐧 "
-Mabox = "📦 "
-Macos = "🍎 "
-Manjaro = "🥭 "
-Mariner = "🌊 "
-MidnightBSD = "🌘 "
-Mint = "🌿 "
-NetBSD = "🚩 "
-NixOS = "❄️ "
-Nobara = "🎩 "
-OpenBSD = "🐡 "
-OpenCloudOS = "☁️ "
-openEuler = "🦉 "
-openSUSE = "🦎 "
-OracleLinux = "🦴 "
-Pop = "🍭 "
-Raspbian = "🍓 "
-Redhat = "🎩 "
-RedHatEnterprise = "🎩 "
-RockyLinux = "💠 "
-Redox = "🧪 "
-Solus = "⛵ "
-SUSE = "🦎 "
-Ubuntu = "🎯 "
-Ultramarine = "🔷 "
-Unknown = "❓ "
-Uos = "🐲 "
-Void = "  "
-Windows = "🪟 "
+[nodejs]
+symbol = ""
+style = "bg:#494d64"
+format = '[[ $symbol ($version) ](fg:#8aadf4 bg:#494d64)]($style)'
 
 [php]
-symbol = ""
+symbol = ""
 style = "bg:#494d64"
 format = '[[ $symbol ($version) ](fg:#8aadf4 bg:#494d64)]($style)'
 
@@ -214,21 +177,27 @@ detect_extensions = ["py"]
 version_format = "v${raw}"
 
 [rust]
-symbol = ""
+symbol = ""
 style = "bg:#494d64"
-format = 'via [⚙️ $version](bold #ed8796)'
+format = '[[ $symbol ($version) ](fg:#8aadf4 bg:#494d64)]($style)'
 
-[shell]
-fish_indicator = '󰈺'
-powershell_indicator = ''
-unknown_indicator = '❓'
-style = 'bold #8aadf4'
+# ─────────────────────────────────────────
+# System
+# ─────────────────────────────────────────
+
+[jobs]
+symbol = '✦ '
+number_threshold = 1
+symbol_threshold = 1
+
+[memory_usage]
+symbol = " "
+style = "bold #f5a97f"
 disabled = false
 
 [status]
 style = 'bg:#8aadf4'
 symbol = '🔴'
-success_symbol = '🟢 SUCCESS'
 format = '[\[$symbol$common_meaning$signal_name$maybe_int\]]($style) '
 map_symbol = true
 disabled = false
@@ -238,9 +207,20 @@ style = 'bold #a6da95'
 symbol = '👑 '
 disabled = false
 
-[terraform]
-format = '[🏎️💨 $version$workspace]($style) '
-style = 'bold #f5a97f'
+# ─────────────────────────────────────────
+# Timing / UI
+# ─────────────────────────────────────────
 
-[vagrant]
-format = 'via [⍱ $version](bold #cad3f5) '
+[cmd_duration]
+min_time = 2000
+show_milliseconds = false
+style = "bold italic #a6da95"
+disabled = false
+
+[fill]
+symbol = " "
+
+[time]
+disabled = false
+style = "bold #cad3f5"
+format = "[$time]($style)"
