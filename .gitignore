@@ -5,3 +5,4 @@
 .env.*
 *.key
 *.pem
+.zshrc.secrets

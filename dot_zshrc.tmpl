@@ -39,7 +39,6 @@ compinit
 eval "$(starship init zsh)"
 
 # aliases
-# alias Chrome='google-chrome --proxy-server="socks5://localhost:3333" --host-resolver-rules="MAP * 0.0.0.0 , EXCLUDE localhost" %U'
 alias Backup='mkdir -p .backups/$(date +%Y%m%dT%H%M) 2>/dev/null; cp -R * .backups/$(date +%Y%m%dT%H%M)/'
 alias dsize='du -sk * | sort -n --'
 alias DT='date "+%F %T"'
@@ -65,8 +64,6 @@ alias Nmap='sudo nmap -p0-65535 -T5'
 alias numfmt=gnumfmt
 alias path='echo -e ${PATH//:/\\n}'
 alias ping='prettyping --nolegend'
-#alias proxyNO="for FILE in \$( ls -1 ${HOME}/.mozilla/firefox/*.default-release/prefs.js ); do sed -i -E 's/^user_pref\(\"network\.proxy\.type\"\,.*$/user_pref(\"network.proxy.type\", 0);/' \${FILE} ; done ;"
-#alias proxyYES="for FILE in \$( ls -1 ${HOME}/.mozilla/firefox/*.default-release/prefs.js ); do sed -i -E 's/^user_pref\(\"network\.proxy\.type\"\,.*$/user_pref(\"network.proxy.type\", 1);/' \${FILE} ; done ;"
 alias PODS='watch -n 6 "kubectl get pods --all-namespaces --field-selector metadata.namespace!=kube-system -o wide"'
 alias TOP1='watch -n 6 "kubectl top pods --use-protocol-buffers --sort-by=cpu --all-namespaces=true --field-selector metadata.namespace!=kube-system" '
 alias TOP2='watch -n 6 "kubectl top pods --use-protocol-buffers --sort-by=memory --all-namespaces=true --field-selector metadata.namespace!=kube-system" '
@@ -92,7 +89,20 @@ gt() {
 gtp() {
     git tag -l "${1}*${2:-prod}*" | sort --version-sort
 }
-#
+
+FR() {
+    flux reconcile source git flux-system -n flux-system && \
+    flux reconcile kustomization flux-system --with-source -n flux-system
+}
+
+RDRY() {
+    LOG_LEVEL=debug renovate --dry-run=full
+}
+
+W() {
+    watch -n 6 "$*"
+}
+
 alias t1='tree -L 1'
 alias t2='tree -L 2'
 alias t3='tree -L 3'
@@ -153,9 +163,10 @@ export GPG_TTY
 export SOPS_GPG_EXEC="gpg"
 export SOPS_PGP_FP="{{ .signingkey }}"
 export SOPS_GPG_KEYSERVER="hkps://keyserver.ubuntu.com"
+export SOPS_AGE_KEY_FILE="${HOME}/.config/sops/age/keys.txt"
 
-# for Talos
-export TALOSCONFIG="${HOME}/SourceCode/Personal/talos-intel-homelab/00_talos_baremetal/talosconfig"
+# machine-local secrets (not tracked by chezmoi — contains tokens/PATs)
+[[ -f "${HOME}/.zshrc.secrets" ]] && source "${HOME}/.zshrc.secrets"
 
 # k8s — cache completions to avoid spawning subprocesses on every shell start
 _cache_completion() {
