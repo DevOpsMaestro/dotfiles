@@ -7,14 +7,14 @@ HISTSIZE=10000
 SAVEHIST=10000
 
 # options
-setopt EXTENDED_HISTORY 
-setopt HIST_FIND_NO_DUPS 
-setopt HIST_IGNORE_SPACE 
+setopt EXTENDED_HISTORY
+setopt HIST_FIND_NO_DUPS
+setopt HIST_IGNORE_SPACE
 setopt INC_APPEND_HISTORY_TIME
-setopt AUTO_CD 
-setopt AUTO_PUSHD 
+setopt AUTO_CD
+setopt AUTO_PUSHD
 setopt PUSHD_MINUS
-setopt AUTO_MENU 
+setopt AUTO_MENU
 setopt ALWAYS_TO_END
 cdpath=("$HOME/SourceCode")
 
@@ -22,7 +22,7 @@ cdpath=("$HOME/SourceCode")
 export HOMEBREW_NO_AUTO_UPDATE=1
 
 # vi mode
-bindkey -v
+#bindkey -v
 
 # Keep Vi mode, but disable mouse tracking
 zmodload zsh/terminfo
@@ -35,7 +35,7 @@ compinit
 
 # git & ssh-agent --> using GPG further down.
 
-# load starship 
+# load starship
 eval "$(starship init zsh)"
 
 # aliases
@@ -44,7 +44,7 @@ alias Backup='mkdir -p .backups/$(date +%Y%m%dT%H%M) 2>/dev/null; cp -R * .backu
 alias dsize='du -sk * | sort -n --'
 alias DT='date "+%F %T"'
 alias du="dust"
-alias edit='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl $@'
+alias edit='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
 #alias EMD='eval $(minikube docker-env)'
 alias filetree="ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'"
 alias fluxlogs='flux logs --all-namespaces --follow --tail=10'
@@ -52,16 +52,16 @@ alias GBT='printf "\n\n"; kubectl -n kubernetes-dashboard create token admin-use
 alias grep='grep --color=auto'
 alias h='history'
 alias j='jobs -l'
-alias k='kubectl $@'
+alias k='kubectl'
 #alias k9s='k9s --readonly --refresh 6 --crumbsless --all-namespaces $@'
 alias k9s='k9s --refresh 6 --crumbsless --all-namespaces $@'
-alias less='less --quiet --tabs=4 $@'
+alias less='less --quiet --tabs=4'
 alias libpath='echo -e ${LD_LIBRARY_PATH//:/\\n}'
 alias ll="ls -lv"
 alias lt='ls -latr'
 alias myflux='flux reconcile ks flux-system --with-source'
 alias Netstat='watch -n 15 -d "lsof -n -i | grep -e LISTEN -e ESTABLISHED"'
-alias Nmap='sudo nmap -p0-65535 -T5 $@'
+alias Nmap='sudo nmap -p0-65535 -T5'
 alias numfmt=gnumfmt
 alias path='echo -e ${PATH//:/\\n}'
 alias ping='prettyping --nolegend'
@@ -72,11 +72,11 @@ alias TOP1='watch -n 6 "kubectl top pods --use-protocol-buffers --sort-by=cpu --
 alias TOP2='watch -n 6 "kubectl top pods --use-protocol-buffers --sort-by=memory --all-namespaces=true --field-selector metadata.namespace!=kube-system" '
 alias which='type -a'
 #
-alias gc='git commit $@'
-alias gco='git checkout $@'
+alias gc='git commit'
+alias gco='git checkout'
 alias gp='git push'
 alias gs='git status'
-alias ga='git add $@'
+alias ga='git add'
 #
 alias gl1='git log --oneline'
 alias gl1h='git log --oneline | head'
@@ -97,7 +97,7 @@ alias t1='tree -L 1'
 alias t2='tree -L 2'
 alias t3='tree -L 3'
 #
-alias syn='ansible-playbook --syntax-check $@'
+alias syn='ansible-playbook --syntax-check'
 alias ap='ansible-playbook'
 
 # alias MVN='mvn clean install -DskipTests -T 12 -e -X'
@@ -113,6 +113,8 @@ genpasswd() {
 # fuzzy search
 if [ -f /usr/share/fzf/completion.zsh ]; then
   source /usr/share/fzf/completion.zsh
+elif [ -f /opt/homebrew/opt/fzf/shell/completion.zsh ]; then
+  source /opt/homebrew/opt/fzf/shell/completion.zsh
 elif [ -f /usr/local/opt/fzf/shell/completion.zsh ]; then
   source /usr/local/opt/fzf/shell/completion.zsh
 fi
@@ -121,17 +123,23 @@ if [ -f /usr/share/fzf/key-bindings.zsh ]; then
   source /usr/share/fzf/key-bindings.zsh
 elif [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]; then
   source /usr/share/doc/fzf/examples/key-bindings.zsh
+elif [ -f /opt/homebrew/opt/fzf/shell/key-bindings.zsh ]; then
+  source /opt/homebrew/opt/fzf/shell/key-bindings.zsh
 elif [ -f /usr/local/opt/fzf/shell/key-bindings.zsh ]; then
   source /usr/local/opt/fzf/shell/key-bindings.zsh
 fi
 
 # fish like
-if [ -f /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+if [ -f /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+  source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+elif [ -f /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
   source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 elif [ -f /usr/local/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
   source /usr/local/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi
-if [ -f /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+if [ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+  source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+elif [ -f /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
   source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 elif [ -f /usr/local/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
   source /usr/local/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -140,35 +148,44 @@ fi
 # gnupg
 GPG_TTY=$(tty)
 export GPG_TTY
-[[ -x $(whence gpg-agent) ]] && eval "$( gpg-agent --quiet --daemon 2>/dev/null )"
 
 # For SOPS
 export SOPS_GPG_EXEC="gpg"
-export SOPS_PGP_FP="55DC1CA95F792EACE2491532EC363AC46ABDC9E7"
+export SOPS_PGP_FP="{{ .signingkey }}"
 export SOPS_GPG_KEYSERVER="hkps://keyserver.ubuntu.com"
 
 # for Talos
 export TALOSCONFIG="${HOME}/SourceCode/Personal/talos-intel-homelab/00_talos_baremetal/talosconfig"
 
-# k8s
-[[ -x $(whence kubectl) ]] && source <( kubectl completion zsh )
-[[ -x $(whence helm) ]] && source <( helm completion zsh )
-[[ -x $(whence flux) ]] && source <( flux completion zsh ) && compdef _flux flux
+# k8s — cache completions to avoid spawning subprocesses on every shell start
+_cache_completion() {
+  local cmd="$1" file="${HOME}/.zsh_cache/${1}_completion.zsh"
+  mkdir -p "${HOME}/.zsh_cache"
+  if [[ ! -f "$file" || "$(whence -p "$cmd")" -nt "$file" ]]; then
+    "$cmd" completion zsh > "$file" 2>/dev/null
+  fi
+  source "$file"
+}
+[[ -x $(whence kubectl) ]] && _cache_completion kubectl
+[[ -x $(whence helm) ]]    && _cache_completion helm
+[[ -x $(whence flux) ]]    && _cache_completion flux && compdef _flux flux
 #[[ -x $(whence saml2aws) ]] && eval "$( saml2aws --completion-script-zsh )"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('${HOME}/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "${HOME}/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "${HOME}/anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="${HOME}/anaconda3/bin:$PATH"
-    fi
+if [[ -d "${HOME}/anaconda3" ]]; then
+  __conda_setup="$('${HOME}/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+  if [ $? -eq 0 ]; then
+      eval "$__conda_setup"
+  else
+      if [ -f "${HOME}/anaconda3/etc/profile.d/conda.sh" ]; then
+          . "${HOME}/anaconda3/etc/profile.d/conda.sh"
+      else
+          export PATH="${HOME}/anaconda3/bin:$PATH"
+      fi
+  fi
+  unset __conda_setup
 fi
-unset __conda_setup
 # <<< conda initialize <<<
 
 # troubleshooting ending

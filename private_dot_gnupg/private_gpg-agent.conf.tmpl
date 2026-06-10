@@ -1,5 +1,9 @@
 {{- if eq .chezmoi.os "darwin" -}}
+{{- if eq .chezmoi.arch "arm64" }}
+pinentry-program /opt/homebrew/bin/pinentry-mac
+{{- else }}
 pinentry-program /usr/local/bin/pinentry-mac
+{{- end }}
 {{ else if eq .chezmoi.osRelease.id "archarm" -}}
 pinentry-program /usr/bin/pinentry-gnome3
 {{- end }}

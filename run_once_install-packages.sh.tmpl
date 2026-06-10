@@ -8,11 +8,11 @@ then
   sudo pacman -S --needed base-devel rust
   rustup toolchain install stable
   BUILDDIR=$(mktemp -d)
-  git clone https://aur.archlinux.org/paru.git $BUILDDIR
-  pushd $BUILDDIR
+  git clone https://aur.archlinux.org/paru.git "$BUILDDIR"
+  pushd "$BUILDDIR"
   makepkg -si
-  popd $BUILDDIR
-  rm -rf $BUILDDIR
+  popd
+  rm -rf "${BUILDDIR:?}"
 fi
 
 paru -S --needed \

@@ -1,9 +1,11 @@
 {{- $email := promptString "email" -}}
 {{- $gpgKey := promptString "gpg key" -}}
 {{- $githubUser := promptString "github username" -}}
+{{- $fortressUser := promptString "fortress lab username" -}}
 [data]
   email = "{{ $email }}"
   signingkey = "{{ $gpgKey }}"
+  fortressUser = "{{ $fortressUser }}"
   [data.github]
     user = "{{ $githubUser }}"
 [diff]
