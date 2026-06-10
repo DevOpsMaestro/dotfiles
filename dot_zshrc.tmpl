@@ -38,51 +38,46 @@ compinit
 # load starship
 eval "$(starship init zsh)"
 
-# aliases
-alias Backup='mkdir -p .backups/$(date +%Y%m%dT%H%M) 2>/dev/null; cp -R * .backups/$(date +%Y%m%dT%H%M)/'
-alias dsize='du -sk * | sort -n --'
-alias DT='date "+%F %T"'
-alias du="dust"
-alias edit='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
-#alias EMD='eval $(minikube docker-env)'
-alias filetree="ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'"
-alias fluxlogs='flux logs --all-namespaces --follow --tail=10'
-alias GBT='printf "\n\n"; kubectl -n kubernetes-dashboard create token admin-user'
-alias grep='grep --color=auto'
+# --- shell / environment ---
+alias dt='date "+%F %T"'
 alias h='history'
 alias j='jobs -l'
-alias k='kubectl'
-#alias k9s='k9s --readonly --refresh 6 --crumbsless --all-namespaces $@'
-alias k9s='k9s --refresh 6 --crumbsless --all-namespaces $@'
-alias less='less --quiet --tabs=4'
 alias libpath='echo -e ${LD_LIBRARY_PATH//:/\\n}'
-alias ll="ls -lv"
-alias lt='ls -latr'
-alias myflux='flux reconcile ks flux-system --with-source'
-alias Netstat='watch -n 15 -d "lsof -n -i | grep -e LISTEN -e ESTABLISHED"'
-alias Nmap='sudo nmap -p0-65535 -T5'
-alias numfmt=gnumfmt
 alias path='echo -e ${PATH//:/\\n}'
-alias ping='prettyping --nolegend'
-alias PODS='watch -n 6 "kubectl get pods --all-namespaces --field-selector metadata.namespace!=kube-system -o wide"'
-alias TOP1='watch -n 6 "kubectl top pods --use-protocol-buffers --sort-by=cpu --all-namespaces=true --field-selector metadata.namespace!=kube-system" '
-alias TOP2='watch -n 6 "kubectl top pods --use-protocol-buffers --sort-by=memory --all-namespaces=true --field-selector metadata.namespace!=kube-system" '
 alias which='type -a'
-#
+
+# --- filesystem ---
+alias backup='mkdir -p .backups/$(date +%Y%m%dT%H%M) 2>/dev/null; cp -R * .backups/$(date +%Y%m%dT%H%M)/'
+alias dsize='du -sk * | sort -n --'
+alias du='dust'
+alias grep='grep --color=auto'
+alias less='less --quiet --tabs=4'
+alias ll='lsd -l'
+alias lt='ls -latr'
+alias t1='tree -L 1'
+alias t2='tree -L 2'
+alias t3='tree -L 3'
+{{- if eq .chezmoi.os "darwin" }}
+alias edit='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
+alias numfmt='gnumfmt'
+{{- end }}
+
+# --- network ---
+alias netwatch='watch -n 15 -d "lsof -n -i | grep -e LISTEN -e ESTABLISHED"'
+alias nmap-full='sudo nmap -p0-65535 -T5'
+alias ping='prettyping --nolegend'
+
+# --- git ---
+alias ga='git add'
 alias gc='git commit'
 alias gco='git checkout'
-alias gp='git push'
-alias gs='git status'
-alias ga='git add'
-#
+alias gld='git log --oneline --graph --decorate --abbrev-commit --all'
 alias gl1='git log --oneline'
 alias gl1h='git log --oneline | head'
-alias gld="git log --oneline --graph --decorate --abbrev-commit --all"
 alias glp="git -c core.pager='less -SRF' log --oneline --graph --decorate"
-#
+alias gp='git push'
+alias gs='git status'
 
-#
-# list git tags
 gt() {
     git tag -l "*${1}*" | sort --version-sort
 }
@@ -90,34 +85,40 @@ gtp() {
     git tag -l "${1}*${2:-prod}*" | sort --version-sort
 }
 
-FR() {
+# --- kubernetes ---
+alias k='kubectl'
+alias k9s='k9s --refresh 6 --crumbsless --all-namespaces'
+alias kdash-token='printf "\n\n"; kubectl -n kubernetes-dashboard create token admin-user'
+alias kpods='watch -n 6 "kubectl get pods --all-namespaces --field-selector metadata.namespace!=kube-system -o wide"'
+alias ktop-cpu='watch -n 6 "kubectl top pods --use-protocol-buffers --sort-by=cpu --all-namespaces=true --field-selector metadata.namespace!=kube-system"'
+alias ktop-mem='watch -n 6 "kubectl top pods --use-protocol-buffers --sort-by=memory --all-namespaces=true --field-selector metadata.namespace!=kube-system"'
+
+# --- flux ---
+alias fluxlogs='flux logs --all-namespaces --follow --tail=10'
+
+frec() {
     flux reconcile source git flux-system -n flux-system && \
     flux reconcile kustomization flux-system --with-source -n flux-system
 }
 
-RDRY() {
+# --- ansible ---
+alias ap='ansible-playbook'
+alias syn='ansible-playbook --syntax-check'
+
+# --- renovate ---
+rdry() {
     LOG_LEVEL=debug renovate --dry-run=full
 }
 
-W() {
-    watch -n 6 "$*"
+# --- utilities ---
+genpasswd() {
+    local l=${1:-26}
+    export LC_ALL=C
+    tr -dc A-Za-z0-9_ < /dev/urandom | head -c "${l}" | xargs
 }
 
-alias t1='tree -L 1'
-alias t2='tree -L 2'
-alias t3='tree -L 3'
-#
-alias syn='ansible-playbook --syntax-check'
-alias ap='ansible-playbook'
-
-# alias MVN='mvn clean install -DskipTests -T 12 -e -X'
-
-## Password Generator:
-genpasswd() {
-   local l=$1
-      [[ "$l" == "" ]] && l=26
-      export LC_ALL=C;
-      tr -dc A-Za-z0-9_ < /dev/urandom | head -c ${l} | xargs
+ww() {
+    watch -n 6 "$*"
 }
 
 # fuzzy search
