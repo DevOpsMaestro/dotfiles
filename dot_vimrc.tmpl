@@ -20,16 +20,11 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 " Use a plugin manager like Vim-Plug for easier plugin management
 call plug#begin('~/.vim/bundle')
 Plug 'catppuccin/vim', { 'as': 'catppuccin' }  " my favorite color scheme
-Plug 'dense-analysis/ale'                      " Formatting and linting
 Plug 'jiangmiao/auto-pairs'                    " Auto-pairs for brackets, quotes, etc.
-Plug 'junegunn/goyo.vim'                       " for resizing windows
 Plug 'preservim/nerdtree'                      " File navigation
-Plug 'sheerun/vim-polyglot'                    " Language pack for syntax highlighting for many languages
 Plug 'tpope/vim-commentary'                    " Easy code commenting
 Plug 'tpope/vim-sensible'                      " Loads a set of reasonable default Vim settings
 Plug 'tpope/vim-surround'                      " Easily modify surrounding characters (quotes, brackets, etc.)
-Plug 'vim-airline/vim-airline-themes'          " Additional themes for vim-airline
-Plug 'vim-airline/vim-airline'                 " Status/tabline for Vim
 call plug#end()
 
 
@@ -85,31 +80,6 @@ nnoremap <F8> <Esc><C-W>gF<CR>:tabm<CR>
 
 " Toggle line-wrap. My default is to 'set nowrap'
 map <F12> <Esc>:set wrap!<CR>
-
-
-" -------------------------------------------
-" Code Formatting and Linting
-" -------------------------------------------
-" Integrate ALE for linting and fixing
-highlight ALEWarning ctermbg=DarkMagenta
-let g:ale_echo_msg_error_str = 'E'
-let g:ale_echo_msg_warning_str = 'W'
-let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-let g:ale_fix_on_save = 1
-let g:ale_linters = {
-\  'ansible': ['ansible-lint'],
-\  'Dockerfile': ['dockerfile_lint'],
-\  'JSON': ['jsonlint', 'jq', 'prettier'],
-\  'Python': ['autopep8', 'flake8', 'pylint'],
-\  'Terraform': ['terraform-fmt-fixer', 'tflint'],
-\  'YAML': ['yamllint', 'yq']
-\}
-let g:ale_sign_error = '>>'
-let g:ale_sign_warning = '--'
-
-" Set this. Airline will handle the rest.
-let g:airline#extensions#ale#enabled = 1
-
 
 " -------------------------------------------
 " Search and Navigation
