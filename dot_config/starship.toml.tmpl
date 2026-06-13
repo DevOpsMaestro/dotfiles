@@ -1,19 +1,11 @@
-# Get editor completions based on the config schema
 "$schema" = 'https://starship.rs/config-schema.json'
 
-# Catppuccin Macchiato palette reference:
-# Text:     #cad3f5  Blue:    #8aadf4  Green:   #a6da95
-# Red:      #ed8796  Peach:   #f5a97f  Surface: #494d64
-
-# Use the Catppuccin Mocha palette defined at the bottom
-palette = "catppuccin_mocha"
-
+palette      = "catppuccin_mocha"
 scan_timeout = 10
-add_newline = true
+add_newline  = true
 
 format = """\
 $all\
-$git_metrics\
 $cmd_duration\
 $fill\
 $time\
@@ -27,299 +19,315 @@ $shell\
 $character\
 """
 
-# ─────────────────────────────────────────
-# Prompt character
-# ─────────────────────────────────────────
+# ──────────────────────────────────────────────────────────────────────────────
+# Character & shell identity
+# ──────────────────────────────────────────────────────────────────────────────
 
 [character]
-success_symbol = '[➜](bold green)'
-error_symbol = '[✗](bold red)'
-vimcmd_symbol = '[](bold fg:color_bright_green)'
-vimcmd_replace_one_symbol = '[](bold fg:color_purple)'
-vimcmd_replace_symbol = '[](bold fg:color_purple)'
-vimcmd_visual_symbol = '[](bold fg:color_yellow)'
-
-# ─────────────────────────────────────────
-# Shell / Identity
-# ─────────────────────────────────────────
-[fill]
-symbol = " "
-
-[time]
-disabled = false
-style = "bold #cad3f5"
-format = "[$time]($style)"
-=======
-[fill]
-symbol = " "
-
-[time]
-disabled = false
-style = "bold #cad3f5"
-time_format = "%R"
-format = "[$time]($style)"
+success_symbol            = '[➜](bold green)'
+error_symbol              = '[✗](bold red)'
+vimcmd_symbol             = '[](bold fg:color_bright_green)'
+vimcmd_replace_one_symbol = '[](bold fg:color_purple)'
+vimcmd_replace_symbol     = '[](bold fg:color_purple)'
+vimcmd_visual_symbol      = '[](bold fg:color_yellow)'
 
 [username]
-style_user = "bold #8aadf4"
-style_root = "bold #ed8796"
-format = "[$user]($style) "
-disabled = false
+style_user  = "bold #8aadf4"
+style_root  = "bold #ed8796"
+format      = "[$user]($style) "
+disabled    = false
 show_always = true
 
 [hostname]
 ssh_only = false
-format = 'on [$hostname](bold #f5a97f) '
-trim_at = "."
+format   = 'on [$hostname](bold #f5a97f) '
+trim_at  = "."
 disabled = false
 
-[cmd_duration]
-disabled = false
-min_time = 2000
-show_milliseconds = false
-style = "bold italic #a6da95"
-format = '[[  $duration  ]]'
+[shell]
+fish_indicator       = '󰈺'
+powershell_indicator = ''
+zsh_indicator        = '󱆃'
+unknown_indicator    = '❓'
+style                = 'bold #8aadf4'
+disabled             = false
 
+# ──────────────────────────────────────────────────────────────────────────────
+# Directory
+# ──────────────────────────────────────────────────────────────────────────────
 
 [directory]
-style = "fg:#cad3f5 bg:#8aadf4"
-format = "[ $path ]($style)"
+style             = "fg:#cad3f5 bg:#8aadf4"
+format            = "[ $path ]($style)"
 truncation_length = 3
 truncation_symbol = "…/"
-read_only = " "
-truncate_to_repo = true
+read_only         = " "
+truncate_to_repo  = true
 
 [directory.substitutions]
 "Documents" = "󰈙"
 "Downloads" = ""
-"Music" = ""
-"Pictures" = ""
+"Music"     = ""
+"Pictures"  = ""
 
-[shell]
-fish_indicator = '󰈺'
-powershell_indicator = ''
-unknown_indicator = '❓'
-style = 'bold #8aadf4'
-disabled = false
-
-# ─────────────────────────────────────────
+# ──────────────────────────────────────────────────────────────────────────────
 # Git
-# ─────────────────────────────────────────
+# ──────────────────────────────────────────────────────────────────────────────
 
 [git_branch]
-symbol = '🌿 '
+symbol            = '🌿 '
 truncation_length = 20
 truncation_symbol = '…'
-style = "bold #8aadf4"
+ignore_branches   = ['master', 'main']
+style             = "bold #8aadf4"
 
 [git_commit]
 commit_hash_length = 7
-tag_symbol = '🏷️ '
+tag_symbol         = '🏷️ '
 
 [git_state]
-format = '[\($state( $progress_current of $progress_total)\)]($style) '
+format      = '[\($state( $progress_current of $progress_total)\)]($style) '
 cherry_pick = '[🍒 PICKING](bold #ed8796)'
 
-[git_metrics]
-added_style = 'bold #a6da95'
-deleted_style = 'bold #ed8796'
-format = '[+$added]($added_style)/[-$deleted]($deleted_style) '
-disabled = false
-
 [git_status]
-ahead = '⇡${count}'
-behind = '⇣${count}'
+ahead      = '⇡${count}'
+behind     = '⇣${count}'
 conflicted = '🏳️'
-deleted = '🗑️'
-diverged = '⇕⇡${ahead_count}⇣${behind_count}'
-modified = '📝'
-renamed = '🔀'
-staged = '[++\($count\)](#a6da95)'
-stashed = '📦'
+deleted    = '🗑️'
+diverged   = '⇕⇡${ahead_count}⇣${behind_count}'
+modified   = '📝'
+renamed    = '🔀'
+staged     = '[++\($count\)](#a6da95)'
+stashed    = '📦'
 up_to_date = '✓'
-untracked = '🤷'
+untracked  = '🤷'
 
 [git_metrics]
-added_style = 'bold #a6da95'
+added_style   = 'bold #a6da95'
 deleted_style = 'bold #ed8796'
-format = '[+$added]($added_style)/[-$deleted]($deleted_style) '
-disabled = true
+format        = '[+$added]($added_style)/[-$deleted]($deleted_style) '
+disabled      = true
 
-[golang]
-symbol = ""
-style = "bg:#494d64"
-format = '[[ $symbol ($version) ](fg:#8aadf4 bg:#494d64)]($style)'
+# ──────────────────────────────────────────────────────────────────────────────
+# Kubernetes & cloud
+# ──────────────────────────────────────────────────────────────────────────────
 
 [kubernetes]
-disabled = false
+disabled     = false
+detect_files = ['k8s']
 
 [[kubernetes.contexts]]
 context_pattern = "production"
-user_pattern = "admin_user"
-style = "bold #ed8796"
-context_alias = "prod"
-user_alias = "admin"
+user_pattern    = "admin_user"
+style           = "bold #ed8796"
+context_alias   = "prod"
+user_alias      = "admin"
 
 [[kubernetes.contexts]]
 context_pattern = ".*fortress.*"
-style = "bold #a6da95"
-symbol = "💔"
-context_alias = "talos"
-
-# ─────────────────────────────────────────
-# Cloud / Infrastructure
-# ─────────────────────────────────────────
+style           = "bold #a6da95"
+symbol          = "💔"
+context_alias   = "talos"
 
 [aws]
 symbol = " "
 
 [docker_context]
-symbol = ""
-format = "via [$symbol$context]($style) "
-style = "bold #8aadf4"
+symbol          = ""
+format          = "via [$symbol$context]($style) "
+style           = "bold #8aadf4"
 only_with_files = true
-detect_files = ["docker-compose.yml", "docker-compose.yaml", "Dockerfile"]
+detect_files    = ["docker-compose.yml", "docker-compose.yaml", "Dockerfile"]
 
 [terraform]
 format = '[🏎️💨 $version$workspace]($style) '
-style = 'bold #f5a97f'
+style  = 'bold #f5a97f'
 
 [vagrant]
 format = 'via [⍱ $version](bold #cad3f5) '
 
-# ─────────────────────────────────────────
+# ──────────────────────────────────────────────────────────────────────────────
 # Languages
-# ─────────────────────────────────────────
+# ──────────────────────────────────────────────────────────────────────────────
 
 [golang]
 symbol = ""
-style = "bg:#494d64"
+style  = "bg:#494d64"
 format = '[[ $symbol ($version) ](fg:#8aadf4 bg:#494d64)]($style)'
 
 [nodejs]
 symbol = ""
-style = "bg:#494d64"
+style  = "bg:#494d64"
 format = '[[ $symbol ($version) ](fg:#8aadf4 bg:#494d64)]($style)'
 
 [php]
 symbol = ""
-style = "bg:#494d64"
+style  = "bg:#494d64"
 format = '[[ $symbol ($version) ](fg:#8aadf4 bg:#494d64)]($style)'
 
 [python]
-symbol = '🐍'
-format = 'via [$symbol python ($version)(\($virtualenv\)) ]($style)'
-style = "bold #f5a97f"
-pyenv_prefix = "venv "
-python_binary = ["./venv/bin/python", "python", "python3", "python2"]
+symbol            = '🐍'
+format            = 'via [$symbol python ($version)(\($virtualenv\)) ]($style)'
+style             = "bold #f5a97f"
+pyenv_prefix      = "venv "
+python_binary     = ["./venv/bin/python", "python", "python3", "python2"]
 detect_extensions = ["py"]
-version_format = "v${raw}"
+version_format    = "v${raw}"
 
 [rust]
 symbol = ""
-style = "bg:#494d64"
-format = '[[ $symbol ($version) ](fg:#8aadf4 bg:#494d64)]($style)'
+style  = "bg:#494d64"
+format = 'via [⚙️ $version](bold #ed8796)'
 
-# ─────────────────────────────────────────
+# ──────────────────────────────────────────────────────────────────────────────
 # System
-# ─────────────────────────────────────────
+# ──────────────────────────────────────────────────────────────────────────────
 
 [jobs]
-symbol = '✦ '
+symbol           = '✦ '
 number_threshold = 1
 symbol_threshold = 1
 
 [memory_usage]
 symbol = " "
-style = "bold #f5a97f"
-
-[shell]
-fish_indicator = '󰈺'
-powershell_indicator = ''
-zsh_indicator = '󱆃'
-unknown_indicator = '❓'
-style = 'bold #8aadf4'
-disabled = false
+style  = "bold #f5a97f"
 
 [status]
-style = 'bg:#8aadf4'
-symbol = '🔴'
-format = '[\[$symbol$common_meaning$signal_name$maybe_int\]]($style) '
-map_symbol = true
-disabled = false
+style          = 'bg:#8aadf4'
+symbol         = '🔴'
+success_symbol = '🟢 SUCCESS'
+format         = '[\[$symbol$common_meaning$signal_name$maybe_int\]]($style) '
+map_symbol     = true
+disabled       = false
 
 [sudo]
-style = 'bold #a6da95'
-symbol = '👑 '
+style    = 'bold #a6da95'
+symbol   = '👑 '
 disabled = false
 
-# ─────────────────────────────────────────
-# Timing / UI
-# ─────────────────────────────────────────
+[battery]
+disabled           = false
+full_symbol        = "󰁹"
+charging_symbol    = "󰂄"
+discharging_symbol = "󰂃"
+unknown_symbol     = "󰁽"
+empty_symbol       = "󰂎"
+format             = "[[ $symbol  ](fg:color_fg0 bg:color_red)]($style)"
+
+[[battery.display]]
+threshold = 100
+style     = 'bg:color_purple'
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Timing & layout
+# ──────────────────────────────────────────────────────────────────────────────
 
 [cmd_duration]
-min_time = 2000
+min_time          = 2000
 show_milliseconds = false
-style = "bold italic #a6da95"
-disabled = false
+style             = "bold italic #a6da95"
+format            = '[ $duration ]($style) '
+disabled          = false
 
 [fill]
 symbol = " "
 
 [time]
-disabled = false
-style = "bold #cad3f5"
-format = "[$time]($style)"
-||||||| parent of 15b882d (fix: starship palette aliases, zsh indicator, cmd_duration format)
-[vagrant]
-format = 'via [⍱ $version](bold #cad3f5) '
-=======
-[vagrant]
-format = 'via [⍱ $version](bold #cad3f5) '
+disabled    = false
+style       = "bold #cad3f5"
+time_format = "%R"
+format      = "[$time]($style)"
 
-[battery]
-disabled = false
-full_symbol = "󰁹"
-charging_symbol = "󰂄"
-discharging_symbol = "󰂃"
-unknown_symbol = "󰁽"
-empty_symbol = "󰂎"
-format = "[[ $symbol  ](fg:color_fg0 bg:color_red)]($style)"
+# ──────────────────────────────────────────────────────────────────────────────
+# OS symbols
+# ──────────────────────────────────────────────────────────────────────────────
 
-[[battery.display]]
-threshold = 100
-style = 'bg:color_purple'
+[os.symbols]
+AIX              = "➿ "
+Alpaquita        = "🔔 "
+AlmaLinux        = "💠 "
+Alpine           = "🏔️ "
+Amazon           = "🙂 "
+Android          = "🤖 "
+Arch             = "🎗️ "
+Artix            = "🎗️ "
+Bluefin          = "🐟 "
+CachyOS          = "🎗️ "
+CentOS           = "💠 "
+Debian           = "🌀 "
+DragonFly        = "🐉 "
+Emscripten       = "🔗 "
+EndeavourOS      = "🚀 "
+Fedora           = "🎩 "
+FreeBSD          = "😈 "
+Garuda           = "🦅 "
+Gentoo           = "🗜️ "
+HardenedBSD      = "🛡️ "
+Illumos          = "🐦 "
+Kali             = "🐉 "
+Linux            = "🐧 "
+Mabox            = "📦 "
+Macos            = "🍎 "
+Manjaro          = "🥭 "
+Mariner          = "🌊 "
+MidnightBSD      = "🌘 "
+Mint             = "🌿 "
+NetBSD           = "🚩 "
+NixOS            = "❄️ "
+Nobara           = "🎩 "
+OpenBSD          = "🐡 "
+OpenCloudOS      = "☁️ "
+openEuler        = "🦉 "
+openSUSE         = "🦎 "
+OracleLinux      = "🦴 "
+Pop              = "🍭 "
+Raspbian         = "🍓 "
+Redhat           = "🎩 "
+RedHatEnterprise = "🎩 "
+RockyLinux       = "💠 "
+Redox            = "🧪 "
+Solus            = "⛵ "
+SUSE             = "🦎 "
+Ubuntu           = "🎯 "
+Ultramarine      = "🔷 "
+Unknown          = "❓ "
+Uos              = "🐲 "
+Void             = "  "
+Windows          = "🪟 "
 
-# Custom Palette definitions for Catppuccin Mocha
+# ──────────────────────────────────────────────────────────────────────────────
+# Catppuccin Mocha palette
+# ──────────────────────────────────────────────────────────────────────────────
+
 [palettes.catppuccin_mocha]
-rosewater = "#f5e0dc"
-flamingo = "#f2cdcd"
-pink = "#f5c2e7"
-mauve = "#cba6f7"
-red = "#f38ba8"
-maroon = "#eba0ac"
-peach = "#fab387"
-yellow = "#f9e2af"
-green = "#a6e3a1"
-teal = "#94e2d5"
-sky = "#89dceb"
-sapphire = "#74c7ec"
-blue = "#89b4fa"
-lavender = "#b4befe"
-text = "#cdd6f4"
-subtext1 = "#bac2de"
-subtext0 = "#a6adc8"
-overlay2 = "#9399b2"
-overlay1 = "#7f849c"
-overlay0 = "#6c7086"
-surface2 = "#585b70"
-surface1 = "#45475a"
-surface0 = "#313244"
-base = "#1e1e2e"
-mantle = "#181825"
-crust = "#11111b"
+rosewater         = "#f5e0dc"
+flamingo          = "#f2cdcd"
+pink              = "#f5c2e7"
+mauve             = "#cba6f7"
+red               = "#f38ba8"
+maroon            = "#eba0ac"
+peach             = "#fab387"
+yellow            = "#f9e2af"
+green             = "#a6e3a1"
+teal              = "#94e2d5"
+sky               = "#89dceb"
+sapphire          = "#74c7ec"
+blue              = "#89b4fa"
+lavender          = "#b4befe"
+text              = "#cdd6f4"
+subtext1          = "#bac2de"
+subtext0          = "#a6adc8"
+overlay2          = "#9399b2"
+overlay1          = "#7f849c"
+overlay0          = "#6c7086"
+surface2          = "#585b70"
+surface1          = "#45475a"
+surface0          = "#313244"
+base              = "#1e1e2e"
+mantle            = "#181825"
+crust             = "#11111b"
 color_bright_green = "#a6e3a1"
-color_purple = "#cba6f7"
-color_yellow = "#f9e2af"
-color_fg0 = "#cdd6f4"
-color_red = "#f38ba8"
-
+color_purple      = "#cba6f7"
+color_yellow      = "#f9e2af"
+color_fg0         = "#cdd6f4"
+color_red         = "#f38ba8"
