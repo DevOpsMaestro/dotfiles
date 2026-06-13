@@ -1,57 +1,113 @@
-# DevOpsMaestro/dotfiles
+# DevOpsMaestro — Dotfiles
 
-Dapper Dan's dotfiles
+Personal system configuration files for macOS and Arch Linux, managed with [chezmoi](https://github.com/twpayne/chezmoi). Templates handle differences between machines through prompted variables, keeping sensitive values out of version control.
 
-Managed with: [`chezmoi`](https://github.com/twpayne/chezmoi)
+---
 
------
+## Managed Configuration Files
 
-[following this guide](https://www.chezmoi.io/quick-start/#set-up-a-new-machine-with-a-single-command)
+| Source File | Deployed To | Purpose |
+|---|---|---|
+| `.chezmoi.toml.tmpl` | `~/.config/chezmoi/chezmoi.toml` | chezmoi settings and template variables |
+| `dot_gitconfig.tmpl` | `~/.gitconfig` | Git identity, signing, aliases, and tools |
+| `dot_zshrc.tmpl` | `~/.zshrc` | Zsh shell configuration and aliases |
+| `dot_zshenv.tmpl` | `~/.zshenv` | Zsh environment variables (loaded for all sessions) |
+| `dot_vimrc.tmpl` | `~/.vimrc` | Vim editor configuration and plugins |
+| `dot_tmux.conf.tmpl` | `~/.tmux.conf` | tmux multiplexer configuration |
+| `dot_config/starship.toml.tmpl` | `~/.config/starship.toml` | Starship prompt (Catppuccin Mocha theme) |
+| `private_dot_ssh/private_config.tmpl` | `~/.ssh/config` | SSH host definitions and key assignments |
+| `private_dot_gnupg/` | `~/.gnupg/` | GPG agent configuration |
+| `run_once_install-packages.sh.tmpl` | — | One-time package installation script |
 
-[how-to install the client](https://www.chezmoi.io/install/)
+---
 
-## Macbook client
+## Prerequisites
+
+The following tools must be installed before running `chezmoi init`:
+
+- **chezmoi** — dotfiles manager
+- **GPG** — used for encrypting private files and signing Git commits
+- A GPG key pair associated with the email address used during setup
+
+---
+
+## Installation
+
+### macOS
 
 ```shell
 brew install chezmoi
 ```
 
-## Arch Linux client
+### Arch Linux
 
 ```shell
 pacman -S chezmoi
 ```
 
-## Rough Notes
+---
 
-From your Second system, example:
+## Deploying to a New Machine
+
+Initialize and apply all dotfiles in a single command:
+
+```shell
+chezmoi init --apply DevOpsMaestro
+```
+
+`chezmoi init` will prompt for the following values before writing any files:
+
+| Prompt | Example Value | Used In |
+|---|---|---|
+| `email` | `user@example.com` | Git config, GPG key |
+| `gpg key` | `412D990A41E880F4645E3E3E5AA9018FE9C21542` | Git signing key, chezmoi GPG recipient |
+| `github username` | `DevOpsMaestro` | Git config |
+| `fortress lab username` | `goldenleg` | SSH config host block |
+
+To initialize without applying immediately:
 
 ```shell
 chezmoi init https://github.com/DevOpsMaestro/dotfiles.git
 ```
 
-You can install your dotfiles on new machine with a single command:
+Then review and apply when ready:
 
 ```shell
-$ chezmoi init --apply https://github.com/DevOpsMaestro/dotfiles.git
+chezmoi diff
+chezmoi apply
 ```
 
-If you use GitHub and your dotfiles repo is called dotfiles then this can be shortened to:
+---
 
-```shell
-$ chezmoi init --apply DevOpsMaestro
-```
+## Daily Workflow
 
-After the initial install, you can simply run:
+### Check for differences between local files and the chezmoi source
 
 ```shell
 chezmoi status
+```
+
+### Pull updates from the remote repository and apply them
+
+```shell
 chezmoi update -v
 ```
 
-## Dealing with variances in config files
+### Sync a locally edited dotfile back into the chezmoi source
 
-One solution is to remove the file from the local configuration. 
+```shell
+chezmoi re-add ~/.zshrc
+```
+
+### Commit and push changes to the remote repository
+
+```shell
+chezmoi git -- add .
+chezmoi git -- commit -m "describe what changed"
+chezmoi git -- push
+```
+
+### Stop tracking a file
 
 ```shell
 chezmoi forget ~/.ssh/config
@@ -59,311 +115,173 @@ chezmoi forget ~/.ssh/config
 
 ---
 
+## Vim Configuration
+
 <details>
-  <summary>Comprehensive Guide to Using This Vim Configuration</summary>
+  <summary>Key bindings and plugin reference</summary>
 
 &nbsp;
 
-This guide will walk you through how to use the provided Vim configuration, explaining what it does, how to get started, and how to take advantage of its features-even if you’ve never used it before.
+The Vim configuration uses [vim-plug](https://github.com/junegunn/vim-plug) as its plugin manager. If vim-plug is not present on first launch, it is downloaded automatically. Plugins are installed on the first run.
 
----
+To manage plugins manually:
 
-### **1. First-Time Setup**
+| Command | Action |
+|---|---|
+| `:PlugInstall` | Install all plugins |
+| `:PlugUpdate` | Update all plugins |
+| `:PlugClean` | Remove unused plugins |
 
-**a. Automatic Plugin Manager Installation**
-- The configuration checks if [vim-plug](https://github.com/junegunn/vim-plug) (the plugin manager) is installed. If not, it downloads it automatically, so you don’t need to do anything manually here[2].
-- When you first open Vim with this configuration, vim-plug will be installed if necessary.
+### Color Scheme
 
-**b. Installing Plugins**
-- On your first launch, plugins may not be installed yet. The configuration will try to install missing plugins automatically.
-- If you ever need to install plugins manually, run:
-  ```
-  :PlugInstall
-  ```
-- To update plugins later:
-  ```
-  :PlugUpdate
-  ```
-- To remove unused plugins:
-  ```
-  :PlugClean
-  ```
-- To see plugin changes:
-  ```
-  :PlugDiff
-  ```
+Catppuccin Macchiato is applied automatically.
 
----
+### Window and Pane Navigation
 
-### **2. Key Plugins and Their Usage**
+| Key | Action |
+|---|---|
+| `Ctrl+h` | Move to left pane |
+| `Ctrl+j` | Move to lower pane |
+| `Ctrl+k` | Move to upper pane |
+| `Ctrl+l` | Move to right pane |
 
-**a. Color Scheme: Catppuccin**
-- The color scheme is set to “catppuccin_macchiato.” It will be applied automatically.
-- If you want to change the theme, edit the relevant lines in the config.
+### Tab Management
 
-**b. NERDTree (File Explorer)**
-- Toggle NERDTree sidebar:  
-  - `Ctrl+n`: Open NERDTree  
-  - `Ctrl+t`: Toggle NERDTree  
-  - `n` (usually `\n`): Focus NERDTree  
-- NERDTree lets you browse, create, move, and delete files and folders quickly[4].
-- Useful for visualizing your project structure.
+| Key | Action |
+|---|---|
+| `F5` | Open new tab |
+| `F6` | Next tab |
+| `F7` | Previous tab |
+| `F8` | Open file under cursor in new tab |
 
-**c. ALE (Asynchronous Lint Engine)**
-- Provides real-time code linting and fixing for many languages[3].
-- Errors and warnings show up as you type.
-- To manually fix code in the current file:
-  ```
-  :ALEFix
-  ```
-- ALE is configured to lint and fix Python, YAML, Dockerfile, JSON, Terraform, and more.
+### Session Management
 
-**d. Airline**
-- Provides a nice status/tab bar at the bottom of Vim.
-- Shows file info, mode, and integrates with ALE to display linting status.
+| Key | Action |
+|---|---|
+| `\ss` | Save current session |
+| `\sr` | Restore last session |
 
-**e. Other Plugins**
-- `auto-pairs`: Auto-closes brackets, quotes, etc.
-- `goyo.vim`: Distraction-free writing mode (`:Goyo` command).
+### File Explorer — NERDTree
 
----
+| Key | Action |
+|---|---|
+| `Ctrl+n` | Open NERDTree |
+| `Ctrl+t` | Toggle NERDTree |
 
-### **3. Key Mappings and Shortcuts**
+### Linting — ALE
 
-**a. Window and Tab Navigation**
-- Move between panes:  
-  - `Ctrl+h`: Left  
-  - `Ctrl+j`: Down  
-  - `Ctrl+k`: Up  
-  - `Ctrl+l`: Right
-- Tabs:  
-  - `F5`: Open new tab  
-  - `F6`: Next tab  
-  - `F7`: Previous tab  
-  - `F8`: Open file under cursor in new tab
+ALE (Asynchronous Lint Engine) provides real-time error checking for Python, YAML, JSON, Dockerfile, Terraform, and other formats. Errors appear inline as the file is edited. To fix the current file manually:
 
-**b. Session Management**
-- Save session:  
-  - `ss` (usually `\ss`): Save current session  
-- Restore session:  
-  - `sr` (usually `\sr`): Reload last session
+```
+:ALEFix
+```
 
-**c. Line Wrapping**
-- Toggle line wrap:  
-  - `F12`
+### Editor Defaults
 
----
-
-### **4. Editing and Appearance**
-
-- Line numbers are enabled.
-- The 80th column is highlighted for code style.
-- Syntax highlighting and true color support are enabled.
-- Cursor line and column are highlighted for visibility.
-- Search is enhanced:  
-  - Case-insensitive by default, but case-sensitive if you use uppercase letters in your search.
-  - Search results are highlighted as you type.
-
----
-
-### **5. Indentation and Formatting**
-
-- Tabs are set to 2 spaces (expandtab, shiftwidth=2, softtabstop=2).
-- Auto-indentation is on.
-- ALE will try to fix code formatting on save for supported languages.
-
----
-
-### **6. Miscellaneous Features**
-
-- Uses the system clipboard for copy/paste.
-- Keeps 50 lines of command history.
-- Enables wildmenu for better command-line completion.
-- Disables line wrapping by default (toggle with `F12`).
-
----
-
-### **7. Reloading the Configuration**
-
-- When you save your `.vimrc`, it will automatically reload, so changes take effect immediately.
-
----
-
-## **How to Get Started**
-
-1. **Copy the configuration into your `~/.vimrc` file.**
-2. **Open Vim.**  
-   - The config will install vim-plug if needed and prompt to install plugins.
-3. **Wait for plugin installation to finish.**
-4. **Start editing!**  
-   - Use the shortcuts above for navigation, session management, and file exploration.
-5. **Explore Plugins:**  
-   - Try toggling NERDTree (`Ctrl+t`), test ALE linting by opening a Python file, and open multiple tabs and splits.
-
----
-
-## **Tips for New Users**
-
-- If you’re new to Vim, learn basic commands first (`i` to insert, `:w` to save, `:q` to quit, `:wq` to save and quit)[1][6][7].
-- Use the mappings and plugins to boost productivity, but don’t hesitate to look up Vim basics as needed.
-- For more details on vim-plug, see its [usage guide][2].
-
----
-
-**Summary:**  
-This configuration turns Vim into a powerful, modern code editor with real-time linting, file navigation, session management, and a beautiful UI. Use the provided shortcuts and plugins to streamline your workflow, and don’t be afraid to experiment or customize further as you become more comfortable with Vim.
-
-Citations:
-
-[1] https://www.freecodecamp.org/news/vimrc-configuration-guide-customize-your-vim-editor/
-
-[2] https://github.com/junegunn/vim-plug
-
-[3] https://github.com/dmerejkowsky/vim-ale
-
-[4] https://nickjanetakis.com/blog/i-use-nerdtree-in-vim-but-it-is-usually-not-for-opening-files
-
-[5] https://dev.to/ethand91/my-basic-vim-setup-5hdf
-
-[6] https://dev.to/aviavinav/vim-a-beginners-guide-from-a-beginner-b11
-
-[7] https://www.jakewiesler.com/blog/getting-started-with-vim
-
-[8] https://github.com/xolox/vim-session
-
-[9] https://learnvimscriptthehardway.stevelosh.com/chapters/03.html
-
-[10] https://hamvocke.com/blog/ansi-vim-color-scheme/
-
-[11] https://www.tutorialspoint.com/vim/vim_navigating.htm
-
-[12] https://askubuntu.com/questions/264258/changing-vim-editor-settings
-
-[13] https://www.linode.com/docs/guides/writing-a-vim-plugin/
-
-[14] https://dmerej.info/blog/post/lets-have-a-pint-of-vim-ale/
-
-[15] https://github.com/preservim/nerdtree
-
-[16] https://www.vim.org/scripts/script.php?script_id=2010
-
-[17] https://vim.fandom.com/wiki/Mapping_keys_in_Vim_-_Tutorial_(Part_1)
-
-[18] https://www.linode.com/docs/guides/vim-color-schemes/
-
-[19] https://www.linuxfoundation.org/blog/blog/classic-sysadmin-vim-101-a-beginners-guide-to-vim
-
-[20] https://www.reddit.com/r/vim/comments/viunvt/setting_up_good_vim_workflow_as_a_beginner/
+- Tab width: 2 spaces
+- Line numbers: enabled
+- Column 80 marker: enabled
+- System clipboard integration: enabled
+- Line wrap: disabled by default; toggle with `F12`
+- Search: case-insensitive unless uppercase letters are used
 
 </details>
 
-[Vim NerdTree Cheatsheet](https://github.com/DevOpsMaestro/dotfiles/blob/main/cheatsheet_nerdtree.md)
+[NERDTree Cheatsheet](https://github.com/DevOpsMaestro/dotfiles/blob/main/cheatsheet_nerdtree.md)
 
 ---
 
+## tmux Configuration
+
 <details>
-  <summary>tmux Configuration Guide</summary>
+  <summary>Key bindings and plugin reference</summary>
 
 &nbsp;
 
-This guide explains key features and commands for the [DevOpsMaestro tmux configuration](https://github.com/DevOpsMaestro/dotfiles/blob/main/dot_tmux.conf.tmpl), which uses **`Ctrl+Space`** as the prefix key. The configuration emphasizes efficiency, Vi-style navigation, and plugin integration[1][2].
+The prefix key for all tmux commands is **`Ctrl+Space`**.
 
----
+### Session Management
 
-### **Essential Key Bindings**  
+| Command | Action |
+|---|---|
+| `tmux new -s <name>` | Create a named session |
+| `tmux ls` | List active sessions |
+| `tmux attach -t <name>` | Attach to a session |
+| `Prefix + d` | Detach from the current session |
 
-**Prefix Key**  
-- Default prefix: **`Ctrl+Space`**  
+### Window Management
 
----
+| Key | Action |
+|---|---|
+| `Prefix + w` | Create a new window |
+| `Prefix + n` | Move to the next window |
+| `Prefix + p` | Move to the previous window |
+| `Prefix + ,` | Rename the current window |
+| `Prefix + &` | Close the current window |
 
-### **Session Management**  
-- **Create new session**: `tmux new -s `  
-- **Detach from session**: `Prefix + d`  
-- **List sessions**: `tmux ls`  
-- **Attach to session**: `tmux attach -t `  
-- **Kill session**: `Prefix + x` (confirm with `y`)[1]  
+### Pane Management
 
----
+| Key | Action |
+|---|---|
+| `Prefix + v` | Split pane vertically |
+| `Prefix + h` | Split pane horizontally |
+| `Prefix + Arrow Keys` | Move between panes |
+| `Prefix + Ctrl + Arrow Keys` | Resize the current pane |
+| `Prefix + x` | Close the current pane |
 
-### **Window Management**  
-- **New window**: `Prefix + w`  
-- **Next window**: `Prefix + n`  
-- **Previous window**: `Prefix + p`  
-- **Rename window**: `Prefix + ,`  
-- **Close window**: `Prefix + &`  
+### Vi-Style Copy Mode
 
----
+| Key | Action |
+|---|---|
+| `Prefix + [` | Enter copy mode |
+| `v` | Begin text selection |
+| `y` | Copy selection to clipboard |
+| `Prefix + ]` | Paste from buffer |
 
-### **Pane Management**  
-- **Split vertically**: `Prefix + v`  
-- **Split horizontally**: `Prefix + h`  
-- **Switch panes**:  
-  - `Prefix + Arrow Keys` (direction-based)  
-  - `Prefix + o` (cycle order)  
-- **Resize panes**: `Prefix + Ctrl + Arrow Keys`  
-- **Kill pane**: `Prefix + x`  
+### Plugins
 
----
+**tmux-resurrect** — saves and restores sessions across system restarts.
 
-### **Vi-Style Copy Mode**  
-- **Enter copy mode**: `Prefix + [`  
-- **Start selection**: `v` (Vi mode)  
-- **Copy selection**: `y`  
-- **Paste buffer**: `Prefix + ]`  
-- **Quick copy to system clipboard**: `Ctrl+Shift+c`[2]  
+| Key | Action |
+|---|---|
+| `Prefix + Ctrl+s` | Save current session |
+| `Prefix + Ctrl+r` | Restore saved session |
 
----
+**vim-tmux-navigator** — enables unified navigation between Vim splits and tmux panes using `Ctrl+h/j/k/l`.
 
-### **Plugin Shortcuts**  
-- **tmux-resurrect** (session backup):  
-  - Save session: `Prefix + Ctrl+s`  
-  - Restore session: `Prefix + Ctrl+r`  
-- **vim-tmux-navigator** (seamless Vim/tmux navigation):  
-  - Use `Ctrl+h/j/k/l` to move between Vim splits and tmux panes[2].  
+### Other Bindings
 
----
-
-### **Configuration & Debugging**  
-- **Reload config**: `Prefix + r` (displays "Reloaded!" confirmation)  
-- **List all bindings**: `Prefix + ?`  
-- **Open notes file**: `Ctrl+Alt+n` (opens in split pane with `lvim`)[2]  
-
----
-
-### **Advanced Features**  
-- **Synchronize panes**:  
-  - Enable: `Prefix + :setw synchronize-panes on`  
-  - Disable: `Prefix + :setw synchronize-panes off`  
-- **256-color support**: Preconfigured for terminal and Neovim compatibility[2].  
-
----
-
-**Pro Tips**  
-- All new splits/windows inherit the current working directory.  
-- Use `Prefix + Ctrl+c`/`Ctrl+v` for cross-terminal clipboard integration[2].  
-- Customize further by editing `~/.tmux.conf`.  
-
-For the latest updates, refer to the [official cheatsheet](https://github.com/DevOpsMaestro/dotfiles/blob/main/cheatsheet_tmux.md)[1].
-
-Citations:
-
-[1] https://github.com/DevOpsMaestro/dotfiles/blob/main/cheatsheet_tmux.md
-
-[2] https://github.com/akitaonrails/dotfiles/blob/main/dot_tmux.conf.tmpl
-
-[3] https://github.com/NotHarshhaa/devops-cheatsheet/blob/master/Version-Control/GitLab.md
-
-[4] https://github.com/signalpillar/dotfiles/blob/master/dot_tmux.conf.tmpl
-
-[5] https://gerrit.avm99963.com/plugins/gitiles/dotfiles-external/+/b5fe60fafb87dbe165bf7f1d8655a25ccc7329db/dot_tmux.conf.tmpl
-
----
+| Key | Action |
+|---|---|
+| `Prefix + r` | Reload the tmux configuration |
+| `Prefix + ?` | List all active key bindings |
 
 </details>
 
-[TMUX Cheatsheet](https://github.com/DevOpsMaestro/dotfiles/blob/main/cheatsheet_tmux.md)
+[tmux Cheatsheet](https://github.com/DevOpsMaestro/dotfiles/blob/main/cheatsheet_tmux.md)
 
 ---
 
-&nbsp;
+## Starship Prompt
+
+The prompt uses the [Catppuccin Mocha](https://catppuccin.com/) color palette and requires a [Nerd Font](https://www.nerdfonts.com/) to render all icons correctly. FiraCode Nerd Font Mono is the recommended choice.
+
+Prompt modules enabled: username, hostname, directory, git branch, git status, Kubernetes context, shell indicator, command duration, battery, and time.
+
+---
+
+## GPG Setup
+
+Private files (SSH config, GPG config) are encrypted using the GPG key whose fingerprint is provided during `chezmoi init`. The key must exist in the local GPG keyring before running `chezmoi apply` on a new machine.
+
+To import an existing key on a new machine:
+
+```shell
+gpg --import private-key.asc
+```
+
+To verify the key is present:
+
+```shell
+gpg --list-secret-keys --keyid-format long
+```
