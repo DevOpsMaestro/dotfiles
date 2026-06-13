@@ -50,7 +50,6 @@ paru -S --asdeps --needed \
 {{ else if eq .chezmoi.os "darwin" -}}
 brew install \
   age \
-  awscli \
   btop \
   cilium-cli \
   dust \
@@ -81,12 +80,10 @@ brew install \
   mtr \
   ncdu \
   neovim \
-  node@24 \
   p7zip \
   pinentry-mac \
   prettyping \
   pstree \
-  pyenv \
   renovate \
   ripgrep \
   sops \
