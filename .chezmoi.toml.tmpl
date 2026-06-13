@@ -1,4 +1,5 @@
-{{- $email := promptString "email" -}}
+encryption = "gpg"
+{{ $email := promptString "email" -}}
 {{- $gpgKey := promptString "gpg key" -}}
 {{- $githubUser := promptString "github username" -}}
 {{- $fortressUser := promptString "fortress lab username" -}}
