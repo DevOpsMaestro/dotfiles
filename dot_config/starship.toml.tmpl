@@ -1,10 +1,14 @@
+# Get editor completions based on the config schema
 "$schema" = 'https://starship.rs/config-schema.json'
 
 # Catppuccin Macchiato palette reference:
 # Text:     #cad3f5  Blue:    #8aadf4  Green:   #a6da95
 # Red:      #ed8796  Peach:   #f5a97f  Surface: #494d64
 
-scan_timeout = 30
+# Use the Catppuccin Mocha palette defined at the bottom
+palette = "catppuccin_mocha"
+
+scan_timeout = 10
 add_newline = true
 
 format = """\
@@ -30,11 +34,30 @@ $character\
 [character]
 success_symbol = '[➜](bold green)'
 error_symbol = '[✗](bold red)'
-vimcmd_symbol = '[V](bold green)'
+vimcmd_symbol = '[](bold fg:color_bright_green)'
+vimcmd_replace_one_symbol = '[](bold fg:color_purple)'
+vimcmd_replace_symbol = '[](bold fg:color_purple)'
+vimcmd_visual_symbol = '[](bold fg:color_yellow)'
 
 # ─────────────────────────────────────────
 # Shell / Identity
 # ─────────────────────────────────────────
+[fill]
+symbol = " "
+
+[time]
+disabled = false
+style = "bold #cad3f5"
+format = "[$time]($style)"
+=======
+[fill]
+symbol = " "
+
+[time]
+disabled = false
+style = "bold #cad3f5"
+time_format = "%R"
+format = "[$time]($style)"
 
 [username]
 style_user = "bold #8aadf4"
@@ -48,6 +71,14 @@ ssh_only = false
 format = 'on [$hostname](bold #f5a97f) '
 trim_at = "."
 disabled = false
+
+[cmd_duration]
+disabled = false
+min_time = 2000
+show_milliseconds = false
+style = "bold italic #a6da95"
+format = '[[  $duration  ]]'
+
 
 [directory]
 style = "fg:#cad3f5 bg:#8aadf4"
@@ -107,9 +138,16 @@ stashed = '📦'
 up_to_date = '✓'
 untracked = '🤷'
 
-# ─────────────────────────────────────────
-# Kubernetes
-# ─────────────────────────────────────────
+[git_metrics]
+added_style = 'bold #a6da95'
+deleted_style = 'bold #ed8796'
+format = '[+$added]($added_style)/[-$deleted]($deleted_style) '
+disabled = true
+
+[golang]
+symbol = ""
+style = "bg:#494d64"
+format = '[[ $symbol ($version) ](fg:#8aadf4 bg:#494d64)]($style)'
 
 [kubernetes]
 disabled = false
@@ -193,6 +231,13 @@ symbol_threshold = 1
 [memory_usage]
 symbol = " "
 style = "bold #f5a97f"
+
+[shell]
+fish_indicator = '󰈺'
+powershell_indicator = ''
+zsh_indicator = '󱆃'
+unknown_indicator = '❓'
+style = 'bold #8aadf4'
 disabled = false
 
 [status]
@@ -224,3 +269,57 @@ symbol = " "
 disabled = false
 style = "bold #cad3f5"
 format = "[$time]($style)"
+||||||| parent of 15b882d (fix: starship palette aliases, zsh indicator, cmd_duration format)
+[vagrant]
+format = 'via [⍱ $version](bold #cad3f5) '
+=======
+[vagrant]
+format = 'via [⍱ $version](bold #cad3f5) '
+
+[battery]
+disabled = false
+full_symbol = "󰁹"
+charging_symbol = "󰂄"
+discharging_symbol = "󰂃"
+unknown_symbol = "󰁽"
+empty_symbol = "󰂎"
+format = "[[ $symbol  ](fg:color_fg0 bg:color_red)]($style)"
+
+[[battery.display]]
+threshold = 100
+style = 'bg:color_purple'
+
+# Custom Palette definitions for Catppuccin Mocha
+[palettes.catppuccin_mocha]
+rosewater = "#f5e0dc"
+flamingo = "#f2cdcd"
+pink = "#f5c2e7"
+mauve = "#cba6f7"
+red = "#f38ba8"
+maroon = "#eba0ac"
+peach = "#fab387"
+yellow = "#f9e2af"
+green = "#a6e3a1"
+teal = "#94e2d5"
+sky = "#89dceb"
+sapphire = "#74c7ec"
+blue = "#89b4fa"
+lavender = "#b4befe"
+text = "#cdd6f4"
+subtext1 = "#bac2de"
+subtext0 = "#a6adc8"
+overlay2 = "#9399b2"
+overlay1 = "#7f849c"
+overlay0 = "#6c7086"
+surface2 = "#585b70"
+surface1 = "#45475a"
+surface0 = "#313244"
+base = "#1e1e2e"
+mantle = "#181825"
+crust = "#11111b"
+color_bright_green = "#a6e3a1"
+color_purple = "#cba6f7"
+color_yellow = "#f9e2af"
+color_fg0 = "#cdd6f4"
+color_red = "#f38ba8"
+
