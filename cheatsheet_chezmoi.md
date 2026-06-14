@@ -106,11 +106,55 @@ czp "describe what changed"
 
 ---
 
-## Workflow B — Edit the Local File and Sync to Chezmoi
+## Workflow B — Edit a Template File via chezmoi
 
-Use this approach when it is more convenient to edit the deployed file directly (e.g. after testing a change live in the shell).
+Use this approach for any file managed as a `.tmpl` source (most files in this setup). Never use `chezmoi re-add` on a template file — it strips the template markers and breaks variable substitution.
 
-### Step 1 — Edit the live dotfile as normal
+### Step 1 — Open the source template in your editor
+
+```shell
+chezmoi edit ~/.zshrc
+```
+
+This opens the source file (`dot_zshrc.tmpl`) directly. Changes made here are not yet written to the live `~/.zshrc`.
+
+### Step 2 — Apply the change to the live file
+
+```shell
+chezmoi apply ~/.zshrc
+```
+
+This renders the template and writes the result to `~/.zshrc`.
+
+### Step 3 — Confirm the source is modified
+
+```shell
+chezmoi git -- status
+```
+
+The output will show the source template as modified:
+
+```
+modified:   dot_zshrc.tmpl
+```
+
+Running `chezmoi status` will also show `M .zshrc` until the source is committed.
+
+### Step 4 — Commit and push
+
+```shell
+czp "describe what changed"
+```
+
+`czp` stages all changes in the chezmoi source directory, commits them, and pushes to the remote repository.
+
+---
+
+## Workflow C — Edit the Local File and Sync to Chezmoi
+
+Use this approach only for files that are **not** templates (no `.tmpl` suffix in the source). Editing a template's deployed file and then running `re-add` will strip the template markers.
+
+### Step 1 — Edit the live dotfile directly
 
 ```shell
 vim ~/.zshrc
@@ -122,28 +166,11 @@ vim ~/.zshrc
 chezmoi re-add ~/.zshrc
 ```
 
-`re-add` copies the current state of the local file into the chezmoi source, overwriting the previous source version. If the source file is a template (`dot_zshrc.tmpl`), chezmoi will warn that re-adding will remove the template attribute. Answer **no** to that prompt, then use `chezmoi edit` instead (see below).
+`re-add` copies the current state of the deployed file into the chezmoi source. If chezmoi warns that re-adding will remove the template attribute, answer **no** and use Workflow B instead.
 
 ### Step 3 — Commit and push
 
 ```shell
-czp "describe what changed"
-```
-
----
-
-## Editing a Template File via the Source
-
-When a source file is a template (`.tmpl`), do not use `chezmoi re-add` — it will strip the template markers. Use `chezmoi edit` instead, which opens the source template directly:
-
-```shell
-chezmoi edit ~/.zshrc
-```
-
-After saving, apply and push as normal:
-
-```shell
-chezmoi apply ~/.zshrc
 czp "describe what changed"
 ```
 
