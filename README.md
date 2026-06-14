@@ -285,3 +285,5 @@ To verify the key is present:
 ```shell
 gpg --list-secret-keys --keyid-format long
 ```
+
+[GPG Cheatsheet](https://github.com/DevOpsMaestro/dotfiles/blob/main/cheatsheet_gpg.md)
