@@ -129,7 +129,11 @@ genpasswd() {
 }
 
 ww() {
-    watch -n 6 "$*"
+    # The entire command must be passed as a single quoted string when it
+    # contains pipes — e.g. ww 'flux get all -A | grep -v helmchart'
+    # This is necessary because the shell consumes bare pipes before the
+    # function receives its arguments.
+    watch -n 6 "zsh -c ${(q)${(j: :)@}}"
 }
 
 # fuzzy search
