@@ -1,7 +1,6 @@
 typeset -U path
 path=("$HOME/.local/bin" "/opt/homebrew/bin" "/usr/local/bin" "/usr/local/sbin" $path)
 
-
 # common exports
 export EDITOR=vim
 export PAGER=less
@@ -16,3 +15,4 @@ fi
 # software versions
 [[ -x $(whence cargo) ]] && path=("${CARGO_HOME:-$HOME/.cargo}/bin" $path)
 [[ -x $(whence jenv) ]] && path=("${JENV_HOME:-$HOME/.jenv}/bin" $path)
+
