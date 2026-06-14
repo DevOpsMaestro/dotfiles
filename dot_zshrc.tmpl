@@ -22,7 +22,7 @@ cdpath=("$HOME/SourceCode")
 export HOMEBREW_NO_AUTO_UPDATE=1
 
 # vi mode
-#bindkey -v
+bindkey -v
 
 # Keep Vi mode, but disable mouse tracking
 zmodload zsh/terminfo
@@ -81,6 +81,7 @@ alias gs='git status'
 gt() {
     git tag -l "*${1}*" | sort --version-sort
 }
+
 gtp() {
     git tag -l "${1}*${2:-prod}*" | sort --version-sort
 }
@@ -94,7 +95,7 @@ alias ktop-cpu='watch -n 6 "kubectl top pods --use-protocol-buffers --sort-by=cp
 alias ktop-mem='watch -n 6 "kubectl top pods --use-protocol-buffers --sort-by=memory --all-namespaces=true --field-selector metadata.namespace!=kube-system"'
 
 # --- flux ---
-alias fluxlogs='flux logs --all-namespaces --follow --tail=10'
+alias fluxlogs='flux logs --all-namespaces --follow --tail=22'
 
 frec() {
     flux reconcile source git flux-system -n flux-system && \
@@ -158,6 +159,7 @@ elif [ -f /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
 elif [ -f /usr/local/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
   source /usr/local/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi
+
 if [ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
   source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 elif [ -f /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
