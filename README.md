@@ -77,6 +77,8 @@ chezmoi diff
 chezmoi apply
 ```
 
+[Chezmoi Cheatsheet](https://github.com/DevOpsMaestro/dotfiles/blob/main/cheatsheet_chezmoi.md)
+
 ---
 
 ## Daily Workflow
