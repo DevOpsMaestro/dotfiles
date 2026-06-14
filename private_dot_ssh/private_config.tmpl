@@ -4,7 +4,6 @@ ControlPath ${HOME}/.ssh/sockets/%C
 
 CanonicalizeHostname yes
 
-# PERSONAL STUFF:
 Host github.com
     HostName github.com
     IdentityFile ${HOME}/.ssh/GIT_KEYS/id_ed25519
@@ -21,7 +20,7 @@ Match host "172.20.156.195"
 
 Host rhel-iso-builder.fortress.lan
     HostName 172.20.156.208
-    User goldenleg
+    User {{ .fortressUser }}
     ForwardAgent yes
     IdentityFile ${HOME}/.ssh/RKE-LABS/id_ed25519
     PreferredAuthentications publickey,password
@@ -30,7 +29,7 @@ Host rhel-iso-builder.fortress.lan
     UserKnownHostsFile ~/.ssh/known_hosts_labs
 
 Match host "*fortres*,172.20.156.*"
-    User goldenleg
+    User {{ .fortressUser }}
     ForwardAgent yes
     IdentityFile ${HOME}/.ssh/RKE-LABS/id_ed25519
     LogLevel QUIET

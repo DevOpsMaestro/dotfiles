@@ -1,73 +1,89 @@
-# TMUX Cheatsheet
+# tmux Cheatsheet
 
-> Quick reference for this tmux configuration. Config: [dot_tmux.conf.tmpl](https://github.com/DevOpsMaestro/dotfiles/blob/main/dot_tmux.conf.tmpl)
->
-> **Prefix** = `CTRL+Space` — Windows and panes are numbered from **1**. Mouse support is enabled (click to select, drag to resize, scroll to scroll).
+Quick reference for this tmux configuration. Configuration: [dot_tmux.conf.tmpl](https://github.com/DevOpsMaestro/dotfiles/blob/main/dot_tmux.conf.tmpl)
 
-## Prefix & Plugins
+The prefix key for all tmux commands is **`Ctrl+Space`**. Windows and panes are numbered from **1**. Mouse support is enabled: click to select, drag to resize, and scroll to navigate the buffer.
+
+---
+
+## Prefix and Plugins
 
 | Key | Action |
-| ---: | :--- |
-| **CTRL+Space** | Prefix (command key) |
-| Prefix, **I** | Install / reload plugins (TPM) |
-| Prefix, **r** | Reload tmux config |
+|---|---|
+| `Ctrl+Space` | Prefix (command key) |
+| `Prefix + I` | Install or reload plugins (TPM) |
+| `Prefix + r` | Reload the tmux configuration |
+
+---
+
+## Sessions
+
+| Key or Command | Action |
+|---|---|
+| `Prefix + d` | Detach from the current session |
+| `Prefix + Ctrl+s` | Save the session (tmux-resurrect) |
+| `Prefix + Ctrl+r` | Restore a saved session (tmux-resurrect) |
+| `tmux new -s <name>` | Create a new named session |
+| `tmux ls` | List all active sessions |
+| `tmux attach -t <name>` | Attach to a session by name |
+| `tmux kill-session -t <name>` | Terminate a session by name |
+| `tmux a` | Attach to the most recently used session |
+
+Sessions are saved automatically every 15 minutes by tmux-continuum and restored when the tmux server starts.
+
+---
 
 ## Windows
 
 | Key | Action |
-| ---: | :--- |
-| Prefix, **c** | Create new window (prompts for name) |
-| Prefix, **n** | Next window |
-| Prefix, **l** | Last (previously used) window |
-| Prefix, **w** | Window preview and selection |
-| Prefix, **<** | Swap window left |
-| Prefix, **>** | Swap window right |
+|---|---|
+| `Prefix + c` | Create a new window |
+| `Prefix + n` | Move to the next window |
+| `Prefix + l` | Return to the previously used window |
+| `Prefix + w` | Open the window preview and selection menu |
+| `Prefix + <` | Swap the current window one position to the left |
+| `Prefix + >` | Swap the current window one position to the right |
+
+---
 
 ## Panes
 
 | Key | Action |
-| ---: | :--- |
-| Prefix, **\|** | Split into vertical pane |
-| Prefix, **-** | Split into horizontal pane |
-| Prefix, **m** | Select previous pane |
-| Prefix, **k** | Resize pane up 10 rows |
-| Prefix, **j** | Resize pane down 10 rows |
+|---|---|
+| `Prefix + \|` | Split the current pane vertically |
+| `Prefix + -` | Split the current pane horizontally |
+| `Prefix + m` | Select the previously active pane |
+| `Prefix + k` | Resize the current pane upward by 10 rows |
+| `Prefix + j` | Resize the current pane downward by 10 rows |
 
-## Synchronize Panes
+---
 
-Broadcast keystrokes to all panes simultaneously — useful for running the same command across multiple SSH sessions.
+## Synchronized Panes
+
+Synchronized panes broadcast keystrokes to all panes at once. This is useful for running the same command across multiple SSH sessions simultaneously.
 
 | Key | Action |
-| ---: | :--- |
-| **F3** | Synchronize panes ON (no prefix) |
-| **F4** | Synchronize panes OFF (no prefix) |
-| Prefix, **F3** | Toggle synchronize panes |
+|---|---|
+| `F3` | Enable synchronized panes (no prefix required) |
+| `F4` | Disable synchronized panes (no prefix required) |
+| `Prefix + F3` | Toggle synchronized panes |
+
+---
 
 ## Search
 
 | Key | Action |
-| ---: | :--- |
-| Prefix, **/** | Search scrollback buffer |
-| Prefix, **CTRL+f** | FZF fuzzy search (sessions, windows, panes, commands) |
-
-## Sessions
-
-| Key | Action |
-| ---: | :--- |
-| Prefix, **d** | Detach from current session |
-| Prefix, **CTRL+s** | Save session (tmux-resurrect) |
-| Prefix, **CTRL+r** | Restore session (tmux-resurrect) |
-
-> Sessions auto-save every **15 minutes** via tmux-continuum and restore automatically on tmux server start.
-
-## CLI Commands
-
-| Command | Action |
-| ---: | :--- |
-| **tmux ls** | List all sessions |
-| **tmux a** | Re-attach to most recently used session |
-| **tmux attach -t \<ID\>** | Re-attach to a specific session by ID |
-| **tmux new -s \<name\>** | Create a new named session |
-| **tmux kill-session -t \<ID\>** | Kill a session by ID |
+|---|---|
+| `Prefix + /` | Search the scrollback buffer |
+| `Prefix + Ctrl+f` | FZF fuzzy search across sessions, windows, panes, and commands |
 
 ---
+
+## Copy Mode (Vi-Style)
+
+| Key | Action |
+|---|---|
+| `Prefix + [` | Enter copy mode |
+| `v` | Begin text selection |
+| `y` | Copy the selection to the clipboard |
+| `Prefix + ]` | Paste from the buffer |

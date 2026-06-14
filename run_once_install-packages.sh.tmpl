@@ -31,7 +31,6 @@ paru -S --needed \
   kubelet-bin \
   lsd \
   vim \
-  pyenv \
   ripgrep \
   rust \
   starship \
@@ -50,10 +49,8 @@ paru -S --asdeps --needed \
 {{ else if eq .chezmoi.os "darwin" -}}
 brew install \
   age \
-  btop \
   cilium-cli \
   dust \
-  easy-rsa \
   fd \
   fluxcd/tap/flux \
   fping \
@@ -65,11 +62,9 @@ brew install \
   gnupg \
   gping \
   helm \
-  htop \
   hubble \
   istioctl \
   jq \
-  jsonlint \
   k9s \
   kind \
   kubescape \
