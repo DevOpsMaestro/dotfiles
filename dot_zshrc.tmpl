@@ -109,6 +109,13 @@ alias code='codium'
 alias ap='ansible-playbook'
 alias syn='ansible-playbook --syntax-check'
 
+# --- chezmoi ---
+czp() {
+    chezmoi git -- add .
+    chezmoi git -- commit -m "${*:-chore: update dotfiles}"
+    chezmoi git -- push
+}
+
 # --- renovate ---
 rdry() {
     LOG_LEVEL=debug renovate --dry-run=full
