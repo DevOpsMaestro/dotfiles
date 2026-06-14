@@ -297,3 +297,11 @@ gpg --list-secret-keys --keyid-format long
 `fd` is installed on all machines as a fast replacement for `find`. It respects `.gitignore` rules by default, supports regular expressions and glob patterns, and can execute commands on matched results.
 
 [fd Cheatsheet](https://github.com/DevOpsMaestro/dotfiles/blob/main/cheatsheet_fd.md)
+
+---
+
+## fzf
+
+`fzf` is installed on all machines as an interactive fuzzy finder. Zsh shell integration is loaded automatically, providing `Ctrl+R` history search, `Ctrl+T` file selection, `Alt+C` directory navigation, and `**<Tab>` fuzzy completion.
+
+[fzf Cheatsheet](https://github.com/DevOpsMaestro/dotfiles/blob/main/cheatsheet_fzf.md)
