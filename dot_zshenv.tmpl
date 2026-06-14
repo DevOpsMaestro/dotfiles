@@ -16,5 +16,3 @@ fi
 # software versions
 [[ -x $(whence cargo) ]] && path=("${CARGO_HOME:-$HOME/.cargo}/bin" $path)
 [[ -x $(whence jenv) ]] && path=("${JENV_HOME:-$HOME/.jenv}/bin" $path)
-[[ -x $(whence pyenv) ]] && path=("${PYENV_ROOT:-$HOME/.pyenv}/bin" $path)
-[[ -x $(whence luarocks) ]] && path=("$HOME/.luarocks/bin" $path)
