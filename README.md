@@ -289,3 +289,11 @@ gpg --list-secret-keys --keyid-format long
 ```
 
 [GPG Cheatsheet](https://github.com/DevOpsMaestro/dotfiles/blob/main/cheatsheet_gpg.md)
+
+---
+
+## fd
+
+`fd` is installed on all machines as a fast replacement for `find`. It respects `.gitignore` rules by default, supports regular expressions and glob patterns, and can execute commands on matched results.
+
+[fd Cheatsheet](https://github.com/DevOpsMaestro/dotfiles/blob/main/cheatsheet_fd.md)
