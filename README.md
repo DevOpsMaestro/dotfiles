@@ -305,3 +305,11 @@ gpg --list-secret-keys --keyid-format long
 `fzf` is installed on all machines as an interactive fuzzy finder. Zsh shell integration is loaded automatically, providing `Ctrl+R` history search, `Ctrl+T` file selection, `Alt+C` directory navigation, and `**<Tab>` fuzzy completion.
 
 [fzf Cheatsheet](https://github.com/DevOpsMaestro/dotfiles/blob/main/cheatsheet_fzf.md)
+
+---
+
+## ripgrep
+
+`ripgrep` (`rg`) is installed on all machines as a fast recursive search tool. This build includes PCRE2 with JIT and NEON SIMD acceleration. It respects `.gitignore` rules and skips hidden and binary files by default.
+
+[ripgrep Cheatsheet](https://github.com/DevOpsMaestro/dotfiles/blob/main/cheatsheet_ripgrep.md)
