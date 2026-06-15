@@ -6,13 +6,13 @@ CanonicalizeHostname yes
 
 Host github.com
     HostName github.com
-    IdentityFile ${HOME}/.ssh/GIT_KEYS/id_ed25519
+    IdentityFile ${HOME}/.ssh/id_ed25519
     User git
 
 Match host "172.20.156.195"
     User root
     ForwardAgent yes
-    IdentityFile ${HOME}/.ssh/RKE-LABS/id_ed25519
+    IdentityFile ${HOME}/.ssh/id_ed25519
     PreferredAuthentications publickey,password
     ServerAliveInterval 30
     StrictHostKeyChecking accept-new
@@ -22,7 +22,7 @@ Host rhel-iso-builder.fortress.lan
     HostName 172.20.156.208
     User {{ .fortressUser }}
     ForwardAgent yes
-    IdentityFile ${HOME}/.ssh/RKE-LABS/id_ed25519
+    IdentityFile ${HOME}/.ssh/id_ed25519
     PreferredAuthentications publickey,password
     ServerAliveInterval 30
     StrictHostKeyChecking accept-new
@@ -31,7 +31,7 @@ Host rhel-iso-builder.fortress.lan
 Match host "*fortres*,172.20.156.*"
     User {{ .fortressUser }}
     ForwardAgent yes
-    IdentityFile ${HOME}/.ssh/RKE-LABS/id_ed25519
+    IdentityFile ${HOME}/.ssh/id_ed25519
     LogLevel QUIET
     PreferredAuthentications publickey
     ServerAliveInterval 30
