@@ -1,0 +1,11 @@
+k9s:
+  liveViewAutoScroll: true
+  defaultView: pods
+  namespace:
+    active: all
+  ui:
+    skin: catppuccin-macchiato
+    noHeader: false      # Displays hotkey hints
+    crumbsless: false    # Retains path navigation
+    reactive: true       # Immediate visual UI feedback
+

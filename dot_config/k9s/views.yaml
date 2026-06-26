@@ -1,0 +1,138 @@
+k9s:
+  views:
+    v1/pods:
+      sortColumn: "%CPU/L"
+      sortOrder: desc
+      columns:
+        - NAME
+        - NAMESPACE
+        - READY
+        - STATUS
+        - RESTARTS
+        - CPU
+        - MEM
+        - CPU/L
+        - MEM/L
+        - AGE
+
+    apps/v1/deployments:
+      columns:
+        - NAMESPACE
+        - NAME
+        - READY
+        - UP-TO-DATE
+        - AVAILABLE
+        - AGE
+
+    apps/v1/statefulsets:
+      columns:
+        - NAMESPACE
+        - NAME
+        - READY
+        - AGE
+
+    v1/services:
+      columns:
+        - NAMESPACE
+        - NAME
+        - TYPE
+        - CLUSTER-IP
+        - EXTERNAL-IP
+        - PORT(S)
+        - AGE
+
+    networking.k8s.io/v1/ingresses:
+      columns:
+        - NAMESPACE
+        - NAME
+        - CLASS
+        - HOSTS
+        - ADDRESS
+        - PORTS
+        - AGE
+
+    # Matches your v2 plugin scopes
+    helm.toolkit.fluxcd.io/v2/helmreleases:
+      columns: &flux_cols
+        - NAMESPACE
+        - NAME
+        - READY
+        - STATUS
+        - REVISION
+        - SUSPENDED
+        - AGE
+
+    helm.toolkit.fluxcd.io/v2beta1/helmreleases:
+      columns: *flux_cols
+
+    kustomize.toolkit.fluxcd.io/v1/kustomizations:
+      columns: &kust_cols
+        - NAMESPACE
+        - NAME
+        - READY
+        - STATUS
+        - REVISION
+        - SUSPENDED
+        - AGE
+
+    kustomize.toolkit.fluxcd.io/v1beta2/kustomizations:
+      columns: *kust_cols
+
+    source.toolkit.fluxcd.io/v1/gitrepositories:
+      columns: &git_cols
+        - NAMESPACE
+        - NAME
+        - READY
+        - STATUS
+        - ARTIFACT
+        - AGE
+
+    source.toolkit.fluxcd.io/v1beta2/gitrepositories:
+      columns: *git_cols
+
+    helm.sh/v1/helmcharts:
+      columns:
+        - NAMESPACE
+        - NAME
+        - CHART
+        - VERSION
+        - APP VERSION
+        - STATUS
+        - AGE
+
+    # Flux ImageRepositories: Tracks image registry scanning status
+    image.toolkit.fluxcd.io/v1beta2/imagerepositories:
+      columns: &img_repo
+        - NAMESPACE
+        - NAME
+        - LAST SCAN
+        - TAGS
+        - READY
+        - STATUS
+        - AGE
+
+    image.toolkit.fluxcd.io/v1beta1/imagerepositories:
+      columns: *img_repo
+
+    # Flux ImagePolicies: Displays the filtered/latest tag picked by SemVer
+    image.toolkit.fluxcd.io/v1beta2/imagepolicies:
+      columns: &img_policy
+        - NAMESPACE
+        - NAME
+        - LATEST IMAGE
+        - READY
+        - STATUS
+        - AGE
+
+    image.toolkit.fluxcd.io/v1beta1/imagepolicies:
+      columns: *img_policy
+
+    # Flux ImageUpdateAutomations: Displays when Kustomize manifests were updated in Git
+    image.toolkit.fluxcd.io/v1beta1/imageupdateautomations:
+      columns:
+        - NAMESPACE
+        - NAME
+        - LAST RUN
+        - READY
+        - STATUS
+        - AGE

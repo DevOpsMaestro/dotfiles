@@ -1,0 +1,156 @@
+plugins:
+  # ==========================================
+  # FLUX RECONCILE HOTKEYS (Shift+R)
+  # ==========================================
+  reconcile-git:
+    shortCut: Shift-R
+    confirm: false
+    description: "Flux: Reconcile Git Source"
+    scopes: [ "source.toolkit.fluxcd.io/v1/gitrepositories", "source.toolkit.fluxcd.io/v1beta2/gitrepositories" ]
+    command: bash
+    background: false
+    args: [ "-c", "flux reconcile source git --context $CONTEXT -n $NAMESPACE $NAME | less -K" ]
+
+  reconcile-ks:
+    shortCut: Shift-R
+    confirm: false
+    description: "Flux: Reconcile Kustomization"
+    scopes: [ "kustomize.toolkit.fluxcd.io/v1/kustomizations", "kustomize.toolkit.fluxcd.io/v1beta2/kustomizations" ]
+    command: bash
+    background: false
+    args: [ "-c", "flux reconcile kustomization --context $CONTEXT -n $NAMESPACE $NAME | less -K" ]
+
+  reconcile-hr:
+    shortCut: Shift-R
+    confirm: false
+    description: "Flux: Reconcile HelmRelease"
+    scopes: [ "helm.toolkit.fluxcd.io/v2/helmreleases", "helm.toolkit.fluxcd.io/v2beta1/helmreleases" ]
+    command: bash
+    background: false
+    args: [ "-c", "flux reconcile helmrelease --context $CONTEXT -n $NAMESPACE $NAME | less -K" ]
+
+  # ==========================================
+  # FLUX SUSPEND HOTKEYS (Shift+S)
+  # ==========================================
+  suspend-ks:
+    shortCut: Shift-S
+    confirm: true
+    description: "Flux: Suspend Kustomization"
+    scopes: [ "kustomize.toolkit.fluxcd.io/v1/kustomizations", "kustomize.toolkit.fluxcd.io/v1beta2/kustomizations" ]
+    command: bash
+    background: false
+    args: [ "-c", "flux suspend kustomization --context $CONTEXT -n $NAMESPACE $NAME | less -K" ]
+
+  suspend-hr:
+    shortCut: Shift-S
+    confirm: true
+    description: "Flux: Suspend HelmRelease"
+    scopes: [ "helm.toolkit.fluxcd.io/v2/helmreleases", "helm.toolkit.fluxcd.io/v2beta1/helmreleases" ]
+    command: bash
+    background: false
+    args: [ "-c", "flux suspend helmrelease --context $CONTEXT -n $NAMESPACE $NAME | less -K" ]
+
+  # ==========================================
+  # FLUX RESUME HOTKEYS (Shift+U)
+  # ==========================================
+  resume-ks:
+    shortCut: Shift-U
+    confirm: false
+    description: "Flux: Resume Kustomization"
+    scopes: [ "kustomize.toolkit.fluxcd.io/v1/kustomizations", "kustomize.toolkit.fluxcd.io/v1beta2/kustomizations" ]
+    command: bash
+    background: false
+    args: [ "-c", "flux resume kustomization --context $CONTEXT -n $NAMESPACE $NAME | less -K" ]
+
+  resume-hr:
+    shortCut: Shift-U
+    confirm: false
+    description: "Flux: Resume HelmRelease"
+    scopes: [ "helm.toolkit.fluxcd.io/v2/helmreleases", "helm.toolkit.fluxcd.io/v2beta1/helmreleases" ]
+    command: bash
+    background: false
+    args: [ "-c", "flux resume helmrelease --context $CONTEXT -n $NAMESPACE $NAME | less -K" ]
+
+ # ==========================================
+  # FLUX CONTROLLER LOG TRACING (Shift-L)
+  # ==========================================
+  logs-kustomize-controller:
+    shortCut: Shift-L
+    confirm: false
+    description: "Flux: View Kustomize Engine Logs"
+    scopes:
+      - kustomize.toolkit.fluxcd.io/v1/kustomizations
+      - kustomize.toolkit.fluxcd.io/v1beta2/kustomizations
+    command: kubectl
+    background: false
+    args:
+      - logs
+      - --context
+      - $CONTEXT
+      - -n
+      - flux-system
+      - deployment/kustomize-controller
+      - --tail=100
+      - -f
+
+  logs-helm-controller:
+    shortCut: Shift-L
+    confirm: false
+    description: "Flux: View Helm Engine Logs"
+    scopes:
+      - helm.toolkit.fluxcd.io/v2/helmreleases
+      - helm.toolkit.fluxcd.io/v2beta1/helmreleases
+    command: kubectl
+    background: false
+    args:
+      - logs
+      - --context
+      - $CONTEXT
+      - -n
+      - flux-system
+      - deployment/helm-controller
+      - --tail=100
+      - -f
+
+  # ==========================================
+  # IMAGE AUTOMATION RECONCILE (Shift-R)
+  # ==========================================
+  reconcile-img-repo:
+    shortCut: Shift-R
+    confirm: false
+    description: "Flux: Scan Image Registry Now"
+    scopes: [ "image.toolkit.fluxcd.io/v1beta2/imagerepositories", "image.toolkit.fluxcd.io/v1beta1/imagerepositories" ]
+    command: bash
+    background: false
+    args: [ "-c", "flux reconcile image repository --context $CONTEXT -n $NAMESPACE $NAME | less -K" ]
+
+  reconcile-img-auto:
+    shortCut: Shift-R
+    confirm: false
+    description: "Flux: Run Image Git Update Now"
+    scopes: [ "image.toolkit.fluxcd.io/v1beta1/imageupdateautomations" ]
+    command: bash
+    background: false
+    args: [ "-c", "flux reconcile image update --context $CONTEXT -n $NAMESPACE $NAME | less -K" ]
+
+  # ==========================================
+  # IMAGE AUTOMATION ENGINE LOGS (Shift-L)
+  # ==========================================
+  logs-image-reflector:
+    shortCut: Shift-L
+    confirm: false
+    description: "Flux: View Registry Scanner Logs"
+    scopes: [ "image.toolkit.fluxcd.io/v1beta2/imagerepositories", "image.toolkit.fluxcd.io/v1beta1/imagerepositories", "image.toolkit.fluxcd.io/v1beta2/imagepolicies", "image.toolkit.fluxcd.io/v1beta1/imagepolicies" ]
+    command: kubectl
+    background: false
+    args: [ "logs", "--context", "$CONTEXT", "-n", "flux-system", "deployment/image-reflector-controller", "--tail=100", "-f" ]
+
+  logs-image-automation:
+    shortCut: Shift-L
+    confirm: false
+    description: "Flux: View Git Writer Logs"
+    scopes: [ "image.toolkit.fluxcd.io/v1beta1/imageupdateautomations" ]
+    command: kubectl
+    background: false
+    args: [ "logs", "--context", "$CONTEXT", "-n", "flux-system", "deployment/image-automation-controller", "--tail=100", "-f" ]
+

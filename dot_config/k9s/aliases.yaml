@@ -1,0 +1,7 @@
+aliases:
+  hr: helm.toolkit.fluxcd.io/v2/helmreleases
+  ks: kustomize.toolkit.fluxcd.io/v1/kustomizations
+  git: source.toolkit.fluxcd.io/v1/gitrepositories
+  img-repo: image.toolkit.fluxcd.io/v1beta2/imagerepositories
+  img-policy: image.toolkit.fluxcd.io/v1beta2/imagepolicies
+  img-auto: image.toolkit.fluxcd.io/v1beta1/imageupdateautomations
