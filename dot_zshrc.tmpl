@@ -38,6 +38,10 @@ compinit
 # load starship
 eval "$(starship init zsh)"
 
+# load zoxide
+eval "$(zoxide init --cmd cd zsh)"
+[[ -x $(whence zoxide) ]] && zoxide add ~/SourceCode/Personal ~/Documents ~/Downloads ~/Scratch
+
 # --- shell / environment ---
 alias dt='date "+%F %T"'
 alias h='history'
