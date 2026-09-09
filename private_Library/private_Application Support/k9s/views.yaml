@@ -1,0 +1,3 @@
+views:
+  v1/pods:
+    sortColumn: CPU:desc
