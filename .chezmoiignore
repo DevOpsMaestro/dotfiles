@@ -4,3 +4,6 @@ README.md
 .config/gtk-3.0
 .config/gtk-4.0
 {{- end }}
+{{- if ne .chezmoi.os "darwin" }}
+Library
+{{- end }}
