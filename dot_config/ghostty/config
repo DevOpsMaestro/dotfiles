@@ -1,0 +1,194 @@
+# ============================================================================
+# GHOSTTY CONFIGURATION FOR FEDORA / LINUX
+# Place this file at: ~/.config/ghostty/config
+# ============================================================================
+
+# =========================
+# THEME & COLORS
+# =========================
+theme = light:Catppuccin Latte,dark:Catppuccin Mocha
+minimum-contrast = 1.1
+
+# Custom split divider color (added # prefix)
+split-divider-color = #45475a
+
+# =========================
+# FONT CONFIGURATION
+# =========================
+# Quoted font names to prevent fallback parsing errors
+font-family = "Fira Code"
+font-family = "FontAwesome"
+font-family = "DejaVu Sans"
+
+font-size = 13
+
+# Enable ligatures
+font-feature = +liga
+font-feature = +calt
+
+# Rendering tweaks for Linux FreeType
+freetype-load-flags = hinting
+font-thicken = true
+
+# Font metrics adjustments
+adjust-cell-height = 10%
+adjust-font-baseline = -1
+
+# =========================
+# WINDOW & APPEARANCE
+# =========================
+background-opacity = 0.95
+background-blur = 10
+
+# Window padding
+window-padding-x = 12
+window-padding-y = 12
+window-padding-balance = true
+window-padding-color = background
+
+# Window decorations & GNOME integration
+window-decoration = client
+gtk-titlebar = true
+gtk-titlebar-hide-when-maximized = false
+window-theme = auto
+
+# Cell-based snapping resize
+window-step-resize = true
+
+# Split configuration
+unfocused-split-opacity = 0.85
+
+# Resize overlay settings
+resize-overlay = after-first
+resize-overlay-position = top-left
+resize-overlay-duration = 500ms
+
+# Initial window size & prevents re-opening in fullscreen mode
+window-width = 160
+window-height = 46
+fullscreen = false
+window-save-state = always
+
+# =========================
+# PERFORMANCE & BEHAVIOR
+# =========================
+gtk-single-instance = desktop
+gtk-tabs-location = top
+gtk-wide-tabs = true
+
+# Increase Kitty graphics protocol memory limit for inline images
+image-storage-limit = 320
+
+# Scrollback buffer (~100MB)
+scrollback-limit = 100000000
+
+# Cursor settings
+cursor-style = block
+cursor-style-blink = true
+cursor-opacity = 0.95
+cursor-click-to-move = true
+
+# Mouse & URL behavior
+mouse-hide-while-typing = true
+mouse-scroll-multiplier = 1.0
+focus-follows-mouse = false
+link-url = true
+
+# =========================
+# SHELL INTEGRATION
+# =========================
+shell-integration = detect
+shell-integration-features = cursor,sudo,title
+
+# Working directory inheritance
+window-inherit-working-directory = true
+window-inherit-font-size = false
+
+# =========================
+# CLIPBOARD & SECURITY
+# =========================
+clipboard-read = ask
+clipboard-write = allow
+clipboard-trim-trailing-spaces = true
+clipboard-paste-protection = true
+copy-on-select = clipboard
+
+title-report = false
+
+# =========================
+# KEYBINDINGS
+# =========================
+
+# Window management
+keybind = ctrl+shift+n=new_window
+keybind = ctrl+shift+t=new_tab
+keybind = ctrl+shift+enter=new_split:right
+keybind = ctrl+shift+d=new_split:down
+keybind = ctrl+shift+w=close_surface
+keybind = ctrl+shift+q=quit
+
+# Tab navigation
+keybind = ctrl+tab=next_tab
+keybind = ctrl+shift+tab=previous_tab
+keybind = ctrl+shift+left=previous_tab
+keybind = ctrl+shift+right=next_tab
+keybind = ctrl+shift+alt+left=move_tab:-1
+keybind = ctrl+shift+alt+right=move_tab:1
+
+# Split navigation
+keybind = ctrl+shift+h=goto_split:left
+keybind = ctrl+shift+j=goto_split:bottom
+keybind = ctrl+shift+l=goto_split:right
+keybind = alt+up=goto_split:top
+keybind = alt+down=goto_split:bottom
+
+# Split management
+keybind = ctrl+shift+z=toggle_split_zoom
+keybind = ctrl+shift+equal=equalize_splits
+
+# Scrolling
+keybind = shift+page_up=scroll_page_up
+keybind = shift+page_down=scroll_page_down
+keybind = ctrl+shift+home=scroll_to_top
+keybind = ctrl+shift+end=scroll_to_bottom
+
+# Copy/Paste
+keybind = ctrl+shift+c=copy_to_clipboard
+keybind = ctrl+shift+v=paste_from_clipboard
+keybind = shift+insert=paste_from_selection
+
+# Font size adjustment
+keybind = ctrl+plus=increase_font_size:1
+keybind = ctrl+minus=decrease_font_size:1
+keybind = ctrl+0=reset_font_size
+
+# Configuration reload
+keybind = ctrl+shift+comma=reload_config
+
+# Prompt navigation (Shell integration)
+keybind = ctrl+shift+up=jump_to_prompt:-1
+keybind = ctrl+shift+down=jump_to_prompt:1
+
+# =========================
+# NOTIFICATIONS & PROCESSES
+# =========================
+desktop-notifications = true
+app-notifications = clipboard-copy
+
+confirm-close-surface = true
+bold-is-bright = true
+quit-after-last-window-closed = true
+
+# =========================
+# ADVANCED LINUX OPTIONS
+# =========================
+linux-cgroup = single-instance
+linux-cgroup-memory-limit = 2147483648
+linux-cgroup-processes-limit = 1000
+
+# Quick terminal configuration
+quick-terminal-position = top
+quick-terminal-screen = main
+quick-terminal-animation-duration = 0.2
+quick-terminal-autohide = true
+
